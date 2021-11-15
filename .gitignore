@@ -30,9 +30,9 @@ venv.bak/
 
 
 # code
-.pkl
+*.pkl
 /bert_res
 /good_res
 /Inter
-.txt
+*.txt
 __pycache__/
