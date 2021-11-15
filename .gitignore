@@ -35,3 +35,4 @@ venv.bak/
 /good_res
 /Inter
 .txt
+__pycache__/
