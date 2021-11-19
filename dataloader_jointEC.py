@@ -8,11 +8,13 @@ from torch.utils.data import Dataset
 from torch.nn.utils.rnn import pad_sequence
 import pickle
 import pandas as pd
+import numpy as np
+import string
 
 
 class IEMOCAPDataset(Dataset):
 
-    def __init__(self, path, train=True):
+    def __init__(self, path, word_idx=None, max_sen_len=None, train=True):
         self.videoIDs, self.videoSpeakers, self.videoLabels, self.causeLabels, self.causeLabels2, self.causeLabels3, self.pred_sa, self.pred_cd, self.videoText,\
         self.videoAudio, self.videoVisual, self.videoSentence, self.trainVid,\
         self.testVid = pickle.load(open(path, 'rb'), encoding='latin1')
@@ -25,6 +27,8 @@ class IEMOCAPDataset(Dataset):
         self.len = len(self.keys)
 
         self.train = train
+        self.word_idx = word_idx
+        self.max_sen_len = max_sen_len
 
     def __getitem__(self, index):
         vid = self.keys[index]
@@ -41,9 +45,9 @@ class IEMOCAPDataset(Dataset):
             bi_label_cause = torch.LongTensor(self.pred_cd[vid])  # generate cause label
             #bi_label_emo = torch.LongTensor([0 if label == 2 else 1 for label in self.videoLabels[vid]])  # generate emotion label
             #bi_label_cause = torch.LongTensor([1 if i in causeLabels else 0 for i in range(1, len(self.videoLabels[vid])+1)])  # generate cause label
-            #bi_label_emo_real = torch.LongTensor(
+            # bi_label_emo_real = torch.LongTensor(
             #    [0 if label == 2 else 1 for label in self.videoLabels[vid]])  # generate emotion label
-            #bi_label_cause_real = torch.LongTensor([1 if i in causeLabels else 0 for i in
+            # bi_label_cause_real = torch.LongTensor([1 if i in causeLabels else 0 for i in
             #                                        range(1, len(self.videoLabels[vid]) + 1)])  # generate cause label
 
 
@@ -71,29 +75,55 @@ class IEMOCAPDataset(Dataset):
         chck_label = torch.LongTensor(chck_label)
         # chunks = [ch.permute(1,0) for ch in chunks]
 
+        # generate word-level embedding
+        n_cut = 0
+        text = self.videoSentence[vid]
+        x_tmp = np.zeros((len(text), self.max_sen_len), dtype=np.int32)
+        sen_len = np.zeros(len(text), dtype=np.int32)
+        for i in range(len(text)):
+            words = text[i].strip()
+            words = words.lower().replace("'s", "").replace("'", "")
+            for s in range(len(string.punctuation)):
+                words = words.replace(string.punctuation[s], " ")
+            words = words.split()
+            sen_len[i] = min(len(words), self.max_sen_len)
+            if len(words) == 0:
+                print(text[i], words)
+            for j, word in enumerate(words):
+                if j >= self.max_sen_len:
+                    n_cut += 1
+                    break
+                if word not in self.word_idx:
+                    x_tmp[i][j] = 0
+                else:
+                    x_tmp[i][j] = int(self.word_idx[word])
+        textid = torch.from_numpy(x_tmp).long()
+        sen_len = torch.from_numpy(sen_len)
+
 
         if self.train:
             return  text_emo,\
                     text_cau,\
                     chck_label,\
                     p3_label,\
+                    textid, \
+                    sen_len, \
+                    bi_label_emo, \
+                    bi_label_cause, \
                     vid
         else:
-            #print('text', text.size())
-            #print('text_emo',text_emo.size())
-            #print('beforepadding',bi_label_emo.size(),bi_label_emo)
-            #print('cLabels',cLabels)
-            #print('afterpadding', pad_sequence([bi_label_emo]).size())
-            return text_emo,\
+            return  text_emo,\
                     text_cau,\
                     chck_label,\
                     p3_label,\
                     bi_label_emo,\
+                    bi_label_cause, \
                     ids_cau, \
                     cLabels, \
                     phase3_label, \
+                    textid, \
+                    sen_len, \
                     vid
-                    #ids_emo,\bi_label_cause, \
 
 
 
@@ -105,9 +135,9 @@ class IEMOCAPDataset(Dataset):
 
 
         if self.train:
-            return [pad_sequence(dat[i]) if i<4 else dat[i].tolist() for i in dat]
+            return [pad_sequence(dat[i]) if i<8 else dat[i].tolist() for i in dat]
         else:
             #print(dat)
-            res = [pad_sequence(dat[i]) if i<8 else dat[i].tolist() for i in dat]
+            res = [pad_sequence(dat[i]) if i<11 else dat[i].tolist() for i in dat]
             #print('afterpadding', res[4].size(),res[4])
             return res

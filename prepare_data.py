@@ -13,15 +13,19 @@ def load_w2v(embedding_dim, train_file_path, embedding_path):
     print('\nload embedding...')
     print(embedding_path)
 
-    words = []
+    words = ['happy', 'sadness', 'anger', 'neutral', 'excited', 'frustrated']
     inputFile1 = open(train_file_path, 'r')
     for line in inputFile1.readlines():
         line = line.strip().split(',')
-        emotion, clause = line[1], line[-1]
+        #emotion, clause = line[1], line[-1]
+        if line[2] == "":
+            clause = line[3]
+        else:
+            clause = line[2]
         clause = clause.lower().replace("'s", "").replace("'", "")
         for i in range(len(string.punctuation)):
             clause = clause.replace(string.punctuation[i], " ")
-        words.extend( [emotion] + clause.split())
+        words.extend( clause.split())
     words = set(words)
     word_idx = dict((c, k + 1) for k, c in enumerate(words))
     word_idx_rev = dict((k + 1, c) for k, c in enumerate(words))
