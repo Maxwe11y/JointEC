@@ -125,7 +125,7 @@ class ECPEC(nn.Module):
         self.transa = TextTransformer(LearnedPositionEncoding, d_model=4 * self.input_dim, d_out=self.input_dim,
                                       nhead=4, num_encoder_layers=3,
                                       dim_feedforward=512)
-        self.W3 = nn.Linear(6 * input_dim + 2, input_dim)
+        self.W3 = nn.Linear(3 * input_dim + 1, input_dim)
         #self.W3 = nn.Linear(input_dim, input_dim)
         self.cls = nn.Linear(input_dim, self.n_class)
         self.scorer = nn.Linear(2*input_dim, 1)
@@ -146,7 +146,7 @@ class ECPEC(nn.Module):
         return pad_sequence(xfs)
 
     def forward(self, text_emo=None, text_cau=None, chunksize=8, t_ratio=1, label_ck=None,
-                label3=None, share_rep=True, train=True, word_encode=None, sen_lengths=None, bi_label_emo=None, bi_label_cau=None):
+                label3=None, share_rep=False, train=True, word_encode=None, sen_lengths=None, bi_label_emo=None, bi_label_cau=None):
         """
         :param text_emo:-->seq, batch, dim
                 text_cau:-->seq, batch, dim
@@ -180,113 +180,34 @@ class ECPEC(nn.Module):
         if share_rep:
             text_emo = self.ac(self.rep(text_emo))
             text_cau = self.ac(self.rep(text_cau))
-        chunks = torch.split(text_cau, chunksize, 0)  # [num_chunk, chunksize,1, dim] --> tuple
 
         p_out = []
-        label3_out = []
-        phase2_out = []
-        pp_out = []
 
         # iterate text_emo and pair up all the emotion-chunk and emotion-cause pairs
-        h0 = torch.zeros((1, text_emo.size(1), text_emo.size(2))).cuda() if not self.nocuda else torch.zeros((1, text_emo.size(1), text_emo.size(2)))
+        pair = torch.zeros((text_emo.size(0)*text_cau.size(0), 3*text_emo.size(-1)+1)).cuda() if cuda else \
+            torch.zeros((text_emo.size(0) * text_cau.size(0), 3 * text_emo.size(-1) + 1))
+        label_pair = torch.zeros((text_emo.size(0)*text_cau.size(0)), requires_grad=False)
         for j, emo in enumerate(text_emo):
-            chunkEmb = torch.empty([len(chunks), text_emo.size(2)]).cuda() if not self.nocuda else torch.empty([len(chunks), text_emo.size(2)])
-            num = 0
-            # employ GRU to generate chunk embedding chEmb and chunk-emotion embedding
-            # h0 = torch.zeros((1, text_emo.size(1), text_emo.size(2))).cuda() if cuda else torch.zeros((1, text_emo.size(1), text_emo.size(2)))
-            # for i, ch in enumerate(chunks):
-            #    #h0 = torch.zeros((1, text_emo.size(1), text_emo.size(2))).cuda()
-            #    chEmb, h0 = self.gru(ch, h0)
-            #    #chunkEmb[num] = torch.cat((emo, chEmb[-1]), dim=1)
-            #    chunkEmb[num] = chEmb[-1]
-            #    num +=1
+            for i, cau in enumerate(text_cau):
+                if i in label3[j]:
+                    label_pair[j*text_cau.size(0)+i] = 1
+                    #pair[j*text_cau.size(0)+i] = torch.cat((emo, cau), dim=-1).squeeze()
+                pair[j * text_cau.size(0) + i] = ECPEC.item_att(emo, cau).squeeze()
 
-            for i, ch in enumerate(chunks):
-                input = torch.cat((emo.repeat(ch.size(0), 1, 1), ch), dim=2)
-                seq_len, batch_size, feature_dim = input.size()
-                scores = self.scorer(input.contiguous().view(-1, feature_dim)).view(batch_size, seq_len)
-                scores = F.softmax(scores, dim=1).transpose(0, 1)
-                chunkEmb[num] = ch[torch.argmax(scores, dim=0)].squeeze(0)
-                num += 1
+        h = self.dropout(self.ac(self.W3(pair)))
+        h = self.cls(h)  # .squeeze(1)
+        p = torch.log_softmax(h, dim=1)
+        p = p.contiguous().view(-1, 2)
+        p_out.append(p)
 
-            # item attention
-            delta = ECPEC.item_att(emo, chunkEmb)
-            #delta = self.ntn(emo, utt_c).squeeze(1)
-
-            # classify the emotion-chunk pairs
-            #hidden = self.dropout(self.ac(self.W2(delta)))
-            # out = torch.log_softmax(self.Wo(hidden), dim=1)
-            # out_ = out.contiguous().view(-1, 2)
-            # phase2_out.append(out_)
-
-            # emotion-cause pair, if t_ratio is 0 then output from pahse2 else real label (teacher forcing)]
-
-
-            chNum = label_ck.size(-1)
-            idx = torch.ones(chNum)
-
-            id_chks = torch.nonzero(idx)
-
-            # phase 3 if there is emotion-chunk pair found in phase 2, then phase3 start
-            # prepare label
-            L_cau = torch.zeros(text_cau.size(0))
-            for label in label3[j]:
-                if label.item() != -1:
-                    L_cau[label.item()] = 1
-            chk_L_cau = torch.split(L_cau, chunksize, 0)
-
-            chunks_sel = []
-            label3_sel = []
-            sz_ck = []
-
-            for id in id_chks:
-                chunks_sel.append(chunks[id])
-                label3_sel.append(chk_L_cau[id])
-                sz_ck.append(chunks[id].size(0))
-            utt_c = torch.cat(chunks_sel, dim=0)
-
-            #delta_ = self.ntn(emo, utt_c).squeeze(1)
-            delta_ = ECPEC.item_att(emo, utt_c.squeeze(1))
-
-            # cross attention for emotion-cause pair extraction task
-            att = delta_.matmul(self.xatt).matmul(delta.permute(1, 0))
-            att_score1 = F.softmax(att, dim=1)
-            attck = att_score1.matmul(delta)
-            delta_att= torch.cat((delta_, attck), dim=1)
-
-            # cross attention for emotion-cause chunk pair extraction task
-            attec = delta.matmul(self.xattck).matmul(delta_.permute(1, 0))
-            att_score2 = F.softmax(attec, dim=1)
-            attec = att_score2.matmul(delta_)
-            delta_attec = torch.cat((delta, attec), dim=1)
-            hidden = self.dropout(self.ac(self.W2(delta_attec)))
-            out = torch.log_softmax(self.Wo(hidden), dim=1)
-            out_ = out.contiguous().view(-1, 2)
-            phase2_out.append(out_)
-
-            h = self.dropout(self.ac(self.W3(delta_att)))
-            h = self.cls(h)  # .squeeze(1)
-            p = torch.log_softmax(h, dim=1)
-            p = p.contiguous().view(-1, 2)
-            p_out.append(p)
-
-            label3_out.extend(label3_sel)
-            if not train:
-                phase3_out = []
-                l = 0
-                for sz in sz_ck:
-                    phase3_out.append(p[l:l + sz])
-                    l += sz
-                pp_out.extend(phase3_out)
-
-        if train:
-            return phase2_out, p_out, label3_out
-        else:
-            return phase2_out, pp_out, label3_out
+        return p_out[0], label_pair
 
     @staticmethod
     def item_att(x, y):
-        item1 = torch.cat((x.repeat(y.size(0), 1), y), dim=-1)
+        if y.size(0) != 1:
+            item1 = torch.cat((x.repeat(y.size(0), 1), y), dim=-1)
+        else:
+            item1 = torch.cat((x,y), dim=-1)
         item2 = torch.norm(x - y, p=2, dim=-1, keepdim=True)
         item3 = torch.mul(x, y)
         delta = torch.cat((item1, item2, item3), dim=-1)
@@ -314,11 +235,9 @@ class Classifier(nn.Module):
         pass
 
 
-def train_model(model, loss_function, loss_function_c, dataloader, epoch, embedding=None, t_ratio=0.5, optimizer=None, train=True):
+def train_model(model, loss_function_c, dataloader, epoch, embedding=None, t_ratio=0.5, optimizer=None, train=True):
     losses = []
     # phase2 and phase3 tasks
-    predec = []
-    labelec = []
     # maskec = []
     pred3 = []
     labelp3 = []
@@ -337,190 +256,89 @@ def train_model(model, loss_function, loss_function_c, dataloader, epoch, embedd
         # total+=text_emo.size(0)*text_cau.size(0)
         # postive+=torch.sum(label3!=-1)
         word_encode = embedding(textid).squeeze()
-        log_phase2, log_phase3, label_phase3 = model(text_emo=text_emo, text_cau=text_cau, t_ratio=t_ratio, label_ck=label,
+        log_phase3, label_phase3 = model(text_emo=text_emo, text_cau=text_cau, t_ratio=t_ratio, label_ck=label,
                                                      label3=label3, word_encode=word_encode, sen_lengths=sen_len,
                                                      bi_label_emo=bi_label_emo, bi_label_cau=bi_label_cau)  # batch*seq_len, n_classes
 
-        log_phase2 = torch.cat(log_phase2, dim=0)
-        log_phase3 = torch.cat(log_phase3, dim=0) if len(log_phase3) != 0 else []
         if args.cuda:
-            label_phase3 = torch.cat(label_phase3, dim=0).long().cuda() if len(label_phase3) != 0 else torch.tensor([])
+            label_phase3 = label_phase3.long().cuda() if len(label_phase3) != 0 else torch.tensor([])
         else:
-            label_phase3 = torch.cat(label_phase3, dim=0).long() if len(label_phase3) != 0 else torch.tensor([])
+            label_phase3 = label_phase3.long() if len(label_phase3) != 0 else torch.tensor([])
 
-        label_ = label.view(-1)
         # umask = torch.ones([text_emo.size(0)*text_cau.size(0), 1]).float()
 
-        skip = False if len(log_phase3) != 0 else True
-        loss_2 = loss_function(log_phase2, label_)
-        # n1 = label_.size(0)
-        if not skip:
-            loss_3 = loss_function_c(log_phase3, label_phase3.view(-1))
-            # n2 = log_phase3.size(0)
-            #loss = loss_3
-            loss = loss_2 + loss_3
-        else:
-            #loss = loss_3
-            loss = loss_2
-
-        # phase 2
-        pred_e = torch.argmax(log_phase2, 1)  # batch*seq_len
-        predec.append(pred_e.data.cpu().numpy())
-        labelec.append(label_.data.cpu().numpy())
-        # maskec.append(umask.view(-1).cpu().numpy())
+        loss_3 = loss_function_c(log_phase3, label_phase3.view(-1))
+        loss = loss_3
 
         # phase 3
-        if not skip:
-            pred_3 = torch.argmax(log_phase3, 1)  # batch*seq_len
-            pred3.append(pred_3.data.cpu().numpy())
-            labelp3.append(label_phase3.view(-1).data.cpu().numpy())
-        else:
-            pred3.append(torch.zeros_like(label_phase3).numpy())
-            labelp3.append(label_phase3.view(-1).data.cpu().numpy())
-            pass
+        pred_3 = torch.argmax(log_phase3, 1)  # batch*seq_len
+        pred3.append(pred_3.data.cpu().numpy())
+        labelp3.append(label_phase3.view(-1).data.cpu().numpy())
 
         losses.append(loss.item())
 
         loss.backward()
         optimizer.step()
 
-    if predec != []:
-        predec = np.concatenate(predec)
-        labelec = np.concatenate(labelec)
-        # maskec = np.concatenate(maskec)
-        # print(Counter(labels.tolist()))
-        if not skip:
-            pred3 = np.concatenate(pred3)
-            labelp3 = np.concatenate(labelp3)
+    pred3 = np.concatenate(pred3)
+    labelp3 = np.concatenate(labelp3)
 
-    else:
-        return float('nan'), float('nan'), float('nan'), float('nan'), float('nan'), float('nan'), float('nan')
 
     avg_loss = round(np.average(losses), 4)
 
-    p_p2, r_p2, f_p2 = evaluate(predec, labelec)
+    #p_p2, r_p2, f_p2 = evaluate(predec, labelec)
     p_p3, r_p3, f_p3 = evaluate(pred3, labelp3)
 
-    return avg_loss, p_p2, r_p2, f_p2, p_p3, r_p3, f_p3
+    return avg_loss, p_p3, r_p3, f_p3
 
 
-def eval_model(model, loss_function, loss_function_c, dataloader, epoch, embedding=None, t_ratio=0.0, optimizer=None,
+def eval_model(model, loss_function_c, dataloader, epoch, embedding=None, t_ratio=0.0, optimizer=None,
                train=False):
     losses = []
     # phase2 and phase3 tasks
-    predec = []
-
-    losses3 = []
-
     assert not train or optimizer != None
     model.eval()
 
     num_proposed_pairs = 0
     num_annotated_pairs = 0
     num_correct_pairs = 0
+    pred3 = []
+    labelp3 = []
     for data in dataloader:
 
         text_emo, text_cau, label, label3, bi_label_emo, bi_label_cau, \
         ids_cau, cLabels, phase3_label, textid, sen_len = \
             [d.cuda() for d in data[:-1]] if cuda else data[:-1]
         if text_emo.size(0) == 0 or text_cau.size(0) == 0:
-            a = torch.nonzero(cLabels)
-            num_annotated_pairs += a.size(0)
+            return float('nan'), float('nan'), float('nan'), float('nan')
         else:
             word_encode = embedding(textid).squeeze()
-            log_phase2, log_phase3, label_phase3 = model(text_emo=text_emo, text_cau=text_cau, t_ratio=t_ratio, label_ck=label,
+            log_phase3, label_phase3 = model(text_emo=text_emo, text_cau=text_cau, t_ratio=t_ratio, label_ck=label,
                                                          label3=label3, train=False, word_encode=word_encode, sen_lengths=sen_len,
                                                          bi_label_emo=bi_label_emo, bi_label_cau=bi_label_cau)  # batch*seq_len, n_classes
-            count = 0
 
-            if len(log_phase2) != phase3_label.size(0):
-                print('phase3_label', phase3_label.size(), phase3_label)
-                print('log_phase2', len(log_phase2))
-                print("cLabels", cLabels.size(), cLabels)
-                print("bi_label_emo", bi_label_emo)
-            for emo_idx, p2 in enumerate(log_phase2):
-
-                ck_ids_cau = torch.split(ids_cau.squeeze(1), 8, dim=0)
-                seq = []
-                # seq_ = torch.LongTensor([0, 0, 0])
-                pred_e_ = torch.argmax(p2, 1)
-                #ck_id = torch.nonzero(pred_e_)
-                ck_id = torch.LongTensor([i for i in range(p2.size(0))])
-
-                for id in ck_id:
-                    pred_3_ = torch.argmax(log_phase3[count], dim=1)
-                    try:
-                        ut_id = torch.nonzero(pred_3_)
-                    except RuntimeError:
-                        print('utid')
-                    try:
-                        if len(ut_id)!=0:
-                            seq.append(ck_ids_cau[id.item()][ut_id])
-                    except IndexError or RuntimeError:
-                        print('seq')
-
-                    count += 1
-
-                if len(seq) != 0:
-                    seq = torch.cat(seq, dim=0)
-                    for idx in range(seq.size(0)):
-                        if seq[idx].item() + 1 in phase3_label[emo_idx]:
-                            num_correct_pairs += 1
-                    num_proposed_pairs += seq.size(0)
-
-            a = torch.nonzero(cLabels)
-
-            num_annotated_pairs += a.size(0)
-
-            log_phase2 = torch.cat(log_phase2, dim=0)
-            log_phase3 = torch.cat(log_phase3, dim=0) if len(log_phase3) != 0 else []
             if args.cuda:
-                label_phase3 = torch.cat(label_phase3, dim=0).long().cuda() if len(label_phase3) != 0 else torch.tensor([])
+                label_phase3 = label_phase3.long().cuda() if len(label_phase3) != 0 else torch.tensor([])
             else:
-                label_phase3 = torch.cat(label_phase3, dim=0).long() if len(label_phase3) != 0 else torch.tensor([])
+                label_phase3 = label_phase3.long() if len(label_phase3) != 0 else torch.tensor([])
 
-            label_ = label.view(-1)
             # umask = torch.ones([text_emo.size(0)*text_cau.size(0), 1]).float()
 
-            skip = False if len(log_phase3) != 0 else True
-            loss_2 = loss_function(log_phase2, label_)
-            # n1 = label_.size(0)
-            if not skip:
-                loss_3 = loss_function_c(log_phase3, label_phase3.view(-1))
-                # n2 = log_phase3.size(0)
-                #loss = loss_3
-                loss = loss_2 + loss_3
-                losses3.append(loss_3.item())
-            else:
-                loss = loss_2
-                #loss =loss_3
-
-            # phase 2
-            pred_e = torch.argmax(log_phase2, 1)  # batch*seq_len
-            predec.append(pred_e.data.cpu().numpy())
-
+            loss_3 = loss_function_c(log_phase3, label_phase3.view(-1))
+            loss = loss_3
             losses.append(loss.item())
 
-    if predec != []:
-        try:
-            precision = round(num_correct_pairs / float(num_proposed_pairs), 4)
-        except ZeroDivisionError:
-            precision = float('nan')
+            pred_3 = torch.argmax(log_phase3, 1)  # batch*seq_len
+            pred3.append(pred_3.data.cpu().numpy())
+            labelp3.append(label_phase3.view(-1).data.cpu().numpy())
 
-        try:
-            recall = round(num_correct_pairs / float(num_annotated_pairs), 4)
-        except ZeroDivisionError:
-            recall = float('nan')
-
-        fscore = round(2 * precision * recall / (precision + recall) if precision + recall != 0 else 0, 4)
-
-    else:
-        return float('nan'), float('nan'), float('nan'), float('nan'), float('nan')
+    pred3 = np.concatenate(pred3)
+    labelp3 = np.concatenate(labelp3)
+    p_p3, r_p3, f_p3 = evaluate(pred3, labelp3)
 
     avg_loss = round(np.average(losses), 4)
-    avg_loss_3 = round(np.average(losses3), 4) if len(losses3) != 0 else 100
 
-    return avg_loss, avg_loss_3, precision, recall, fscore
+    return avg_loss, p_p3, r_p3, f_p3
 
 
 def evaluate(pred, label):
@@ -598,15 +416,6 @@ if __name__ == '__main__':
     if cuda:
         model.cuda()
 
-    loss_weights = torch.FloatTensor([
-        1 / 0.757123,
-        1 / 0.242877,
-    ])  # emotion-chunk pair task
-    # loss_weights = torch.FloatTensor([
-    #     0.66039,
-    #     2.05866,
-    # ])  # emotion-chunk pair task
-
     loss_weights_c = torch.FloatTensor([
         1 / 0.798179,
         1 / 0.201821,
@@ -618,10 +427,8 @@ if __name__ == '__main__':
     # ])  # emotion-cause pair task
 
     if args.class_weight:
-        loss_function = MaskedNLLLoss(loss_weights.cuda() if cuda else loss_weights)
         loss_function_c = MaskedNLLLoss(loss_weights_c.cuda() if cuda else loss_weights_c)
     else:
-        loss_function = MaskedNLLLoss()
         loss_function_c = MaskedNLLLoss()
 
     optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.l2)
@@ -638,20 +445,19 @@ if __name__ == '__main__':
 
     for e in range(n_epochs):
         start_time = time.time()
-        train_loss, p_p2, r_p2, f_p2, p_p3, r_p3, f_p3 = train_model(model, loss_function, loss_function_c,
+        train_loss, p_p3, r_p3, f_p3 = train_model(model, loss_function_c,
                                                                      train_loader, e, embedding=embedding, optimizer=optimizer, train=True)
-        # valid_loss, valid_p_p2, valid_r_p2, valid_f_p2, valid_p_p3, valid_r_p3, valid_f_p3 = train_model(model, loss_function, loss_function_c, valid_loader, e)
-        test_loss, test_loss_3, precision, recall, fscore = eval_model(model, loss_function, loss_function_c,
+        test_loss, precision, recall, fscore = eval_model(model, loss_function_c,
                                                                        test_loader, e, embedding=embedding, t_ratio=0.0)
 
-        if best_loss == 100 or best_loss > test_loss_3:
-            best_loss, best_precision, best_recall, best_fscore = test_loss_3, precision, recall, fscore
+        if best_loss == 100 or best_loss > test_loss:
+            best_loss, best_precision, best_recall, best_fscore = test_loss, precision, recall, fscore
 
         print(
-            'epoch {} train_loss {} train_precision_p2 {} train_recall_p2 {} train_fscore_p2 {} '
+            'epoch {} train_loss {} '
             'train_precision_p3 {} train_recall_p3 {} train_fscore_p3 {}'
-            ' test_loss {} test_loss_3 {} test_precision {} test_recall {} test_fscore {} time {}'. \
-                format(e + 1, train_loss, p_p2, r_p2, f_p2, p_p3, r_p3, f_p3, test_loss, test_loss_3, precision, recall,
+            ' test_loss {} test_precision {} test_recall {} test_fscore {} time {}'. \
+                format(e + 1, train_loss, p_p3, r_p3, f_p3, test_loss, precision, recall,
                        fscore, round(time.time() - start_time, 2)))
 
     print('Test performance..')
