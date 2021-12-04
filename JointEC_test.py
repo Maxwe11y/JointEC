@@ -118,7 +118,8 @@ class ECPEC(nn.Module):
         self.s1 = nn.Linear(input_dim, input_dim)
         self.s2 = nn.Linear(input_dim, 1, bias=False)
 
-        self.ac = nn.Sigmoid()
+        #self.ac = nn.Sigmoid()
+        self.ac = nn.Tanh()
         self.ac_linear = nn.ReLU()
         self.ac_tanh = nn.Tanh()
 
@@ -129,7 +130,7 @@ class ECPEC(nn.Module):
         self.transa = TextTransformer(LearnedPositionEncoding, d_model=4 * self.input_dim, d_out=self.input_dim,
                                       nhead=4, num_encoder_layers=3,
                                       dim_feedforward=512)
-        self.W3 = nn.Linear(4 * input_dim + 1, input_dim)
+        self.W3 = nn.Linear(2*input_dim, input_dim)
         #self.W3 = nn.Linear(input_dim, input_dim)
         self.cls = nn.Linear(input_dim, self.n_class)
         self.scorer = nn.Linear(2*input_dim, 1)
@@ -150,18 +151,42 @@ class ECPEC(nn.Module):
         return pad_sequence(xfs)
 
     def forward(self, text_emo=None, text_cau=None, chunksize=8, t_ratio=1, label_ck=None,
-                label3=None, share_rep=False, train=True, word_encode=None, pos_encode=None, sen_lengths=None, bi_label_emo=None, bi_label_cau=None, pairs=None):
+                label3=None, share_rep=False, train=True, sen_lengths=None, bi_label_emo=None, bi_label_cau=None,
+                textid=None, pos_id=None, embedding=None, pos_embedding=None):
         """
         :param text_emo:-->seq, batch, dim
                 text_cau:-->seq, batch, dim
                 label_ck:-->seq, num_chunk
         :return:
         """
+        label3 = label3.squeeze(1).cuda() if not self.nocuda else label3.squeeze()
+        emo_mask = bi_label_emo.unsqueeze(1).bool()
+        cau_mask = bi_label_cau.unsqueeze(1).bool()
+        textid_emo = torch.masked_select(textid, emo_mask).contiguous().view(-1, 1, textid.size(-1))
+        textid_cau = torch.masked_select(textid, cau_mask).contiguous().view(-1, 1, textid.size(-1))
 
-        # word-level encoding
-        word_encode = word_encode.float()
-        seq_lengths = sen_lengths.squeeze().cpu()
-        pack = nn_utils.rnn.pack_padded_sequence(word_encode, seq_lengths, batch_first=True, enforce_sorted=False)
+        pair_id = torch.zeros((textid_emo.size(0) * textid_cau.size(0), 2 * textid.size(-1))).long().cuda() if cuda else \
+            torch.zeros((textid_emo.size(0) * textid_cau.size(0), 2 * text_emo.size(-1))).long()
+        label_pair = torch.zeros((textid_emo.size(0) * textid_cau.size(0)), requires_grad=False)
+        pair_lengths = torch.zeros((textid_emo.size(0) * textid_cau.size(0)), dtype=torch.int32)
+        dis = torch.zeros((textid_emo.size(0) * textid_cau.size(0))).long().cuda() if cuda else \
+            torch.zeros((textid_emo.size(0) * textid_cau.size(0))).long()
+        for j, emoid in enumerate(textid_emo):
+            for i, cauid in enumerate(textid_cau):
+                if i in label3[j]:
+                    label_pair[j * text_cau.size(0) + i] = 1
+                len_emo = sen_lengths[j].item()
+                len_cau = sen_lengths[i].item()
+                pair_id[j*textid_cau.size(0)+i][0:len_emo+len_cau] = torch.cat((emoid[0][0:len_emo], cauid[0][0:len_cau]), dim=-1)
+                pair_lengths[j*textid_cau.size(0)+i] = len_emo + len_cau
+                dis[j*textid_cau.size(0)+i] = pos_id[j][0][i]
+
+        word_encode = embedding(pair_id).squeeze().float().cuda() if cuda else embedding(pair_id).squeeze().float()
+        pos_encode = pos_embedding(dis.unsqueeze(1)).float().cuda() if cuda else pos_embedding(dis.unsqueeze(1)).float()
+        pair_lengths = pair_lengths.squeeze().cpu()
+        word_encode = self.dropout(word_encode)
+
+        pack = nn_utils.rnn.pack_padded_sequence(word_encode, pair_lengths, batch_first=True, enforce_sorted=False)
         hw = torch.zeros((2, word_encode.size(0), int(word_encode.size(2) / 2))).cuda() if cuda else \
             torch.zeros((2, word_encode.size(0), int(word_encode.size(2) / 2)))
         cw = torch.zeros((2, word_encode.size(0), int(word_encode.size(2) / 2))).cuda() if cuda else \
@@ -171,54 +196,37 @@ class ECPEC(nn.Module):
         # index = torch.LongTensor([seq_lengths[i] + unpacked[0].size(1) * i - 1 for i in range(unpacked[0].size(0))])
         # U = unpacked[0].contiguous().view(-1, unpacked[0].size(2))[index].unsqueeze(1)
 
-        U = self.att_var(unpacked[0], length=seq_lengths).unsqueeze(1)
+        U = self.att_var(unpacked[0], length=pair_lengths).unsqueeze(1)
 
-        emo_mask = bi_label_emo.unsqueeze(1).bool()
-        text_emo = torch.masked_select(U, emo_mask).contiguous().view(-1, 1, 100)
+        delta = torch.cat((U, pos_encode), dim=-1)
 
-        cau_mask = bi_label_cau.unsqueeze(1).bool()
-        text_cau = torch.masked_select(U, cau_mask).contiguous().view(-1, 1, 100)
-
-        # the emotion cause chunk pair extraction task -- GRU variant
-
-        label3 = label3.squeeze(1).cuda() if not self.nocuda else label3.squeeze()
-
-        if share_rep:
-            text_emo = self.ac(self.rep(text_emo))
-            text_cau = self.ac(self.rep(text_cau))
-
-        p_out = []
+        #p_out = []
 
         # iterate text_emo and pair up all the emotion-chunk and emotion-cause pairs
-        pairs = pairs.bool()
-        pair = torch.zeros((text_emo.size(0)*text_cau.size(0), 4*text_emo.size(-1)+1)).cuda() if cuda else \
-            torch.zeros((text_emo.size(0) * text_cau.size(0), 3 * text_emo.size(-1) + 1))
-        label_pair = torch.zeros((text_emo.size(0)*text_cau.size(0)), requires_grad=False)
-        #pair_sel = torch.masked_select(pair, pairs).contiguous().view(-1, 4*text_emo.size(-1)+1)
-        #label_pair_sel = torch.masked_select(label_pair.unsqueeze(1), pairs).contiguous().view(-1, 1)
-        for j, emo in enumerate(text_emo):
-            for i, cau in enumerate(text_cau):
-                if i in label3[j]:
-                    label_pair[j*text_cau.size(0)+i] = 1
-                    #pair[j*text_cau.size(0)+i] = torch.cat((emo, cau), dim=-1).squeeze()
-                att = ECPEC.item_att(emo, cau).squeeze()
-                try:
-                    pair[j * text_cau.size(0) + i] = torch.cat((att, pos_encode[j][i]), dim=-1)
-                except RuntimeError:
-                    print(pos_encode.size())
-                    print(att.size(), pos_encode[j][i].size())
-                #pair[j * text_cau.size(0) + i] = ECPEC.item_att(emo, cau).squeeze()
+        # pair = torch.zeros((text_emo.size(0)*text_cau.size(0), 4*text_emo.size(-1)+1)).cuda() if cuda else \
+        #     torch.zeros((text_emo.size(0) * text_cau.size(0), 3 * text_emo.size(-1) + 1))
+        # label_pair = torch.zeros((text_emo.size(0)*text_cau.size(0)), requires_grad=False)
+        # for j, emo in enumerate(text_emo):
+        #     for i, cau in enumerate(text_cau):
+        #         if i in label3[j]:
+        #             label_pair[j*text_cau.size(0)+i] = 1
+        #             #pair[j*text_cau.size(0)+i] = torch.cat((emo, cau), dim=-1).squeeze()
+        #         att = ECPEC.item_att(emo, cau).squeeze()
+        #         try:
+        #             pair[j * text_cau.size(0) + i] = torch.cat((att, pos_encode[j][i]), dim=-1)
+        #         except RuntimeError:
+        #             print(pos_encode.size())
+        #             print(att.size(), pos_encode[j][i].size())
+        #         #pair[j * text_cau.size(0) + i] = ECPEC.item_att(emo, cau).squeeze()
 
-        pair_sel = torch.masked_select(pair, pairs).contiguous().view(-1, 4 * text_emo.size(-1) + 1)
-        label_pair_sel = torch.masked_select(label_pair.unsqueeze(1), pairs).contiguous().view(-1, 1)
-
-        h = self.dropout(self.ac(self.W3(pair_sel)))
+        #h = self.dropout(self.ac(self.W3(delta)))
+        h = self.ac(self.W3(delta))
         h = self.cls(h)  # .squeeze(1)
-        p = torch.log_softmax(h, dim=1)
+        p = torch.log_softmax(h, dim=2)
         p = p.contiguous().view(-1, 2)
-        p_out.append(p)
+        #p_out.append(p)
 
-        return p_out[0], label_pair_sel
+        return p, label_pair
 
     @staticmethod
     def item_att(x, y):
@@ -231,16 +239,6 @@ class ECPEC(nn.Module):
         delta = torch.cat((item1, item2, item3), dim=-1)
 
         return delta
-
-    #TODO
-    def ntn(self, x, y):
-        #x = x.repeat(y.size(0), 1, 1)
-        input = torch.cat((x.repeat(y.size(0), 1, 1), y), dim=2)
-        #term2 = self.fusion2(input, input)
-        term1 = self.fusion1(input)
-
-        return term1
-
 
     def sequence_mask(self, lengths, maxlen=None, dtype=torch.bool):
         if maxlen is None:
@@ -314,15 +312,14 @@ def train_model(model, loss_function_c, dataloader, epoch, embedding=None, pos_e
 
         optimizer.zero_grad()
 
-        text_emo, text_cau, label, ck_pos_id, pos_id, label3, textid, sen_len, bi_label_emo, bi_label_cau, pairs = \
+        text_emo, text_cau, label, ck_pos_id, pos_id, label3, textid, sen_len, bi_label_emo, bi_label_cau = \
             [d.cuda() for d in data[:-1]] if cuda else data[:-1]
         # total+=text_emo.size(0)*text_cau.size(0)
         # postive+=torch.sum(label3!=-1)
-        word_encode = embedding(textid).squeeze()
-        pos_encode = pos_embedding(pos_id).squeeze(1)
         log_phase3, label_phase3 = model(text_emo=text_emo, text_cau=text_cau, t_ratio=t_ratio, label_ck=label,
-                                                     label3=label3, word_encode=word_encode, pos_encode=pos_encode, sen_lengths=sen_len,
-                                                     bi_label_emo=bi_label_emo, bi_label_cau=bi_label_cau, pairs=pairs)  # batch*seq_len, n_classes
+                                                     label3=label3, sen_lengths=sen_len,
+                                                     bi_label_emo=bi_label_emo, bi_label_cau=bi_label_cau, textid=textid, pos_id=pos_id,
+                                         embedding=embedding, pos_embedding=pos_embedding)  # batch*seq_len, n_classes
 
         if args.cuda:
             label_phase3 = label_phase3.long().cuda() if len(label_phase3) != 0 else torch.tensor([])
@@ -346,7 +343,8 @@ def train_model(model, loss_function_c, dataloader, epoch, embedding=None, pos_e
 
     pred3 = np.concatenate(pred3)
     labelp3 = np.concatenate(labelp3)
-
+    # print('total', total)
+    # print('postive', postive)
 
     avg_loss = round(np.average(losses), 4)
 
@@ -371,16 +369,15 @@ def eval_model(model, loss_function_c, dataloader, epoch, embedding=None, pos_em
     for data in dataloader:
 
         text_emo, text_cau, label, ck_pos_id, pos_id, label3, bi_label_emo, bi_label_cau, \
-        ids_cau, cLabels, phase3_label, textid, sen_len, pairs = \
+        ids_cau, cLabels, phase3_label, textid, sen_len = \
             [d.cuda() for d in data[:-1]] if cuda else data[:-1]
         if text_emo.size(0) == 0 or text_cau.size(0) == 0:
             return float('nan'), float('nan'), float('nan'), float('nan')
         else:
-            word_encode = embedding(textid).squeeze()
-            pos_encode = pos_embedding(pos_id).squeeze(1)
             log_phase3, label_phase3 = model(text_emo=text_emo, text_cau=text_cau, t_ratio=t_ratio, label_ck=label,
-                                                         label3=label3, train=False, word_encode=word_encode, pos_encode=pos_encode, sen_lengths=sen_len,
-                                                         bi_label_emo=bi_label_emo, bi_label_cau=bi_label_cau, pairs=pairs)  # batch*seq_len, n_classes
+                                                         label3=label3, train=False, sen_lengths=sen_len,
+                                                         bi_label_emo=bi_label_emo, bi_label_cau=bi_label_cau, textid=textid, pos_id=pos_id,
+                                         embedding=embedding, pos_embedding=pos_embedding)  # batch*seq_len, n_classes
 
             if args.cuda:
                 label_phase3 = label_phase3.long().cuda() if len(label_phase3) != 0 else torch.tensor([])
@@ -490,8 +487,8 @@ if __name__ == '__main__':
     ])  # emotion-cause pair task
 
     # loss_weights_c = torch.FloatTensor([
-    #     0.527450,
-    #     9.607568,
+    #     1.0/0.94795769,
+    #     1.0/0.052042,
     # ])  # emotion-cause pair task
 
     if args.class_weight:

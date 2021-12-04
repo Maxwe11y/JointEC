@@ -14,7 +14,7 @@ import string
 
 class IEMOCAPDataset(Dataset):
 
-    def __init__(self, path, word_idx=None, max_sen_len=None, ck_size=None, train=True):
+    def __init__(self, path, word_idx=None, max_sen_len=None, train=True):
         self.videoIDs, self.videoSpeakers, self.videoLabels, self.causeLabels, self.causeLabels2, self.causeLabels3, self.sa_Tr, self.cd_Ta, self.pred_sa, self.pred_cd, self.videoText,\
         self.videoAudio, self.videoVisual, self.videoSentence, self.trainVid,\
         self.testVid = pickle.load(open(path, 'rb'), encoding='latin1')
@@ -29,7 +29,6 @@ class IEMOCAPDataset(Dataset):
         self.train = train
         self.word_idx = word_idx
         self.max_sen_len = max_sen_len
-        self.ck_size = ck_size
 
     def __getitem__(self, index):
         vid = self.keys[index]
@@ -38,25 +37,43 @@ class IEMOCAPDataset(Dataset):
 
         if self.train:
             thr = torch.rand(1)
-            if thr.item() > 1:
+            if thr.item() > 0.5:
                 bi_label_emo = torch.LongTensor([0 if label == 2 else 1 for label in self.videoLabels[vid]])  # generate emotion label
                 bi_label_cause = torch.LongTensor([1 if i in causeLabels else 0 for i in range(1, len(self.videoLabels[vid]) + 1)])  # generate cause label TODO
-                #bi_label_cause = torch.LongTensor([1 for i in range(1, len(self.videoLabels[vid]) + 1)])  # generate all the cause chunk label
             else:
                 bi_label_emo = torch.LongTensor(self.sa_Tr[vid])  # generate emotion label
                 bi_label_cause = torch.LongTensor(self.cd_Ta[vid])  # generate cause label
-                #bi_label_cause = torch.LongTensor([1 for i in range(1, len(self.cd_Ta[vid]) + 1)])  # generate all the cause label
+
 
         else:
             bi_label_emo = torch.LongTensor(self.pred_sa[vid])  # generate emotion label
             bi_label_cause = torch.LongTensor(self.pred_cd[vid])  # generate cause label
-            # bi_label_cause = torch.ones_like(torch.LongTensor(self.pred_cd[vid]))  # generate cause label
             # bi_label_emo = torch.LongTensor([0 if label == 2 else 1 for label in self.videoLabels[vid]])  # generate emotion label
             # bi_label_cause = torch.LongTensor([1 if i in causeLabels else 0 for i in range(1, len(self.videoLabels[vid])+1)])  # generate cause label
             # bi_label_emo_real = torch.LongTensor(
             #    [0 if label == 2 else 1 for label in self.videoLabels[vid]])  # generate emotion label
             # bi_label_cause_real = torch.LongTensor([1 if i in causeLabels else 0 for i in
             #                                        range(1, len(self.videoLabels[vid]) + 1)])  # generate cause label
+        pairs = torch.zeros((bi_label_emo.sum()*bi_label_cause.sum()))
+        count_i = 0
+        #count_j =0
+        for idx, i in enumerate(bi_label_emo):
+            if i == 1:
+                count_j = 0
+                for jdx, j in enumerate(bi_label_cause):
+                    if j == 1:
+                        #if abs(idx-jdx) <= 10 and jdx+1 in causeLabels.transpose(0, 1)[idx]:
+                        if abs(idx - jdx) <= 5:
+                            try:
+                                if pairs[count_i * bi_label_cause.sum() + count_j] ==1:
+                                    print('67--', count_i, count_j)
+                                pairs[count_i * bi_label_cause.sum() + count_j] = 1
+                            except IndexError:
+                                print(count_i, count_j)
+                                print(idx, jdx)
+                                print(i, j)
+                        count_j+=1
+                count_i += 1
 
 
         text = torch.FloatTensor(self.videoText[vid])  # text embedding of a given conversation
@@ -66,11 +83,11 @@ class IEMOCAPDataset(Dataset):
         text_cau = torch.masked_select(text, cau_mask).contiguous().view(-1, 100)  # extracted text embedding of cause utterance
         ids_cau = torch.nonzero(bi_label_cause)  # the id of cause utterances in a conversation  # cauid_to_convid
         ids_emo = torch.nonzero(bi_label_emo)   # the id of emotion utterances in a conversation  # cauid_to_convid
-        chks_id = torch.split(ids_cau, self.ck_size, 0)   # split cause utterance into chunks
+        chks_id = torch.split(ids_cau, 8, 0)   # split cause utterance into chunks
         chck_label = [[0 for ch_id in chks_id] for idx in ids_emo]  # initialize chck label for each emotion utterance  # TODO
-        convid_to_cauid = torch.LongTensor([torch.sum(bi_label_cause[:id]).item() if l.item() == 1 else 0 for id, l in enumerate(bi_label_cause)])  # map absolute cause label and relative cause label
+        convid_to_cauid = torch.LongTensor([torch.sum(bi_label_cause[:id]).item() if l.item() ==1 else 0 for id, l in enumerate(bi_label_cause)])  # map absolute cause label and relative cause label
         cLabels = causeLabels.permute(1, 0)  # swap the first and second dimension of causeLabels
-        phase3_label = torch.masked_select(cLabels, emo_mask).view(-1, 3) # use emo_mask to remove non-emotion utterances in cLabels
+        phase3_label = torch.masked_select(cLabels, emo_mask).view(-1,3) # use emo_mask to remove non-emotion utterances in cLabels
         p3_label = torch.LongTensor([[convid_to_cauid[l.item()-1] if l.item()!=0 else -1 for l in line] for line in phase3_label])  # labels of emotion-cause pair
         for i, id_emo in enumerate(ids_emo):
             for cause_id in causeLabels[:, id_emo.item()]:
@@ -80,9 +97,9 @@ class IEMOCAPDataset(Dataset):
                         continue
 
         chck_label = torch.LongTensor(chck_label)
+        # chunks = [ch.permute(1,0) for ch in chunks]
         chck_pos_id = torch.from_numpy(np.array([i for i in range(chck_label.size(1))]),).repeat(chck_label.size(0), 1)
-        cause_pos_id = torch.from_numpy(np.array([i for i in range(text_cau.size(0))]), ).repeat(text_emo.size(0), 1)
-
+        cause_pos_id = torch.from_numpy(np.array([i for i in range(text_cau.size(0))]),).repeat(text_emo.size(0), 1)
         # generate word-level embedding
         n_cut = 0
         text = self.videoSentence[vid]
@@ -120,6 +137,7 @@ class IEMOCAPDataset(Dataset):
                     sen_len, \
                     bi_label_emo, \
                     bi_label_cause, \
+                    pairs, \
                     vid
         else:
             return  text_emo,\
@@ -135,6 +153,7 @@ class IEMOCAPDataset(Dataset):
                     phase3_label, \
                     textid, \
                     sen_len, \
+                    pairs, \
                     vid
 
 
@@ -146,7 +165,7 @@ class IEMOCAPDataset(Dataset):
         dat = pd.DataFrame(data)
 
         if self.train:
-            return [pad_sequence(dat[i]) if i<10 else dat[i].tolist() for i in dat]
+            return [pad_sequence(dat[i]) if i<11 else dat[i].tolist() for i in dat]
         else:
-            res = [pad_sequence(dat[i]) if i<13 else dat[i].tolist() for i in dat]
+            res = [pad_sequence(dat[i]) if i<14 else dat[i].tolist() for i in dat]
             return res

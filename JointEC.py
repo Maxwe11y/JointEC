@@ -20,7 +20,6 @@ from torch.utils.data import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
 from dataloader_jointEC import IEMOCAPDataset
 import torch.nn.functional as F
-from tr import TextTransformer, PositionalEncoding, LearnedPositionEncoding
 import argparse
 import pickle
 from prepare_data import *
@@ -40,8 +39,8 @@ def get_train_valid_sampler(trainset, valid=0.1):
     return SubsetRandomSampler(idx[split:]), SubsetRandomSampler(idx[:split])
 
 
-def get_IEMOCAP_loaders(path, batch_size=1, valid=0.0, num_workers=0, word_idx=None, max_sen_len=None, pin_memory=False):
-    trainset = IEMOCAPDataset(path=path, word_idx=word_idx, max_sen_len=max_sen_len)
+def get_IEMOCAP_loaders(path, batch_size=1, valid=0.0, num_workers=0, word_idx=None, max_sen_len=None, ck_size=None, pin_memory=False):
+    trainset = IEMOCAPDataset(path=path, word_idx=word_idx, max_sen_len=max_sen_len, ck_size=ck_size)
     train_sampler, valid_sampler = get_train_valid_sampler(trainset, valid)
     train_loader = DataLoader(trainset,
                               batch_size=batch_size,
@@ -56,7 +55,7 @@ def get_IEMOCAP_loaders(path, batch_size=1, valid=0.0, num_workers=0, word_idx=N
                               num_workers=num_workers,
                               pin_memory=pin_memory)
 
-    testset = IEMOCAPDataset(path=path, word_idx=word_idx, max_sen_len=max_sen_len, train=False)
+    testset = IEMOCAPDataset(path=path, word_idx=word_idx, max_sen_len=max_sen_len, ck_size=ck_size,train=False)
     test_loader = DataLoader(testset,
                              batch_size=batch_size,
                              collate_fn=testset.collate_fn,
@@ -93,42 +92,38 @@ class MaskedNLLLoss(nn.Module):
 
 class ECPEC(nn.Module):
 
-    def __init__(self, input_dim, n_class, dropout):
+    def __init__(self, input_dim, n_class, dropout, dropout2, ck_size):
         super(ECPEC, self).__init__()
         self.input_dim = input_dim
         self.n_class = n_class
+        self.ck_size = ck_size
         self.rep = nn.Linear(input_dim, input_dim)
 
         self.W = nn.Linear(2 * input_dim, input_dim)
-        self.W2 = nn.Linear(6 * input_dim + 2, input_dim)
+        self.W2 = nn.Linear(4*input_dim+1, input_dim)
         self.Wo = nn.Linear(input_dim, self.n_class)
-
-        self.gru = nn.GRU(input_size=input_dim, hidden_size=input_dim, num_layers=1, bidirectional=False)
 
         self.wgru = nn.LSTM(input_size=input_dim, hidden_size=int(input_dim / 2), num_layers=1, batch_first=True,
                             bidirectional=True)
 
-        self.xatt = nn.Parameter(kaiming_uniform_(torch.zeros((3*input_dim+1, 3*input_dim+1))), requires_grad=True)
-        self.xattck = nn.Parameter(kaiming_uniform_(torch.zeros((3*input_dim+1, 3 * input_dim + 1))), requires_grad=True)
+        self.xatt = nn.Parameter(kaiming_normal_(torch.zeros((4*input_dim+1, 4*input_dim+1))), requires_grad=True)
+        self.xattck = nn.Parameter(kaiming_normal_(torch.zeros((4*input_dim+1, 4*input_dim+1))), requires_grad=True)
 
-        self.fusion2 = nn.Bilinear(2*self.input_dim, 2*self.input_dim, self.input_dim, bias=False)
-        self.fusion1 = nn.Linear(2*self.input_dim, self.input_dim)
+        self.s1 = nn.Linear(input_dim, input_dim)
+        self.s2 = nn.Linear(input_dim, 1, bias=False)
 
-        self.ac = nn.Sigmoid()
+        #self.ac = nn.Sigmoid()
+        self.ac = nn.ReLU()
         self.ac_linear = nn.ReLU()
         self.ac_tanh = nn.Tanh()
 
         self.softmax = nn.Softmax(dim=1)
         self.dropout = nn.Dropout(dropout)
+        self.dropout2 = nn.Dropout(dropout2)
         self.nocuda = not args.cuda
-
-        self.transa = TextTransformer(LearnedPositionEncoding, d_model=4 * self.input_dim, d_out=self.input_dim,
-                                      nhead=4, num_encoder_layers=3,
-                                      dim_feedforward=512)
-        self.W3 = nn.Linear(6 * input_dim + 2, input_dim)
-        #self.W3 = nn.Linear(input_dim, input_dim)
+        self.W3 = nn.Linear(4*input_dim + 2, input_dim)
         self.cls = nn.Linear(input_dim, self.n_class)
-        self.scorer = nn.Linear(2*input_dim, 1)
+        self.scorer = nn.Linear(input_dim, 1)
 
     def _reverse_seq(self, X, mask):
         """
@@ -145,8 +140,8 @@ class ECPEC(nn.Module):
 
         return pad_sequence(xfs)
 
-    def forward(self, text_emo=None, text_cau=None, chunksize=8, t_ratio=1, label_ck=None,
-                label3=None, share_rep=True, train=True, word_encode=None, sen_lengths=None, bi_label_emo=None, bi_label_cau=None):
+    def forward(self, text_emo=None, text_cau=None, t_ratio=1, label_ck=None,
+                label3=None, share_rep=False, train=True, word_encode=None, pos_encode=None, dis_encode=None, sen_lengths=None, bi_label_emo=None, bi_label_cau=None):
         """
         :param text_emo:-->seq, batch, dim
                 text_cau:-->seq, batch, dim
@@ -156,6 +151,8 @@ class ECPEC(nn.Module):
 
         # word-level encoding
         word_encode = word_encode.float()
+        pos_encode = pos_encode.float()
+        dis_encode = dis_encode.float()
         seq_lengths = sen_lengths.squeeze().cpu()
         pack = nn_utils.rnn.pack_padded_sequence(word_encode, seq_lengths, batch_first=True, enforce_sorted=False)
         hw = torch.zeros((2, word_encode.size(0), int(word_encode.size(2) / 2))).cuda() if cuda else \
@@ -164,8 +161,10 @@ class ECPEC(nn.Module):
             torch.zeros((2, word_encode.size(0), int(word_encode.size(2) / 2)))
         out, _ = self.wgru(pack, (hw, cw))
         unpacked = nn_utils.rnn.pad_packed_sequence(out, batch_first=True)
-        index = torch.LongTensor([seq_lengths[i] + unpacked[0].size(1) * i - 1 for i in range(unpacked[0].size(0))])
-        U = unpacked[0].contiguous().view(-1, unpacked[0].size(2))[index].unsqueeze(1)
+        # index = torch.LongTensor([seq_lengths[i] + unpacked[0].size(1) * i - 1 for i in range(unpacked[0].size(0))])
+        # U = unpacked[0].contiguous().view(-1, unpacked[0].size(2))[index].unsqueeze(1)
+        # word attention version
+        U = self.att_var(unpacked[0], length=seq_lengths).unsqueeze(1)
 
         emo_mask = bi_label_emo.unsqueeze(1).bool()
         text_emo = torch.masked_select(U, emo_mask).contiguous().view(-1, 1, 100)
@@ -180,7 +179,7 @@ class ECPEC(nn.Module):
         if share_rep:
             text_emo = self.ac(self.rep(text_emo))
             text_cau = self.ac(self.rep(text_cau))
-        chunks = torch.split(text_cau, chunksize, 0)  # [num_chunk, chunksize,1, dim] --> tuple
+        chunks = torch.split(text_cau, self.ck_size, 0)  # [num_chunk, chunksize,1, dim] --> tuple
 
         p_out = []
         label3_out = []
@@ -188,40 +187,34 @@ class ECPEC(nn.Module):
         pp_out = []
 
         # iterate text_emo and pair up all the emotion-chunk and emotion-cause pairs
-        h0 = torch.zeros((1, text_emo.size(1), text_emo.size(2))).cuda() if not self.nocuda else torch.zeros((1, text_emo.size(1), text_emo.size(2)))
         for j, emo in enumerate(text_emo):
             chunkEmb = torch.empty([len(chunks), text_emo.size(2)]).cuda() if not self.nocuda else torch.empty([len(chunks), text_emo.size(2)])
             num = 0
-            # employ GRU to generate chunk embedding chEmb and chunk-emotion embedding
-            # h0 = torch.zeros((1, text_emo.size(1), text_emo.size(2))).cuda() if cuda else torch.zeros((1, text_emo.size(1), text_emo.size(2)))
-            # for i, ch in enumerate(chunks):
-            #    #h0 = torch.zeros((1, text_emo.size(1), text_emo.size(2))).cuda()
-            #    chEmb, h0 = self.gru(ch, h0)
-            #    #chunkEmb[num] = torch.cat((emo, chEmb[-1]), dim=1)
-            #    chunkEmb[num] = chEmb[-1]
-            #    num +=1
-
             for i, ch in enumerate(chunks):
-                input = torch.cat((emo.repeat(ch.size(0), 1, 1), ch), dim=2)
-                seq_len, batch_size, feature_dim = input.size()
-                scores = self.scorer(input.contiguous().view(-1, feature_dim)).view(batch_size, seq_len)
-                scores = F.softmax(scores, dim=1).transpose(0, 1)
-                chunkEmb[num] = ch[torch.argmax(scores, dim=0)].squeeze(0)
+                #input = torch.cat((emo.repeat(ch.size(0), 1, 1), ch), dim=2)
+                #input = torch.cat((pos_encode[j][i].repeat(ch.size(0), 1, 1), ch), dim=2)
+                #seq_len, batch_size, feature_dim = ch.size()
+                # scores = self.scorer(ch.contiguous().view(-1, feature_dim)).view(batch_size, seq_len)
+                # scores = F.softmax(scores, dim=1).transpose(0, 1)
+                scores = F.softmax(torch.matmul(emo, ch.transpose(1, 2)).squeeze(2), dim=0)
+                chunkEmb[num] = torch.matmul(scores.transpose(0, 1), ch.permute(1, 0, 2)).squeeze()
+                #chunkEmb[num] = torch.cat((ch[torch.argmax(scores)].squeeze(0), pos_encode[j]), dim=-1)
                 num += 1
 
+            #chunkEmb = pos_encode[j]
+
             # item attention
-            delta = ECPEC.item_att(emo, chunkEmb)
-            #delta = self.ntn(emo, utt_c).squeeze(1)
+            delta_c = ECPEC.item_att(emo, chunkEmb)
+            delta = torch.cat((delta_c, pos_encode[j]), dim=-1)
 
             # classify the emotion-chunk pairs
-            #hidden = self.dropout(self.ac(self.W2(delta)))
-            # out = torch.log_softmax(self.Wo(hidden), dim=1)
-            # out_ = out.contiguous().view(-1, 2)
-            # phase2_out.append(out_)
+            hidden = self.dropout2(self.ac(self.W2(delta)))
+            out = torch.log_softmax(self.Wo(hidden), dim=1)
+            out_ = out.contiguous().view(-1, 2)
+            out_feature = torch.argmax(out_, dim=-1)
+            phase2_out.append(out_)
 
-            # emotion-cause pair, if t_ratio is 0 then output from pahse2 else real label (teacher forcing)]
-
-
+            # emotion-cause pair
             chNum = label_ck.size(-1)
             idx = torch.ones(chNum)
 
@@ -233,40 +226,46 @@ class ECPEC(nn.Module):
             for label in label3[j]:
                 if label.item() != -1:
                     L_cau[label.item()] = 1
-            chk_L_cau = torch.split(L_cau, chunksize, 0)
+            chk_L_cau = torch.split(L_cau, self.ck_size, 0)
 
             chunks_sel = []
             label3_sel = []
             sz_ck = []
+            extra_feature = []
 
             for id in id_chks:
                 chunks_sel.append(chunks[id])
                 label3_sel.append(chk_L_cau[id])
                 sz_ck.append(chunks[id].size(0))
+                extra_feature.append(out_feature[id].repeat(chunks[id].size(0), 1))
+            extra_feature = torch.cat(extra_feature, dim=0)
             utt_c = torch.cat(chunks_sel, dim=0)
 
             #delta_ = self.ntn(emo, utt_c).squeeze(1)
-            delta_ = ECPEC.item_att(emo, utt_c.squeeze(1))
+            delta_d = ECPEC.item_att(emo, utt_c.squeeze(1))
+            delta_ = torch.cat((delta_d, dis_encode[j], extra_feature), dim=-1)
 
             # cross attention for emotion-cause pair extraction task
-            att = delta_.matmul(self.xatt).matmul(delta.permute(1, 0))
-            att_score1 = F.softmax(att, dim=1)
-            attck = att_score1.matmul(delta)
-            delta_att= torch.cat((delta_, attck), dim=1)
+            # att = delta_.matmul(self.xatt).matmul(delta.permute(1, 0))
+            # att_score1 = F.softmax(att, dim=1)
+            # attck = att_score1.matmul(delta)
+            # delta_att= torch.cat((delta_, attck), dim=1)
 
             # cross attention for emotion-cause chunk pair extraction task
-            attec = delta.matmul(self.xattck).matmul(delta_.permute(1, 0))
-            att_score2 = F.softmax(attec, dim=1)
-            attec = att_score2.matmul(delta_)
-            delta_attec = torch.cat((delta, attec), dim=1)
-            hidden = self.dropout(self.ac(self.W2(delta_attec)))
-            out = torch.log_softmax(self.Wo(hidden), dim=1)
-            out_ = out.contiguous().view(-1, 2)
-            phase2_out.append(out_)
+            # #attec = delta.matmul(self.xattck).matmul(delta_.permute(1, 0))
+            # #att_score2 = F.softmax(attec, dim=1)
+            # #attec = att_score2.matmul(delta_)
+            # #delta_attec = torch.cat((delta, attec), dim=1)
+            # #hidden = self.dropout(self.ac(self.W2(delta_attec)))
+            # hidden = self.dropout(self.ac(self.W2(delta)))
+            # out = torch.log_softmax(self.Wo(hidden), dim=1)
+            # out_ = out.contiguous().view(-1, 2)
+            # phase2_out.append(out_)
 
-            h = self.dropout(self.ac(self.W3(delta_att)))
-            h = self.cls(h)  # .squeeze(1)
-            p = torch.log_softmax(h, dim=1)
+            #h = self.W3(delta_)
+            h = self.dropout(self.ac(self.W3(delta_)))
+            h_ = self.cls(h)  # .squeeze(1)
+            p = torch.log_softmax(h_, dim=1)
             p = p.contiguous().view(-1, 2)
             p_out.append(p)
 
@@ -286,21 +285,60 @@ class ECPEC(nn.Module):
 
     @staticmethod
     def item_att(x, y):
-        item1 = torch.cat((x.repeat(y.size(0), 1), y), dim=-1)
+        try:
+            item1 = torch.cat((x.repeat(y.size(0), 1), y), dim=-1)
+        except RuntimeError:
+            print(x.size(), y.size())
         item2 = torch.norm(x - y, p=2, dim=-1, keepdim=True)
         item3 = torch.mul(x, y)
         delta = torch.cat((item1, item2, item3), dim=-1)
 
         return delta
 
-    #TODO
-    def ntn(self, x, y):
-        #x = x.repeat(y.size(0), 1, 1)
-        input = torch.cat((x.repeat(y.size(0), 1, 1), y), dim=2)
-        #term2 = self.fusion2(input, input)
-        term1 = self.fusion1(input)
+    def sequence_mask(self, lengths, maxlen=None, dtype=torch.bool):
+        if maxlen is None:
+            maxlen = lengths.max()
+        mask = ~(torch.ones((len(lengths), maxlen), device=lengths.device).cumsum(dim=1).t() > lengths).t()
+        mask.type(dtype)
+        return mask
 
-        return term1
+    def getmask(self, length, max_seq_len, out_shape):
+        '''
+        :param length: batch
+        '''
+        #batch = length.numel()
+        #res = (torch.arange(0, max_seq_len, device=length.device).type_as(length).unsqueeze(0).expand(batch, max_seq_len).lt(length.unsqueeze(1)))
+        res = self.sequence_mask(length)
+        return res.contiguous().view(out_shape)
+
+    def softmax_by_length(self, inputs, length):
+        '''
+        :param inputs: batch, 1, max_seq_len
+        :param length: batch
+        :return: batch, dim
+        '''
+        inputs_ = torch.exp(inputs)
+        inputs *= self.getmask(length, inputs_.size(2), inputs_.size())
+        _sum = torch.sum(inputs, dim=2, keepdim=True) + 1e-9
+
+        return inputs/_sum
+
+    def att_var(self, inputs, length=None):
+        '''
+
+        :param inputs: shape->seq, batch, max_seq_len, dim
+        :param length: shape->batch
+        :return: shape->batch, dim
+        '''
+        if self.cuda:
+            length = length.cuda()
+        max_seq_len, dim = inputs.size(1), inputs.size(2)
+        tmp = inputs.contiguous().view(-1, dim)
+        utt = self.ac(self.s1(tmp))
+        alpha = self.s2(utt).contiguous().view(-1, 1, max_seq_len)
+        alpha_ = self.softmax_by_length(alpha, length)
+
+        return torch.matmul(alpha_, inputs).contiguous().view(-1, dim)
 
 
 
@@ -314,7 +352,7 @@ class Classifier(nn.Module):
         pass
 
 
-def train_model(model, loss_function, loss_function_c, dataloader, epoch, embedding=None, t_ratio=0.5, optimizer=None, train=True):
+def train_model(model, loss_function, loss_function_c, dataloader, epoch, embedding=None, pos_embedding=None, t_ratio=0.5, optimizer=None, train=True):
     losses = []
     # phase2 and phase3 tasks
     predec = []
@@ -332,13 +370,15 @@ def train_model(model, loss_function, loss_function_c, dataloader, epoch, embedd
 
         optimizer.zero_grad()
 
-        text_emo, text_cau, label, label3, textid, sen_len, bi_label_emo, bi_label_cau = \
+        text_emo, text_cau, label, ck_pos_id, pos_id, label3, textid, sen_len, bi_label_emo, bi_label_cau = \
             [d.cuda() for d in data[:-1]] if cuda else data[:-1]
         # total+=text_emo.size(0)*text_cau.size(0)
         # postive+=torch.sum(label3!=-1)
         word_encode = embedding(textid).squeeze()
+        pos_encode = pos_embedding(ck_pos_id).squeeze(1)
+        dis_encode = pos_embedding(pos_id).squeeze(1)
         log_phase2, log_phase3, label_phase3 = model(text_emo=text_emo, text_cau=text_cau, t_ratio=t_ratio, label_ck=label,
-                                                     label3=label3, word_encode=word_encode, sen_lengths=sen_len,
+                                                     label3=label3, word_encode=word_encode, pos_encode=pos_encode, dis_encode=dis_encode, sen_lengths=sen_len,
                                                      bi_label_emo=bi_label_emo, bi_label_cau=bi_label_cau)  # batch*seq_len, n_classes
 
         log_phase2 = torch.cat(log_phase2, dim=0)
@@ -353,15 +393,9 @@ def train_model(model, loss_function, loss_function_c, dataloader, epoch, embedd
 
         skip = False if len(log_phase3) != 0 else True
         loss_2 = loss_function(log_phase2, label_)
-        # n1 = label_.size(0)
-        if not skip:
-            loss_3 = loss_function_c(log_phase3, label_phase3.view(-1))
-            # n2 = log_phase3.size(0)
-            #loss = loss_3
-            loss = loss_2 + loss_3
-        else:
-            #loss = loss_3
-            loss = loss_2
+        loss_3 = loss_function_c(log_phase3, label_phase3.view(-1))
+        #loss = loss_3
+        loss = loss_2 + loss_3
 
         # phase 2
         pred_e = torch.argmax(log_phase2, 1)  # batch*seq_len
@@ -401,10 +435,13 @@ def train_model(model, loss_function, loss_function_c, dataloader, epoch, embedd
     p_p2, r_p2, f_p2 = evaluate(predec, labelec)
     p_p3, r_p3, f_p3 = evaluate(pred3, labelp3)
 
+    # print('total', total)
+    # print('postive', postive)
+
     return avg_loss, p_p2, r_p2, f_p2, p_p3, r_p3, f_p3
 
 
-def eval_model(model, loss_function, loss_function_c, dataloader, epoch, embedding=None, t_ratio=0.0, optimizer=None,
+def eval_model(model, loss_function, loss_function_c, dataloader, epoch, embedding=None, pos_embedding=None, t_ratio=0.0, ck_size=None, optimizer=None,
                train=False):
     losses = []
     # phase2 and phase3 tasks
@@ -420,7 +457,7 @@ def eval_model(model, loss_function, loss_function_c, dataloader, epoch, embeddi
     num_correct_pairs = 0
     for data in dataloader:
 
-        text_emo, text_cau, label, label3, bi_label_emo, bi_label_cau, \
+        text_emo, text_cau, label, ck_pos_id, pos_id, label3, bi_label_emo, bi_label_cau, \
         ids_cau, cLabels, phase3_label, textid, sen_len = \
             [d.cuda() for d in data[:-1]] if cuda else data[:-1]
         if text_emo.size(0) == 0 or text_cau.size(0) == 0:
@@ -428,8 +465,10 @@ def eval_model(model, loss_function, loss_function_c, dataloader, epoch, embeddi
             num_annotated_pairs += a.size(0)
         else:
             word_encode = embedding(textid).squeeze()
+            pos_encode = pos_embedding(ck_pos_id).squeeze(1)
+            dis_encode = pos_embedding(pos_id).squeeze(1)
             log_phase2, log_phase3, label_phase3 = model(text_emo=text_emo, text_cau=text_cau, t_ratio=t_ratio, label_ck=label,
-                                                         label3=label3, train=False, word_encode=word_encode, sen_lengths=sen_len,
+                                                         label3=label3, train=False, word_encode=word_encode, pos_encode=pos_encode, dis_encode=dis_encode, sen_lengths=sen_len,
                                                          bi_label_emo=bi_label_emo, bi_label_cau=bi_label_cau)  # batch*seq_len, n_classes
             count = 0
 
@@ -440,7 +479,7 @@ def eval_model(model, loss_function, loss_function_c, dataloader, epoch, embeddi
                 print("bi_label_emo", bi_label_emo)
             for emo_idx, p2 in enumerate(log_phase2):
 
-                ck_ids_cau = torch.split(ids_cau.squeeze(1), 8, dim=0)
+                ck_ids_cau = torch.split(ids_cau.squeeze(1), ck_size, dim=0)
                 seq = []
                 # seq_ = torch.LongTensor([0, 0, 0])
                 pred_e_ = torch.argmax(p2, 1)
@@ -484,16 +523,10 @@ def eval_model(model, loss_function, loss_function_c, dataloader, epoch, embeddi
 
             skip = False if len(log_phase3) != 0 else True
             loss_2 = loss_function(log_phase2, label_)
-            # n1 = label_.size(0)
-            if not skip:
-                loss_3 = loss_function_c(log_phase3, label_phase3.view(-1))
-                # n2 = log_phase3.size(0)
-                #loss = loss_3
-                loss = loss_2 + loss_3
-                losses3.append(loss_3.item())
-            else:
-                loss = loss_2
-                #loss =loss_3
+            loss_3 = loss_function_c(log_phase3, label_phase3.view(-1))
+            #loss = loss_3
+            loss = loss_2 + loss_3
+            losses3.append(loss_3.item())
 
             # phase 2
             pred_e = torch.argmax(log_phase2, 1)  # batch*seq_len
@@ -551,8 +584,8 @@ if __name__ == '__main__':
                         help='learning rate')
     parser.add_argument('--l2', type=float, default=0.0001, metavar='L1',
                         help='L2 regularization weight')
-    parser.add_argument('--rec-dropout', type=float, default=0.1,
-                        metavar='rec_dropout', help='rec_dropout rate')
+    parser.add_argument('--dropout2', type=float, default=0.3,
+                        metavar='dropout2', help='ec chunk dropout rate')
     parser.add_argument('--dropout', type=float, default=0.30, metavar='dropout',
                         help='dropout rate')
     parser.add_argument('--batch-size', type=int, default=1, metavar='BS',
@@ -563,8 +596,10 @@ if __name__ == '__main__':
                         help='class weight')
     parser.add_argument('--tensorboard', action='store_true', default=False,
                         help='Enables tensorboard log')
-    parser.add_argument('--max_sen_len', type=int, default=30,
+    parser.add_argument('--max_sen_len', type=int, default=20,
                         help='max sentence length')
+    parser.add_argument('--chunk_size', type=int, default=2,
+                        help='size of the cause chunk')
     args = parser.parse_args()
 
     print(args)
@@ -582,18 +617,23 @@ if __name__ == '__main__':
     n_epochs = args.epochs
     dropout = args.dropout
     max_sen_len = args.max_sen_len
+    ck_size = args.chunk_size
+    dropout2 = args.dropout2
 
     D_m = 100
 
-    model = ECPEC(D_m, n_classes, dropout)
+    model = ECPEC(D_m, n_classes, dropout, dropout2, ck_size)
 
     # word2vec loading
-    w2v_path = './IEMOCAP_train_raw.txt'
+    w2v_path = './key_words.txt'
     w2v_file = './glove.6B.100d.txt'
-    word_idx_rev, word_id_mapping, word_embedding = load_w2v(D_m, w2v_path, w2v_file)
+    word_idx_rev, word_id_mapping, word_embedding, pos_embedding = load_w2v(D_m, w2v_path, w2v_file)
     word_embedding = torch.from_numpy(word_embedding)
+    pos_embedding = torch.from_numpy(pos_embedding)
     embedding = torch.nn.Embedding.from_pretrained(word_embedding, freeze=True).cuda() if cuda else \
         torch.nn.Embedding.from_pretrained(word_embedding, freeze=True)
+    pos_embedding = torch.nn.Embedding.from_pretrained(pos_embedding, freeze=True).cuda() if cuda else \
+        torch.nn.Embedding.from_pretrained(pos_embedding, freeze=True)
 
     if cuda:
         model.cuda()
@@ -627,22 +667,23 @@ if __name__ == '__main__':
     optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.l2)
 
     train_loader, valid_loader, test_loader = \
-        get_IEMOCAP_loaders(r'./ECPEC_phase_two_gcn_0.4_0.6_relu.pkl',
+        get_IEMOCAP_loaders(r'../ECPEC_phase_two_gcn_0.4_0.7_relu_full.pkl',
                             valid=0.0,
                             batch_size=batch_size,
                             num_workers=2,
                             word_idx=word_id_mapping,
-                            max_sen_len=max_sen_len)
+                            max_sen_len=max_sen_len,
+                            ck_size=ck_size)
 
     best_loss = 100
 
     for e in range(n_epochs):
         start_time = time.time()
         train_loss, p_p2, r_p2, f_p2, p_p3, r_p3, f_p3 = train_model(model, loss_function, loss_function_c,
-                                                                     train_loader, e, embedding=embedding, optimizer=optimizer, train=True)
+                                                                     train_loader, e, embedding=embedding, pos_embedding=pos_embedding, optimizer=optimizer, train=True)
         # valid_loss, valid_p_p2, valid_r_p2, valid_f_p2, valid_p_p3, valid_r_p3, valid_f_p3 = train_model(model, loss_function, loss_function_c, valid_loader, e)
         test_loss, test_loss_3, precision, recall, fscore = eval_model(model, loss_function, loss_function_c,
-                                                                       test_loader, e, embedding=embedding, t_ratio=0.0)
+                                                                       test_loader, e, embedding=embedding, pos_embedding=pos_embedding, t_ratio=0.0, ck_size=ck_size)
 
         if best_loss == 100 or best_loss > test_loss_3:
             best_loss, best_precision, best_recall, best_fscore = test_loss_3, precision, recall, fscore

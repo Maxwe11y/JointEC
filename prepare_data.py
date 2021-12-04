@@ -13,19 +13,29 @@ def load_w2v(embedding_dim, train_file_path, embedding_path):
     print('\nload embedding...')
     print(embedding_path)
 
-    words = ['happy', 'sadness', 'anger', 'neutral', 'excited', 'frustrated']
+    words = []
     inputFile1 = open(train_file_path, 'r')
     for line in inputFile1.readlines():
         line = line.strip().split(',')
-        #emotion, clause = line[1], line[-1]
-        if line[2] == "":
-            clause = line[3]
-        else:
-            clause = line[2]
+        emotion, clause = line[1], line[-1]
         clause = clause.lower().replace("'s", "").replace("'", "")
         for i in range(len(string.punctuation)):
             clause = clause.replace(string.punctuation[i], " ")
-        words.extend( clause.split())
+        words.extend([emotion] + clause.split())
+
+    # words = ['happy', 'sadness', 'anger', 'neutral', 'excited', 'frustrated']
+    # inputFile1 = open(train_file_path, 'r')
+    # for line in inputFile1.readlines():
+    #     line = line.strip().split(',')
+    #     #emotion, clause = line[1], line[-1]
+    #     if line[2] == "":
+    #         clause = line[3]
+    #     else:
+    #         clause = line[2]
+    #     clause = clause.lower().replace("'s", "").replace("'", "")
+    #     for i in range(len(string.punctuation)):
+    #         clause = clause.replace(string.punctuation[i], " ")
+    #     words.extend(clause.split())
     words = set(words)
     word_idx = dict((c, k + 1) for k, c in enumerate(words))
     word_idx_rev = dict((k + 1, c) for k, c in enumerate(words))
@@ -49,12 +59,13 @@ def load_w2v(embedding_dim, train_file_path, embedding_path):
             vec = list(np.random.rand(embedding_dim) / 5. - 0.1)
         embedding.append(vec)
     print('w2v_file: {}\nall_words: {} hit_words: {}'.format(embedding_path, len(words), hit))
-
-    #embedding_pos = [list(np.zeros(embedding_dim_pos))]
-    #embedding_pos.extend( [list(np.random.normal(loc=0.0, scale=0.1, size=embedding_dim_pos)) for i in range(200)] )
+    embedding_dim_pos = 100
+    embedding_pos = [list(np.zeros(embedding_dim_pos))]
+    embedding_pos.extend( [list(np.random.normal(loc=0.0, scale=0.1, size=embedding_dim_pos)) for i in range(120)] )
 
     embedding = np.array(embedding)
+    embedding_pos = np.array(embedding_pos)
     
     print("embedding.shape: {}:".format(embedding.shape))
     print("load embedding done!\n")
-    return word_idx_rev, word_idx, embedding
+    return word_idx_rev, word_idx, embedding, embedding_pos
