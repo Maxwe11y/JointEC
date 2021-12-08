@@ -467,13 +467,14 @@ if __name__ == '__main__':
     max_sen_len = args.max_sen_len
 
     D_m = 100
+    pos_D_m = None
 
     model = ECPEC(D_m, n_classes, dropout)
 
     # word2vec loading
     w2v_path = './key_words.txt'
     w2v_file = './glove.6B.100d.txt'
-    word_idx_rev, word_id_mapping, word_embedding, pos_embedding = load_w2v(D_m, w2v_path, w2v_file)
+    word_idx_rev, word_id_mapping, word_embedding, pos_embedding = load_w2v(D_m, pos_D_m, w2v_path, w2v_file)
     word_embedding = torch.from_numpy(word_embedding)
     pos_embedding = torch.from_numpy(pos_embedding)
     embedding = torch.nn.Embedding.from_pretrained(word_embedding, freeze=True).cuda() if cuda else \

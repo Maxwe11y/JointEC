@@ -9,7 +9,7 @@ import string
 def print_time():
     print ('\n----------{}----------'.format(time.strftime("%Y-%m-%d %X", time.localtime())))
 
-def load_w2v(embedding_dim, train_file_path, embedding_path):
+def load_w2v(embedding_dim, pos_embedding_dim, train_file_path, embedding_path):
     print('\nload embedding...')
     print(embedding_path)
 
@@ -59,7 +59,7 @@ def load_w2v(embedding_dim, train_file_path, embedding_path):
             vec = list(np.random.rand(embedding_dim) / 5. - 0.1)
         embedding.append(vec)
     print('w2v_file: {}\nall_words: {} hit_words: {}'.format(embedding_path, len(words), hit))
-    embedding_dim_pos = 100
+    embedding_dim_pos = pos_embedding_dim
     embedding_pos = [list(np.zeros(embedding_dim_pos))]
     embedding_pos.extend( [list(np.random.normal(loc=0.0, scale=0.1, size=embedding_dim_pos)) for i in range(120)] )
 
