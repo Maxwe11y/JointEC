@@ -61,7 +61,7 @@ def load_w2v(embedding_dim, pos_embedding_dim, train_file_path, embedding_path):
     print('w2v_file: {}\nall_words: {} hit_words: {}'.format(embedding_path, len(words), hit))
     embedding_dim_pos = pos_embedding_dim
     embedding_pos = [list(np.zeros(embedding_dim_pos))]
-    embedding_pos.extend( [list(np.random.normal(loc=0.0, scale=0.1, size=embedding_dim_pos)) for i in range(120)] )
+    embedding_pos.extend( [list(np.random.normal(loc=0.0, scale=0.1, size=embedding_dim_pos)) for i in range(120)])
 
     embedding = np.array(embedding)
     embedding_pos = np.array(embedding_pos)

@@ -34,7 +34,7 @@ class IEMOCAPDataset(Dataset):
 
     def __getitem__(self, index):
         vid = self.keys[index]
-        causeLabels = torch.stack((torch.LongTensor(self.causeLabels[vid]),torch.LongTensor(self.causeLabels2[vid]),
+        causeLabels = torch.stack((torch.LongTensor(self.causeLabels[vid]), torch.LongTensor(self.causeLabels2[vid]),
                                  torch.LongTensor(self.causeLabels3[vid])), 0)  # stack the cause three cause labels
 
         if self.train:

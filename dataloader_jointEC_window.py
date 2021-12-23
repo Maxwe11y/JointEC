@@ -42,7 +42,7 @@ class IEMOCAPDataset(Dataset):
             thr = torch.rand(1)
             if thr.item() > self.tf:
                 bi_label_emo = torch.LongTensor([0 if label == 2 else 1 for label in self.videoLabels[vid]])  # generate emotion label
-                bi_label_cause = torch.LongTensor([1 if i in causeLabels else 0 for i in range(1, len(self.videoLabels[vid]) + 1)])  # generate cause label TODO
+                bi_label_cause = torch.LongTensor([1 if i in causeLabels else 0 for i in range(1, len(self.videoLabels[vid]) + 1)])  # generate cause label
                 #bi_label_cause = torch.LongTensor([1 for i in range(1, len(self.videoLabels[vid]) + 1)])  # generate all the cause chunk label
             else:
                 bi_label_emo = torch.LongTensor(self.sa_Tr[vid])  # generate emotion label
@@ -52,20 +52,53 @@ class IEMOCAPDataset(Dataset):
         else:
             bi_label_emo = torch.LongTensor(self.pred_sa[vid])  # generate emotion label
             bi_label_cause = torch.LongTensor(self.pred_cd[vid])  # generate cause label
-            # bi_label_cause = torch.ones_like(torch.LongTensor(self.pred_cd[vid]))  # generate cause label
+            #bi_label_cause = torch.ones_like(torch.LongTensor(self.pred_cd[vid]))  # generate cause label
             # bi_label_emo = torch.LongTensor([0 if label == 2 else 1 for label in self.videoLabels[vid]])  # generate emotion label
             # bi_label_cause = torch.LongTensor([1 if i in causeLabels else 0 for i in range(1, len(self.videoLabels[vid])+1)])  # generate cause label
-            # bi_label_emo_real = torch.LongTensor(
-            #    [0 if label == 2 else 1 for label in self.videoLabels[vid]])  # generate emotion label
-            # bi_label_cause_real = torch.LongTensor([1 if i in causeLabels else 0 for i in
-            #                                        range(1, len(self.videoLabels[vid]) + 1)])  # generate cause label
 
+        # pairs = torch.zeros((bi_label_emo.sum() * bi_label_cause.sum()))
+        # count_i = 0
+        # for idx, i in enumerate(bi_label_emo):
+        #     if i == 1:
+        #         count_j = 0
+        #         for jdx, j in enumerate(bi_label_cause):
+        #             if j == 1:
+        #                 if abs(idx - jdx) <= 5:
+        #                     try:
+        #                         if pairs[count_i * bi_label_cause.sum() + count_j] == 1:
+        #                             print('67--', count_i, count_j)
+        #                         pairs[count_i * bi_label_cause.sum() + count_j] = 1
+        #                     except IndexError:
+        #                         print(count_i, count_j)
+        #                         print(idx, jdx)
+        #                         print(i, j)
+        #                 count_j += 1
+        #         count_i += 1
 
-        text = torch.FloatTensor(self.videoText[vid])  # text embedding of a given conversation
+        mask_window = torch.zeros((bi_label_emo.sum(), bi_label_cause.sum()), requires_grad=False)
+        count_i = 0
+        for idx, emo in enumerate(bi_label_emo):
+            if emo == 1:
+                count_j = 0
+                for jdx, cau in enumerate(bi_label_cause):
+                    if cau == 1:
+                        if abs(idx-jdx)<=8:
+                            mask_window[count_i][count_j] = 1
+                        count_j += 1
+                count_i += 1
+        if int(mask_window.size(1)%self.ck_size)==0:
+            split_list = int(mask_window.size(1) / self.ck_size) * [self.ck_size]
+        else:
+            split_list = int(mask_window.size(1) / self.ck_size) * [self.ck_size] + [mask_window.size(1) % self.ck_size]
+        ck_mask = torch.split(mask_window, split_list, dim=1)
+        ck_mask_ = torch.stack([i.sum(dim=-1).ne(0) for i in ck_mask], dim=-1)
+        #ck_mask_=torch.zeros(1, 1)
+
+        #text = torch.FloatTensor(self.videoText[vid])  # text embedding of a given conversation
         emo_mask = bi_label_emo.unsqueeze(1).bool()   # boolean value of emotion label
-        text_emo = torch.masked_select(text, emo_mask).contiguous().view(-1, 100)  # extracted text embedding of emotion utterance
-        cau_mask = bi_label_cause.unsqueeze(1).bool()  # boolean value of cause label
-        text_cau = torch.masked_select(text, cau_mask).contiguous().view(-1, 100)  # extracted text embedding of cause utterance
+        #text_emo = torch.masked_select(text, emo_mask).contiguous().view(-1, 100)  # extracted text embedding of emotion utterance
+        #cau_mask = bi_label_cause.unsqueeze(1).bool()  # boolean value of cause label
+        #text_cau = torch.masked_select(text, cau_mask).contiguous().view(-1, 100)  # extracted text embedding of cause utterance
         ids_cau = torch.nonzero(bi_label_cause)  # the id of cause utterances in a conversation  # cauid_to_convid
         ids_emo = torch.nonzero(bi_label_emo)   # the id of emotion utterances in a conversation  # cauid_to_convid
         chks_id = torch.split(ids_cau, self.ck_size, 0)   # split cause utterance into chunks
@@ -83,7 +116,8 @@ class IEMOCAPDataset(Dataset):
 
         chck_label = torch.LongTensor(chck_label)
         chck_pos_id = torch.from_numpy(np.array([i for i in range(chck_label.size(1))]),).repeat(chck_label.size(0), 1)
-        cause_pos_id = torch.from_numpy(np.array([i for i in range(text_cau.size(0))]), ).repeat(text_emo.size(0), 1)
+        # cause_pos_id = torch.from_numpy(np.array([i for i in range(text_cau.size(0))]), ).repeat(text_emo.size(0), 1)
+        cause_pos_id = torch.from_numpy(np.array([i for i in range(bi_label_cause.sum())]), ).repeat(bi_label_emo.sum(), 1)
 
         # generate word-level embedding
         n_cut = 0
@@ -112,9 +146,7 @@ class IEMOCAPDataset(Dataset):
 
 
         if self.train:
-            return  text_emo,\
-                    text_cau,\
-                    chck_label,\
+            return  chck_label,\
                     chck_pos_id, \
                     cause_pos_id, \
                     p3_label,\
@@ -122,11 +154,11 @@ class IEMOCAPDataset(Dataset):
                     sen_len, \
                     bi_label_emo, \
                     bi_label_cause, \
+                    mask_window, \
+                    ck_mask_, \
                     vid
         else:
-            return  text_emo,\
-                    text_cau,\
-                    chck_label,\
+            return  chck_label,\
                     chck_pos_id, \
                     cause_pos_id, \
                     p3_label,\
@@ -137,6 +169,8 @@ class IEMOCAPDataset(Dataset):
                     phase3_label, \
                     textid, \
                     sen_len, \
+                    mask_window, \
+                    ck_mask_, \
                     vid
 
 

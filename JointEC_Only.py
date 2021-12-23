@@ -118,9 +118,10 @@ class ECPEC(nn.Module):
         self.s1 = nn.Linear(input_dim, input_dim)
         self.s2 = nn.Linear(input_dim, 1, bias=False)
 
-        self.ac = nn.Sigmoid()
-        self.ac_linear = nn.ReLU()
-        self.ac_tanh = nn.Tanh()
+        #self.ac = nn.Sigmoid()
+        #self.ac_linear = nn.ReLU()
+        #self.ac_tanh = nn.Tanh()
+        self.ac = nn.LeakyReLU()
 
         self.softmax = nn.Softmax(dim=1)
         self.dropout = nn.Dropout(dropout)
@@ -133,6 +134,8 @@ class ECPEC(nn.Module):
         #self.W3 = nn.Linear(input_dim, input_dim)
         self.cls = nn.Linear(input_dim, self.n_class)
         self.scorer = nn.Linear(2*input_dim, 1)
+
+        self.bn = nn.BatchNorm1d(input_dim, affine=False, track_running_stats=False)
 
     def _reverse_seq(self, X, mask):
         """
@@ -212,7 +215,7 @@ class ECPEC(nn.Module):
         pair_sel = torch.masked_select(pair, pairs).contiguous().view(-1, 4 * text_emo.size(-1) + 1)
         label_pair_sel = torch.masked_select(label_pair.unsqueeze(1), pairs).contiguous().view(-1, 1)
 
-        h = self.dropout(self.ac(self.W3(pair_sel)))
+        h = self.dropout(self.ac(self.bn(self.W3(pair_sel))))
         h = self.cls(h)  # .squeeze(1)
         p = torch.log_softmax(h, dim=1)
         p = p.contiguous().view(-1, 2)
@@ -280,7 +283,7 @@ class ECPEC(nn.Module):
         max_seq_len, dim = inputs.size(1), inputs.size(2)
         length = length.cuda() if cuda else length
         tmp = inputs.contiguous().view(-1, dim)
-        utt = self.ac(self.s1(tmp))
+        utt = self.ac(self.bn(self.s1(tmp)))
         alpha = self.s2(utt).contiguous().view(-1, 1, max_seq_len)
         alpha_ = self.softmax_by_length(alpha, length)
 
@@ -467,7 +470,7 @@ if __name__ == '__main__':
     max_sen_len = args.max_sen_len
 
     D_m = 100
-    pos_D_m = None
+    pos_D_m = 100
 
     model = ECPEC(D_m, n_classes, dropout)
 

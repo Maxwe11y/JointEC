@@ -12,22 +12,18 @@ import time
 import torch.nn as nn
 import torch.optim as optim
 import numpy as np
-from sklearn.metrics import f1_score, confusion_matrix, accuracy_score, \
-    classification_report, precision_recall_fscore_support
-
 from torch.nn.utils.rnn import pad_sequence
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
-from dataloader_jointEC import IEMOCAPDataset
+from dataloader_jointEC_window import IEMOCAPDataset
 import torch.nn.functional as F
 import argparse
-import pickle
 from prepare_data import *
 from torch.nn import utils as nn_utils
-from torch.nn.init import xavier_uniform_, xavier_normal_
-from torch.nn.init import kaiming_uniform_, kaiming_normal_
 import sys
 import os
+import json
+from torch.optim.lr_scheduler import ExponentialLR
 
 np.random.seed(1234)
 torch.random.manual_seed(1234)
@@ -80,6 +76,14 @@ class Logger(object):
         pass
 
 
+class Mish(nn.Module):
+    def __init__(self):
+        super().__init__()
+    def forward(self, x):
+        x = x * (torch.tanh(F.softplus(x)))
+        return x
+
+
 class MaskedNLLLoss(nn.Module):
 
     def __init__(self, weight=None):
@@ -104,10 +108,33 @@ class MaskedNLLLoss(nn.Module):
         # loss = self.loss(pred, target)
         return loss
 
+class MaskedNLLLoss2(nn.Module):
+
+    def __init__(self, weight=None):
+        super(MaskedNLLLoss2, self).__init__()
+        self.weight = weight
+        self.loss = nn.NLLLoss(weight=weight,
+                               reduction='none')
+
+    def forward(self, pred, target, mask):
+        """
+        pred -> batch*seq_len, n_classes
+        target -> batch*seq_len
+        mask -> batch, seq_len
+        """
+        mask_ = mask.contiguous().view(-1, 1) # batch*seq_len, 1
+        if type(self.weight) == type(None):
+            loss = self.loss(pred*mask_, target)/torch.sum(mask)
+        else:
+            # loss = self.loss(pred*mask_, target)\
+            #                 /torch.sum(self.weight[target]*mask_.squeeze())
+            loss = torch.sum(self.loss(pred, target)*mask_)/torch.sum(self.weight[target]*mask_.squeeze())
+        return loss
+
 
 class ECPEC(nn.Module):
 
-    def __init__(self, input_dim, pos_dim, n_class, dropout, dropout2, ck_size):
+    def __init__(self, input_dim, pos_dim, n_class, dropout, dropout2, dropout3, ck_size):
         super(ECPEC, self).__init__()
         self.input_dim = input_dim
         self.n_class = n_class
@@ -115,31 +142,33 @@ class ECPEC(nn.Module):
         self.pos_dim = pos_dim
         self.rep = nn.Linear(input_dim, input_dim)
 
-        self.W = nn.Linear(2 * input_dim, input_dim)
-        self.W2 = nn.Linear(3*input_dim+1 + pos_dim, input_dim)
+        self.W2 = nn.Linear(3*input_dim + 1 + pos_dim, input_dim)
         self.Wo = nn.Linear(input_dim, self.n_class)
 
         self.wgru = nn.LSTM(input_size=input_dim, hidden_size=int(input_dim / 2), num_layers=1, batch_first=True,
                             bidirectional=True)
 
-        # self.xatt = nn.Parameter(kaiming_normal_(torch.zeros((4*input_dim+1, 4*input_dim+1))), requires_grad=True)
-        # self.xattck = nn.Parameter(kaiming_normal_(torch.zeros((4*input_dim+1, 4*input_dim+1))), requires_grad=True)
-
         self.s1 = nn.Linear(input_dim, input_dim)
         self.s2 = nn.Linear(input_dim, 1, bias=False)
 
-        #self.ac = nn.Sigmoid()
         #self.ac = nn.ReLU()
         self.ac = nn.LeakyReLU()
+        #self.ac = Mish()
         #self.ac = nn.Tanh()
+        #self.ac = nn.PReLU()
+        #self.ac_tanh = nn.Tanh()
 
         self.softmax = nn.Softmax(dim=1)
         self.dropout = nn.Dropout(dropout)
         self.dropout2 = nn.Dropout(dropout2)
+        self.dropout3 = nn.Dropout(dropout3)
         self.nocuda = not args.cuda
-        self.W3 = nn.Linear(3*input_dim + 2 + 49 + pos_dim, input_dim) # TODO
+        self.W3 = nn.Linear(3*input_dim + 2 + pos_dim, input_dim) # TODO
         self.cls = nn.Linear(input_dim, self.n_class)
         self.scorer = nn.Linear(input_dim, 1)
+
+        self.bn = nn.BatchNorm1d(input_dim, affine=False, track_running_stats=False)
+
 
     def _reverse_seq(self, X, mask):
         """
@@ -156,8 +185,8 @@ class ECPEC(nn.Module):
 
         return pad_sequence(xfs)
 
-    def forward(self, text_emo=None, text_cau=None, label_ck=None, label3=None, share_rep=False, train=True,
-                word_encode=None, pos_encode=None, dis_encode=None, sen_lengths=None, bi_label_emo=None, bi_label_cau=None):
+    def forward(self, label_ck=None, label3=None, share_rep=False, train=True,
+                word_encode=None, pos_encode=None, dis_encode=None, sen_lengths=None, bi_label_emo=None, bi_label_cau=None, mask_window=None, ck_mask=None):
         """
         :param text_emo:-->seq, batch, dim
                 text_cau:-->seq, batch, dim
@@ -166,7 +195,7 @@ class ECPEC(nn.Module):
         """
 
         # word-level encoding
-        word_encode = word_encode.float()
+        word_encode = self.dropout3(word_encode.float())
         pos_encode = pos_encode.float()
         dis_encode = dis_encode.float()
         seq_lengths = sen_lengths.squeeze().cpu()
@@ -188,43 +217,41 @@ class ECPEC(nn.Module):
         cau_mask = bi_label_cau.unsqueeze(1).bool()
         text_cau = torch.masked_select(U, cau_mask).contiguous().view(-1, 1, word_encode.size(2))
 
-        # the emotion cause chunk pair extraction task -- GRU variant
-
         label3 = label3.squeeze(1).cuda() if not self.nocuda else label3.squeeze()
 
         if share_rep:
             text_emo = self.ac(self.rep(text_emo))
             text_cau = self.ac(self.rep(text_cau))
         chunks = torch.split(text_cau, self.ck_size, 0)  # [num_chunk, chunksize,1, dim] --> tuple
+        dis_ck = torch.split(dis_encode[0], self.ck_size, 0)
 
         p_out = []
         label3_out = []
         phase2_out = []
         pp_out = []
 
+        cause_mask = []
+        #mask_window = mask_window.bool()
         # iterate text_emo and pair up all the emotion-chunk and emotion-cause pairs
         for j, emo in enumerate(text_emo):
             chunkEmb = torch.empty([len(chunks), text_emo.size(2)]).cuda() if not self.nocuda else torch.empty([len(chunks), text_emo.size(2)])
             num = 0
             for i, ch in enumerate(chunks):
-                #input = torch.cat((emo.repeat(ch.size(0), 1, 1), ch), dim=2)
-                #input = torch.cat((pos_encode[j][i].repeat(ch.size(0), 1, 1), ch), dim=2)
-                #seq_len, batch_size, feature_dim = ch.size()
-                # scores = self.scorer(ch.contiguous().view(-1, feature_dim)).view(batch_size, seq_len)
-                # scores = F.softmax(scores, dim=1).transpose(0, 1)
                 scores = F.softmax(torch.matmul(emo, ch.transpose(1, 2)).squeeze(2), dim=0)
                 chunkEmb[num] = torch.matmul(scores.transpose(0, 1), ch.permute(1, 0, 2)).squeeze()
-                #chunkEmb[num] = torch.cat((ch[torch.argmax(scores)].squeeze(0), pos_encode[j]), dim=-1)
                 num += 1
-
-            #chunkEmb = pos_encode[j]
 
             # item attention
             delta_c = ECPEC.item_att(emo, chunkEmb)
             delta = torch.cat((delta_c, pos_encode[j]), dim=-1)
 
+            #delta = torch.masked_select(delta, ck_mask[j].transpose(0, 1)).contiguous().view(-1, delta.size(-1))
+
             # classify the emotion-chunk pairs
-            hidden = self.dropout2(self.ac(self.W2(delta)))
+            if delta.size(0) == 1:
+                hidden = self.dropout2(self.ac(self.W2(delta)))
+            else:
+                hidden = self.dropout2(self.ac(self.bn(self.W2(delta))))
             out = torch.log_softmax(self.Wo(hidden), dim=1)
             out_ = out.contiguous().view(-1, 2)
             out_feature = torch.argmax(out_, dim=-1)
@@ -234,7 +261,13 @@ class ECPEC(nn.Module):
             chNum = label_ck.size(-1)
             idx = torch.ones(chNum)
 
-            id_chks = torch.nonzero(idx)
+            #id_chks = torch.nonzero(idx)
+
+            id_ = idx * ck_mask[j].squeeze().cpu()
+            #ckid_to_maskid = torch.LongTensor([int(torch.sum(id_[:id]).item()) if int(l.item()) == 1 else -1 for id, l in enumerate(id_)])
+
+            #id_chks = torch.nonzero(idx * ck_mask[j].squeeze().cpu())
+            id_chks = torch.nonzero(id_)
 
             # phase 3 if there is emotion-chunk pair found in phase 2, then phase3 start
             # prepare label
@@ -248,68 +281,99 @@ class ECPEC(nn.Module):
             label3_sel = []
             sz_ck = []
             extra_feature = []
+            dis_ = []
+
+            masked = []
 
             for id in id_chks:
                 chunks_sel.append(chunks[id])
                 label3_sel.append(chk_L_cau[id])
                 sz_ck.append(chunks[id].size(0))
                 extra_feature.append(out_feature[id].repeat(chunks[id].size(0), 1))
+                #extra_feature.append(out_feature[ckid_to_maskid[id]].repeat(chunks[id].size(0), 1))
+                dis_.append(dis_ck[id])
+
+                if len(chunks[id]) == self.ck_size:
+                    masked.extend([id * self.ck_size, id * self.ck_size + 1])
+                else:
+                    masked.extend([id * self.ck_size])
+            cause_mask.append(masked)
+
             extra_feature = torch.cat(extra_feature, dim=0)
+            dis_encode = torch.cat(dis_, dim=0)
             utt_c = torch.cat(chunks_sel, dim=0)
 
-            #delta_ = self.ntn(emo, utt_c).squeeze(1)
+            if len(masked) != utt_c.size(0):
+                print('masked not equal utt_c')
+
+
             delta_d = ECPEC.item_att(emo, utt_c.squeeze(1))
-            extra_feature = extra_feature.repeat(1, 50)
-            delta_ = torch.cat((delta_d, dis_encode[j], extra_feature), dim=-1)
+            extra_feature = extra_feature.repeat(1, 1)
+            #delta_ = torch.cat((delta_d, dis_encode[j], extra_feature), dim=-1)
+            delta_ = torch.cat((delta_d, dis_encode, extra_feature), dim=-1)
 
-            # cross attention for emotion-cause pair extraction task
-            # att = delta_.matmul(self.xatt).matmul(delta.permute(1, 0))
-            # att_score1 = F.softmax(att, dim=1)
-            # attck = att_score1.matmul(delta)
-            # delta_att= torch.cat((delta_, attck), dim=1)
+            #delta_ = torch.masked_select(delta_, mask_window.bool()[j].transpose(0, 1)).contiguous().view(-1, delta_.size(-1))
 
-            # cross attention for emotion-cause chunk pair extraction task
-            # #attec = delta.matmul(self.xattck).matmul(delta_.permute(1, 0))
-            # #att_score2 = F.softmax(attec, dim=1)
-            # #attec = att_score2.matmul(delta_)
-            # #delta_attec = torch.cat((delta, attec), dim=1)
-            # #hidden = self.dropout(self.ac(self.W2(delta_attec)))
-            # hidden = self.dropout(self.ac(self.W2(delta)))
-            # out = torch.log_softmax(self.Wo(hidden), dim=1)
-            # out_ = out.contiguous().view(-1, 2)
-            # phase2_out.append(out_)
-
-            #h = self.W3(delta_)
-            h = self.dropout(self.ac(self.W3(delta_)))
+            if delta_.size(0) == 1:
+                h = self.dropout(self.ac(self.W3(delta_)))
+            else:
+                h = self.dropout(self.ac(self.bn(self.W3(delta_))))
             h_ = self.cls(h)  # .squeeze(1)
             p = torch.log_softmax(h_, dim=1)
             p = p.contiguous().view(-1, 2)
             p_out.append(p)
 
+            label3_sel = torch.cat(label3_sel, dim=0)
+            #label3_sel = torch.masked_select(label3_sel, mask_window.bool()[j].squeeze(0)).contiguous().view(p.size(0))
+
             label3_out.extend(label3_sel)
             if not train:
                 phase3_out = []
-                l = 0
-                for sz in sz_ck:
-                    phase3_out.append(p[l:l + sz])
-                    l += sz
+                phase3_out.append(p)
                 pp_out.extend(phase3_out)
 
+        def case_study(bi_label_emo, bi_label_cau, log_phase3, label_phase3, cause_mask):
+            store_res = torch.zeros(bi_label_emo.size(0), bi_label_cau.size(0))
+            store_truth = torch.zeros(bi_label_emo.size(0), bi_label_cau.size(0))
+            bi_label_cau = bi_label_cau.bool()
+            bi_label_emo = bi_label_emo.bool()
+            log_phase3 = torch.cat(log_phase3, dim=0)
+            label_phase3  = torch.stack(label_phase3).long().cuda().view(-1)
+            count_i = 0
+            count_num = 0
+            countx = 0
+            for idx, i in enumerate(bi_label_emo):
+                if i:
+                    #count_j = 0
+                    mask = cause_mask[count_i]
+                    #count_num+=len(mask)
+                    for jdx, j in enumerate(bi_label_cau):
+                        count_j = bi_label_cau[:jdx].sum().item()
+                        if j and count_j in mask:
+                        #if j and count_j in mask:
+                            try:
+                                store_res[idx][jdx] = torch.argmax(log_phase3[count_num+mask.index(count_j)]).item()
+                                store_truth[idx][jdx] = label_phase3[count_num+mask.index(count_j)].item()
+                                countx+=1
+                            except IndexError:
+                                print('error')
+                            #count_j+=1
+                    count_num += len(mask)
+                    count_i += 1
+            return store_res, store_truth
+
         if train:
-            return phase2_out, p_out, label3_out
+            return phase2_out, ck_mask, p_out, label3_out
         else:
-            return phase2_out, pp_out, label3_out
+            store_res, store_truth = case_study(bi_label_emo, bi_label_cau, pp_out, label3_out, cause_mask)
+            return phase2_out, ck_mask, pp_out, label3_out, store_res, store_truth
 
     @staticmethod
     def item_att(x, y):
-        try:
-            item1 = torch.cat((x.repeat(y.size(0), 1), y), dim=-1)
-        except RuntimeError:
-            print(x.size(), y.size())
+        item1 = torch.cat((x.repeat(y.size(0), 1), y), dim=-1)
         item2 = torch.norm(x - y, p=2, dim=-1, keepdim=True)
         item3 = torch.mul(x, y)
         delta = torch.cat((item1, item2, item3), dim=-1)
-
         return delta
 
     def sequence_mask(self, lengths, maxlen=None, dtype=torch.bool):
@@ -323,8 +387,6 @@ class ECPEC(nn.Module):
         '''
         :param length: batch
         '''
-        #batch = length.numel()
-        #res = (torch.arange(0, max_seq_len, device=length.device).type_as(length).unsqueeze(0).expand(batch, max_seq_len).lt(length.unsqueeze(1)))
         res = self.sequence_mask(length)
         return res.contiguous().view(out_shape)
 
@@ -347,11 +409,11 @@ class ECPEC(nn.Module):
         :param length: shape->batch
         :return: shape->batch, dim
         '''
-        if self.cuda:
+        if not self.nocuda:
             length = length.cuda()
         max_seq_len, dim = inputs.size(1), inputs.size(2)
         tmp = inputs.contiguous().view(-1, dim)
-        utt = self.ac(self.s1(tmp))
+        utt = self.ac(self.bn(self.s1(tmp))) # TODO self.bn
         alpha = self.s2(utt).contiguous().view(-1, 1, max_seq_len)
         alpha_ = self.softmax_by_length(alpha, length)
 
@@ -381,37 +443,36 @@ def train_model(model, loss_function, loss_function_c, dataloader, epoch, embedd
     assert not train or optimizer != None
     model.train()
     # count = 0
-    total = 0
-    postive = 0
+    # total = 0
+    # postive = 0
     for data in dataloader:
 
         optimizer.zero_grad()
 
-        text_emo, text_cau, label, ck_pos_id, pos_id, label3, textid, sen_len, bi_label_emo, bi_label_cau = \
+        label, ck_pos_id, pos_id, label3, textid, sen_len, bi_label_emo, bi_label_cau, mask_window, ck_mask = \
             [d.cuda() for d in data[:-1]] if cuda else data[:-1]
         # total+=text_emo.size(0)*text_cau.size(0)
         # postive+=torch.sum(label3!=-1)
         word_encode = embedding(textid).squeeze()
         pos_encode = pos_embedding(ck_pos_id).squeeze(1)
         dis_encode = pos_embedding(pos_id).squeeze(1)
-        log_phase2, log_phase3, label_phase3 = model(text_emo=text_emo, text_cau=text_cau, label_ck=label,
+        log_phase2, ck_mask, log_phase3, label_phase3 = model(label_ck=label,
                                                      label3=label3, word_encode=word_encode, pos_encode=pos_encode, dis_encode=dis_encode, sen_lengths=sen_len,
-                                                     bi_label_emo=bi_label_emo, bi_label_cau=bi_label_cau)  # batch*seq_len, n_classes
+                                                     bi_label_emo=bi_label_emo, bi_label_cau=bi_label_cau, mask_window=mask_window, ck_mask=ck_mask)  # batch*seq_len, n_classes
 
         log_phase2 = torch.cat(log_phase2, dim=0)
         log_phase3 = torch.cat(log_phase3, dim=0) if len(log_phase3) != 0 else []
         if args.cuda:
-            label_phase3 = torch.cat(label_phase3, dim=0).long().cuda() if len(label_phase3) != 0 else torch.tensor([])
+            label_phase3 = torch.stack(label_phase3).long().cuda() if len(label_phase3) != 0 else torch.tensor([])
         else:
-            label_phase3 = torch.cat(label_phase3, dim=0).long() if len(label_phase3) != 0 else torch.tensor([])
+            label_phase3 = torch.stack(label_phase3).long() if len(label_phase3) != 0 else torch.tensor([])
 
         label_ = label.view(-1)
+        #label_ = torch.masked_select(label_, ck_mask.contiguous().view(-1))
         # umask = torch.ones([text_emo.size(0)*text_cau.size(0), 1]).float()
 
-        skip = False if len(log_phase3) != 0 else True
         loss_2 = loss_function(log_phase2, label_)
         loss_3 = loss_function_c(log_phase3, label_phase3.view(-1))
-        #loss = loss_3
         loss = loss_2 + loss_3
 
         # phase 2
@@ -421,14 +482,10 @@ def train_model(model, loss_function, loss_function_c, dataloader, epoch, embedd
         # maskec.append(umask.view(-1).cpu().numpy())
 
         # phase 3
-        if not skip:
-            pred_3 = torch.argmax(log_phase3, 1)  # batch*seq_len
-            pred3.append(pred_3.data.cpu().numpy())
-            labelp3.append(label_phase3.view(-1).data.cpu().numpy())
-        else:
-            pred3.append(torch.zeros_like(label_phase3).numpy())
-            labelp3.append(label_phase3.view(-1).data.cpu().numpy())
-            pass
+        #if not skip:
+        pred_3 = torch.argmax(log_phase3, 1)  # batch*seq_len
+        pred3.append(pred_3.data.cpu().numpy())
+        labelp3.append(label_phase3.view(-1).data.cpu().numpy())
 
         losses.append(loss.item())
 
@@ -440,9 +497,9 @@ def train_model(model, loss_function, loss_function_c, dataloader, epoch, embedd
         labelec = np.concatenate(labelec)
         # maskec = np.concatenate(maskec)
         # print(Counter(labels.tolist()))
-        if not skip:
-            pred3 = np.concatenate(pred3)
-            labelp3 = np.concatenate(labelp3)
+        #if not skip:
+        pred3 = np.concatenate(pred3)
+        labelp3 = np.concatenate(labelp3)
 
     else:
         return float('nan'), float('nan'), float('nan'), float('nan'), float('nan'), float('nan'), float('nan')
@@ -461,116 +518,85 @@ def train_model(model, loss_function, loss_function_c, dataloader, epoch, embedd
 def eval_model(model, loss_function, loss_function_c, dataloader, epoch, embedding=None, pos_embedding=None, ck_size=None, optimizer=None,
                train=False):
     losses = []
-    # phase2 and phase3 tasks
-    predec = []
-
     losses3 = []
 
     assert not train or optimizer != None
     model.eval()
 
-    num_proposed_pairs = 0
-    num_annotated_pairs = 0
-    num_correct_pairs = 0
+    predec = []
+    labelec = []
+    # maskec = []
+    pred3 = []
+    labelp3 = []
+    predicted_res = {}
+    ground_truth = {}
     for data in dataloader:
 
-        text_emo, text_cau, label, ck_pos_id, pos_id, label3, bi_label_emo, bi_label_cau, \
-        ids_cau, cLabels, phase3_label, textid, sen_len = \
+        label, ck_pos_id, pos_id, label3, bi_label_emo, bi_label_cau, \
+        ids_cau, cLabels, phase3_label, textid, sen_len, mask_window, ck_mask = \
             [d.cuda() for d in data[:-1]] if cuda else data[:-1]
-        if text_emo.size(0) == 0 or text_cau.size(0) == 0:
-            a = torch.nonzero(cLabels)
-            num_annotated_pairs += a.size(0)
+        vid = data[-1]
+        word_encode = embedding(textid).squeeze()
+        pos_encode = pos_embedding(ck_pos_id).squeeze(1)
+        dis_encode = pos_embedding(pos_id).squeeze(1)
+        log_phase2, ck_mask, log_phase3, label_phase3, store_res, store_truth = model(label_ck=label,
+                                                     label3=label3, train=False, word_encode=word_encode, pos_encode=pos_encode, dis_encode=dis_encode, sen_lengths=sen_len,
+                                                     bi_label_emo=bi_label_emo, bi_label_cau=bi_label_cau, mask_window=mask_window, ck_mask=ck_mask)  # batch*seq_len, n_classes
+        log_phase2 = torch.cat(log_phase2, dim=0)
+        log_phase3 = torch.cat(log_phase3, dim=0) if len(log_phase3) != 0 else []
+        if args.cuda:
+            label_phase3 = torch.stack(label_phase3).long().cuda() if len(label_phase3) != 0 else torch.tensor([])
         else:
-            word_encode = embedding(textid).squeeze()
-            pos_encode = pos_embedding(ck_pos_id).squeeze(1)
-            dis_encode = pos_embedding(pos_id).squeeze(1)
-            log_phase2, log_phase3, label_phase3 = model(text_emo=text_emo, text_cau=text_cau, label_ck=label,
-                                                         label3=label3, train=False, word_encode=word_encode, pos_encode=pos_encode, dis_encode=dis_encode, sen_lengths=sen_len,
-                                                         bi_label_emo=bi_label_emo, bi_label_cau=bi_label_cau)  # batch*seq_len, n_classes
-            count = 0
+            label_phase3 = torch.stack(label_phase3).long() if len(label_phase3) != 0 else torch.tensor([])
 
-            if len(log_phase2) != phase3_label.size(0):
-                print('phase3_label', phase3_label.size(), phase3_label)
-                print('log_phase2', len(log_phase2))
-                print("cLabels", cLabels.size(), cLabels)
-                print("bi_label_emo", bi_label_emo)
-            for emo_idx, p2 in enumerate(log_phase2):
+        label_ = label.view(-1)
+        #label_ = torch.masked_select(label_, ck_mask.contiguous().view(-1))
+        # umask = torch.ones([text_emo.size(0)*text_cau.size(0), 1]).float()
 
-                ck_ids_cau = torch.split(ids_cau.squeeze(1), ck_size, dim=0)
-                seq = []
-                # seq_ = torch.LongTensor([0, 0, 0])
-                pred_e_ = torch.argmax(p2, 1)
-                #ck_id = torch.nonzero(pred_e_)
-                ck_id = torch.LongTensor([i for i in range(p2.size(0))])
+        #skip = False if len(log_phase3) != 0 else True
+        loss_2 = loss_function(log_phase2, label_)
+        loss_3 = loss_function_c(log_phase3, label_phase3.view(-1))
+        loss = loss_2 + loss_3
 
-                for id in ck_id:
-                    pred_3_ = torch.argmax(log_phase3[count], dim=1)
-                    try:
-                        ut_id = torch.nonzero(pred_3_)
-                    except RuntimeError:
-                        print('utid')
-                    try:
-                        if len(ut_id)!=0:
-                            seq.append(ck_ids_cau[id.item()][ut_id])
-                    except IndexError or RuntimeError:
-                        print('seq')
+        predicted_res[vid[0]] = store_res.tolist()
+        ground_truth[vid[0]] = store_truth.tolist()
 
-                    count += 1
+        # phase 2
+        pred_e = torch.argmax(log_phase2, 1)  # batch*seq_len
+        predec.append(pred_e.data.cpu().numpy())
+        labelec.append(label_.data.cpu().numpy())
+        # maskec.append(umask.view(-1).cpu().numpy())
 
-                if len(seq) != 0:
-                    seq = torch.cat(seq, dim=0)
-                    for idx in range(seq.size(0)):
-                        if seq[idx].item() + 1 in phase3_label[emo_idx]:
-                            num_correct_pairs += 1
-                    num_proposed_pairs += seq.size(0)
+        # phase 3
+        #if not skip:
+        pred_3 = torch.argmax(log_phase3, 1)  # batch*seq_len
+        pred3.append(pred_3.data.cpu().numpy())
+        labelp3.append(label_phase3.view(-1).data.cpu().numpy())
 
-            a = torch.nonzero(cLabels)
-
-            num_annotated_pairs += a.size(0)
-
-            log_phase2 = torch.cat(log_phase2, dim=0)
-            log_phase3 = torch.cat(log_phase3, dim=0) if len(log_phase3) != 0 else []
-            if args.cuda:
-                label_phase3 = torch.cat(label_phase3, dim=0).long().cuda() if len(label_phase3) != 0 else torch.tensor([])
-            else:
-                label_phase3 = torch.cat(label_phase3, dim=0).long() if len(label_phase3) != 0 else torch.tensor([])
-
-            label_ = label.view(-1)
-            # umask = torch.ones([text_emo.size(0)*text_cau.size(0), 1]).float()
-
-            skip = False if len(log_phase3) != 0 else True
-            loss_2 = loss_function(log_phase2, label_)
-            loss_3 = loss_function_c(log_phase3, label_phase3.view(-1))
-            #loss = loss_3
-            loss = loss_2 + loss_3
-            losses3.append(loss_3.item())
-
-            # phase 2
-            pred_e = torch.argmax(log_phase2, 1)  # batch*seq_len
-            predec.append(pred_e.data.cpu().numpy())
-
-            losses.append(loss.item())
+        losses.append(loss.item())
+        losses3.append(loss_3.item())
 
     if predec != []:
-        try:
-            precision = round(num_correct_pairs / float(num_proposed_pairs), 4)
-        except ZeroDivisionError:
-            precision = float('nan')
-
-        try:
-            recall = round(num_correct_pairs / float(num_annotated_pairs), 4)
-        except ZeroDivisionError:
-            recall = float('nan')
-
-        fscore = round(2 * precision * recall / (precision + recall) if precision + recall != 0 else 0, 4)
+        predec = np.concatenate(predec)
+        labelec = np.concatenate(labelec)
+        # maskec = np.concatenate(maskec)
+        # print(Counter(labels.tolist()))
+        pred3 = np.concatenate(pred3)
+        labelp3 = np.concatenate(labelp3)
 
     else:
-        return float('nan'), float('nan'), float('nan'), float('nan'), float('nan')
+        return float('nan'), float('nan'), float('nan'), float('nan'), float('nan'), float('nan'), float('nan')
 
     avg_loss = round(np.average(losses), 4)
-    avg_loss_3 = round(np.average(losses3), 4) if len(losses3) != 0 else 100
+    avg_loss_3 = round(np.average(losses3), 4)
 
-    return avg_loss, avg_loss_3, precision, recall, fscore
+    #p_p2, r_p2, f_p2 = evaluate(predec, labelec)
+    p_p3, r_p3, f_p3 = evaluate(pred3, labelp3)
+
+    # print('total', total)
+    # print('postive', postive)
+
+    return avg_loss, avg_loss_3, p_p3, r_p3, f_p3, predicted_res, ground_truth
 
 
 def evaluate(pred, label):
@@ -601,9 +627,11 @@ if __name__ == '__main__':
                         help='learning rate')
     parser.add_argument('--l2', type=float, default=0.0001, metavar='L1',
                         help='L2 regularization weight')
-    parser.add_argument('--dropout2', type=float, default=0.3,
+    parser.add_argument('--dropout2', type=float, default=0,
                         metavar='dropout2', help='ec chunk dropout rate')
-    parser.add_argument('--dropout', type=float, default=0.30, metavar='dropout',
+    parser.add_argument('--dropout3', type=float, default=0.5,
+                        metavar='dropout3', help='word_encode dropout rate')
+    parser.add_argument('--dropout', type=float, default=0, metavar='dropout',
                         help='dropout rate')
     parser.add_argument('--batch-size', type=int, default=1, metavar='BS',
                         help='batch size')
@@ -651,12 +679,13 @@ if __name__ == '__main__':
     max_sen_len = args.max_sen_len
     ck_size = args.chunk_size
     dropout2 = args.dropout2
+    dropout3 = args.dropout3
     tf = args.tf
 
     D_m = args.embed_dim
     pos_D_m = args.pos_dim
 
-    model = ECPEC(D_m, pos_D_m, n_classes, dropout, dropout2, ck_size)
+    model = ECPEC(D_m, pos_D_m, n_classes, dropout, dropout2, dropout3, ck_size)
 
     # word2vec loading
     w2v_path = './key_words.txt'
@@ -664,7 +693,7 @@ if __name__ == '__main__':
     word_idx_rev, word_id_mapping, word_embedding, pos_embedding = load_w2v(D_m, pos_D_m, w2v_path, w2v_file)
     word_embedding = torch.from_numpy(word_embedding)
     pos_embedding = torch.from_numpy(pos_embedding)
-    embedding = torch.nn.Embedding.from_pretrained(word_embedding, freeze=True).cuda() if cuda else \
+    embedding = torch.nn.Embedding.from_pretrained(word_embedding, freeze=False).cuda() if cuda else \
         torch.nn.Embedding.from_pretrained(word_embedding, freeze=True)
     pos_embedding = torch.nn.Embedding.from_pretrained(pos_embedding, freeze=True).cuda() if cuda else \
         torch.nn.Embedding.from_pretrained(pos_embedding, freeze=True)
@@ -676,20 +705,11 @@ if __name__ == '__main__':
         1 / 0.757123,
         1 / 0.242877,
     ])  # emotion-chunk pair task
-    # loss_weights = torch.FloatTensor([
-    #     0.66039,
-    #     2.05866,
-    # ])  # emotion-chunk pair task
 
     loss_weights_c = torch.FloatTensor([
         1 / 0.798179,
         1 / 0.201821,
     ])  # emotion-cause pair task
-
-    # loss_weights_c = torch.FloatTensor([
-    #     0.527450,
-    #     9.607568,
-    # ])  # emotion-cause pair task
 
     if args.class_weight:
         loss_function = MaskedNLLLoss(loss_weights.cuda() if cuda else loss_weights)
@@ -717,11 +737,11 @@ if __name__ == '__main__':
         train_loss, p_p2, r_p2, f_p2, p_p3, r_p3, f_p3 = train_model(model, loss_function, loss_function_c,
                                                                      train_loader, e, embedding=embedding, pos_embedding=pos_embedding, optimizer=optimizer, train=True)
         # valid_loss, valid_p_p2, valid_r_p2, valid_f_p2, valid_p_p3, valid_r_p3, valid_f_p3 = train_model(model, loss_function, loss_function_c, valid_loader, e)
-        test_loss, test_loss_3, precision, recall, fscore = eval_model(model, loss_function, loss_function_c,
+        test_loss, test_loss_3, precision, recall, fscore, predicted_res, ground_truth = eval_model(model, loss_function, loss_function_c,
                                                                        test_loader, e, embedding=embedding, pos_embedding=pos_embedding, ck_size=ck_size)
 
         if best_loss == 100 or best_loss > test_loss_3:
-            best_loss, best_precision, best_recall, best_fscore = test_loss_3, precision, recall, fscore
+            best_loss, best_precision, best_recall, best_fscore, best_pred, best_ground = test_loss_3, precision, recall, fscore, predicted_res, ground_truth
 
         print(
             'epoch {} train_loss {} train_precision_p2 {} train_recall_p2 {} train_fscore_p2 {} '
@@ -730,5 +750,12 @@ if __name__ == '__main__':
                 format(e + 1, train_loss, p_p2, r_p2, f_p2, p_p3, r_p3, f_p3, test_loss, test_loss_3, precision, recall,
                        fscore, round(time.time() - start_time, 2)))
 
+    path = '/home/maxwe11y/Desktop/weili/phase3/case_study/'
+    with open(os.path.join(path, 'predicted_dialogue_1_' + str(tf) + '.json'), 'w') as f:
+        json.dump(best_pred, f)
+    with open(os.path.join(path, 'ground_truth_dialogue_1_' + str(tf) + '.json'), 'w') as g:
+        json.dump(best_ground, g)
     print('Test performance..')
     print('Loss {} precision {} recall {} fscore{} '.format(best_loss, best_precision, best_recall, best_fscore))
+
+

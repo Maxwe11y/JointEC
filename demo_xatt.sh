@@ -3,16 +3,28 @@
 # this is my first demo
 # Wei Li
 
-dropout=(0.2 0.3 0.4 0.5 0.6 0.7 0.8)
-chunk_size=(5 10 15 20)
+#dropout3=(0.4)
+chunk_size=(2)
+tf=(0.5 1)
 cd /home/maxwe11y/Desktop/weili/phase3/Phase3
 vardate='date'
-for i in ${dropout[*]}
+for i in ${chunk_size[*]}
 do
-    for j in ${chunk_size[*]}
+    for j in ${tf[*]}
     do
-        #echo "hello world: ${i}${j}"
-        echo `python3 JointEC.py --epochs 50 --dropout ${i} --chunk_size ${j} --lr 0.0005 ` >> /home/maxwe11y/Desktop/weili/phase3/log_p3/"res${i}and${j}.log" 2>&1
-        #echo ${i}${j}
+
+        echo `python3 JointEC_window.py --epochs 100 --chunk_size ${i} --tf ${j} --lr 0.001 ` >> /home/maxwe11y/Desktop/weili/phase3/case_study/"JointECW_tf_res${i}and${j}.log" 2>&1
+
+done
+done
+
+
+for i in ${chunk_size[*]}
+do
+    for j in ${tf[*]}
+    do
+
+        echo `python3 JointEC.py --epochs 100 --chunk_size ${i} --tf ${j} --lr 0.0005 ` >> /home/maxwe11y/Desktop/weili/phase3/case_study/"JointEC_tf_res${i}and${j}.log" 2>&1
+
 done
 done
