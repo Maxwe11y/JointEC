@@ -19,6 +19,9 @@ class IEMOCAPDataset(Dataset):
         self.videoIDs, self.videoSpeakers, self.videoLabels, self.causeLabels, self.causeLabels2, self.causeLabels3, self.sa_Tr, self.cd_Ta, self.pred_sa, self.pred_cd, self.videoText,\
         self.videoAudio, self.videoVisual, self.videoSentence, self.trainVid,\
         self.testVid = pickle.load(open(path, 'rb'), encoding='latin1')
+        # self.videoIDs, self.videoSpeakers, self.videoLabels, self.causeLabels, self.causeLabels2, self.causeLabels3, self.pred_sa, self.pred_cd, self.videoText, \
+        # self.videoAudio, self.videoVisual, self.videoSentence, self.trainVid, \
+        # self.testVid = pickle.load(open(path, 'rb'), encoding='latin1')
         '''
         label index mapping = {'hap':0, 'sad':1, 'neu':2, 'ang':3, 'exc':4, 'fru':5}
         '''
@@ -75,6 +78,10 @@ class IEMOCAPDataset(Dataset):
         #                 count_j += 1
         #         count_i += 1
 
+        if vid == 'Ses05M_impro05':
+            randemo = np.random.randint(bi_label_emo.size(0))
+            bi_label_emo[randemo] = 1
+
         mask_window = torch.zeros((bi_label_emo.sum(), bi_label_cause.sum()), requires_grad=False)
         count_i = 0
         for idx, emo in enumerate(bi_label_emo):
@@ -82,7 +89,7 @@ class IEMOCAPDataset(Dataset):
                 count_j = 0
                 for jdx, cau in enumerate(bi_label_cause):
                     if cau == 1:
-                        if abs(idx-jdx)<=8:
+                        if abs(idx-jdx) <= 8:
                             mask_window[count_i][count_j] = 1
                         count_j += 1
                 count_i += 1

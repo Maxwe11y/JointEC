@@ -18,6 +18,9 @@ class IEMOCAPDataset(Dataset):
         self.videoIDs, self.videoSpeakers, self.videoLabels, self.causeLabels, self.causeLabels2, self.causeLabels3, self.sa_Tr, self.cd_Ta, self.pred_sa, self.pred_cd, self.videoText,\
         self.videoAudio, self.videoVisual, self.videoSentence, self.trainVid,\
         self.testVid = pickle.load(open(path, 'rb'), encoding='latin1')
+        # self.videoIDs, self.videoSpeakers, self.videoLabels, self.causeLabels, self.causeLabels2, self.causeLabels3, self.pred_sa, self.pred_cd, self.videoText, \
+        # self.videoAudio, self.videoVisual, self.videoSentence, self.trainVid, \
+        # self.testVid = pickle.load(open(path, 'rb'), encoding='latin1')
         '''
         label index mapping = {'hap':0, 'sad':1, 'neu':2, 'ang':3, 'exc':4, 'fru':5}
         '''
@@ -58,6 +61,9 @@ class IEMOCAPDataset(Dataset):
             #    [0 if label == 2 else 1 for label in self.videoLabels[vid]])  # generate emotion label
             # bi_label_cause_real = torch.LongTensor([1 if i in causeLabels else 0 for i in
             #                                        range(1, len(self.videoLabels[vid]) + 1)])  # generate cause label
+        # if vid == 'Ses05M_impro05':
+        #     randemo = np.random.randint(bi_label_emo.size(0))
+        #     bi_label_emo[randemo] = 1
 
 
         text = torch.FloatTensor(self.videoText[vid])  # text embedding of a given conversation

@@ -659,7 +659,7 @@ if __name__ == '__main__':
                         help='L2 regularization weight')
     parser.add_argument('--dropout2', type=float, default=0.3,
                         metavar='dropout2', help='ec chunk dropout rate')
-    parser.add_argument('--dropout', type=float, default=0.30, metavar='dropout',
+    parser.add_argument('--dropout', type=float, default=0.3, metavar='dropout',
                         help='dropout rate')
     parser.add_argument('--batch-size', type=int, default=1, metavar='BS',
                         help='batch size')
@@ -679,6 +679,8 @@ if __name__ == '__main__':
                         help='dimension of pre-trained embeddings')
     parser.add_argument('--pos_dim', type=int, default=100,
                         help='dimension of position embeddings')
+    parser.add_argument('--data', type=str, default=r'../ECPEC_phase_two_gcn_0.4_0.7_relu_full.pkl',
+                        help='dataset from step one')
     args = parser.parse_args()
 
     # path = r'/home/maxwe11y/Desktop/weili/phase3/JointEC_gcn_res_sigmoid'
@@ -708,6 +710,7 @@ if __name__ == '__main__':
     ck_size = args.chunk_size
     dropout2 = args.dropout2
     tf = args.tf
+    data_ = args.data
 
     D_m = args.embed_dim
     pos_D_m = args.pos_dim
@@ -734,20 +737,12 @@ if __name__ == '__main__':
         1 / 0.757123,
         1 / 0.242877,
     ])  # emotion-chunk pair task
-    # loss_weights = torch.FloatTensor([
-    #     0.66039,
-    #     2.05866,
-    # ])  # emotion-chunk pair task
 
     loss_weights_c = torch.FloatTensor([
         1 / 0.798179,
         1 / 0.201821,
     ])  # emotion-cause pair task
 
-    # loss_weights_c = torch.FloatTensor([
-    #     0.527450,
-    #     9.607568,
-    # ])  # emotion-cause pair task
 
     if args.class_weight:
         loss_function = MaskedNLLLoss(loss_weights.cuda() if cuda else loss_weights)
@@ -759,7 +754,7 @@ if __name__ == '__main__':
     optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.l2)
 
     train_loader, valid_loader, test_loader = \
-        get_IEMOCAP_loaders(r'../ECPEC_phase_two_gcn_0.4_0.7_relu_full.pkl',
+        get_IEMOCAP_loaders(data_,
                             valid=0.0,
                             batch_size=batch_size,
                             num_workers=2,
@@ -788,11 +783,11 @@ if __name__ == '__main__':
                 format(e + 1, train_loss, p_p2, r_p2, f_p2, p_p3, r_p3, f_p3, test_loss, test_loss_3, precision, recall,
                        fscore, round(time.time() - start_time, 2)))
 
-    path = '/home/maxwe11y/Desktop/weili/phase3/case_study/'
-    with open(os.path.join(path, 'predicted_dialogue_jointEC_' + str(tf) + '.json'), 'w') as f:
-        json.dump(best_pred, f)
-    with open(os.path.join(path, 'ground_truth_dialogue_jointEC_' + str(tf) + '.json'), 'w') as g:
-        json.dump(best_ground, g)
+    # path = '/home/maxwe11y/Desktop/weili/phase3/case_study/'
+    # with open(os.path.join(path, 'predicted_dialogue_jointEC_' + str(tf) + '.json'), 'w') as f:
+    #     json.dump(best_pred, f)
+    # with open(os.path.join(path, 'ground_truth_dialogue_jointEC_' + str(tf) + '.json'), 'w') as g:
+    #     json.dump(best_ground, g)
 
     print('Test performance..')
     print('Loss {} precision {} recall {} fscore{} '.format(best_loss, best_precision, best_recall, best_fscore))

@@ -116,12 +116,12 @@ sorted_res = list(count_pair.items())
 sorted_res.sort(key=lambda k: k[1][2])
 
 # TODO visualize res
-res = pd.DataFrame(count_pair, index=['Proposed_pairs', 'labelled_pairs', 'Difference', 'Correct_pairs', 'Proposed_pairs', 'labelled_pairs', 'Difference', 'Correct_pairs','Text_length', 'Gap'])
-
+# res = pd.DataFrame(count_pair, index=['Proposed_pairs', 'labelled_pairs', 'Difference', 'Correct_pairs', 'Proposed_pairs', 'labelled_pairs', 'Difference', 'Correct_pairs','Text_length', 'Gap'])
+# res.to_excel(os.path.join(path, 'statistics' + '.xlsx'), sheet_name='statistics')
 
 #id = 'Ses05F_impro01'
-#id = 'Ses05F_impro08'  # good for photo
-id = 'Ses05M_impro06'  # good for photo
+#id = 'Ses05F_impro08'  # good for photoid = 'Ses05M_impro06'  # good for photo
+path_figure = '/home/maxwe11y/Desktop/weili/phase3/case_study/figure/'
 for id in pred.keys():
     text = testset.videoSentence[id]
     proposed = np.array(pred[id])
@@ -135,32 +135,52 @@ for id in pred.keys():
     compress_label_EC = csr_matrix(true_label_EC)
 
     # TODO visualize the predicted result
-    # plt.imshow(compress_pro.toarray(), cmap=plt.get_cmap('PuBuGn'))
-    # plt.show()
-    #
-    # plt.imshow(compress_pro_EC.toarray(), cmap=plt.get_cmap('PuBuGn'))
-    # plt.show()
-    #
-    # plt.imshow(compress_label_EC.toarray(), cmap=plt.get_cmap('PuBuGn'))
-    # plt.show()
+    plt.figure()
+    plt.subplot(2, 2, 1)
+    plt.title('Joint-ECW')
+    plt.imshow(compress_pro.toarray(), cmap=plt.get_cmap('ocean_r'))
+    #plt.savefig("vis.png", dpi=240)
+    #plt.show()
+    plt.subplot(2, 2, 3)
+    plt.title('Ground Truth of Joint-ECW')
+    plt.imshow(compress_label.toarray(), cmap=plt.get_cmap('ocean_r'))
+
+    plt.subplot(2, 2, 2)
+    plt.title('Joint-EC')
+    plt.imshow(compress_pro_EC.toarray(), cmap=plt.get_cmap('ocean_r'))
+    #plt.show()
+
+    plt.subplot(2, 2, 4)
+    plt.title('Ground Truth of Joint-EC')
+    plt.imshow(compress_label_EC.toarray(), cmap=plt.get_cmap('ocean_r'))
+
+    plt.tight_layout(pad=1.08)
+    plt.savefig(os.path.join(path_figure, id+".png"), dpi=240)
+
+    plt.close()
+    #plt.show()
 
 
-    case_data = {}
-    case_data['text'] = text
-    case_data['emotion'] = testset.videoLabels[id]
 
-
-    case_data['predicted'] = [(np.array(i)+1).tolist() for i in compress_pro.tolil().rows] # compress_pro.tolil().rows
-    case_data['pred_label'] = [(np.array(i)+1).tolist() for i in compress_label.tolil().rows] #compress_label.tolil().rows
-    case_data['predicted_EC'] = [(np.array(i)+1).tolist() for i in compress_pro_EC.tolil().rows] # compress_pro_EC.tolil().rows
-    case_data['pred_label_EC'] = [(np.array(i)+1).tolist() for i in compress_label_EC.tolil().rows] # compress_label_EC.tolil().rows
-    case_data['cause_1'] = testset.causeLabels[id]
-    case_data['cause_2'] = testset.causeLabels2[id]
-    case_data['cause_3'] = testset.causeLabels3[id]
-    case_data['speaker'] = testset.videoSpeakers[id]
-
-    case_pd = pd.DataFrame(case_data)
-    path = '/home/maxwe11y/Desktop/weili/phase3/case_study/case/'
-    case_pd.to_excel(os.path.join(path,'case_study' + id + '.xlsx'), sheet_name=id)
+    #print('error!')
+#
+#
+#     case_data = {}
+#     case_data['text'] = text
+#     case_data['emotion'] = testset.videoLabels[id]
+#
+#
+#     case_data['predicted'] = [(np.array(i)+1).tolist() for i in compress_pro.tolil().rows] # compress_pro.tolil().rows
+#     case_data['pred_label'] = [(np.array(i)+1).tolist() for i in compress_label.tolil().rows] #compress_label.tolil().rows
+#     case_data['predicted_EC'] = [(np.array(i)+1).tolist() for i in compress_pro_EC.tolil().rows] # compress_pro_EC.tolil().rows
+#     case_data['pred_label_EC'] = [(np.array(i)+1).tolist() for i in compress_label_EC.tolil().rows] # compress_label_EC.tolil().rows
+#     case_data['cause_1'] = testset.causeLabels[id]
+#     case_data['cause_2'] = testset.causeLabels2[id]
+#     case_data['cause_3'] = testset.causeLabels3[id]
+#     case_data['speaker'] = testset.videoSpeakers[id]
+#
+#     case_pd = pd.DataFrame(case_data)
+#     path = '/home/maxwe11y/Desktop/weili/phase3/case_study/case/'
+#     case_pd.to_excel(os.path.join(path,'case_study' + id + '.xlsx'), sheet_name=id)
 
 print('finished!')

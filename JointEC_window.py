@@ -298,7 +298,6 @@ class ECPEC(nn.Module):
                 else:
                     masked.extend([id * self.ck_size])
             cause_mask.append(masked)
-
             extra_feature = torch.cat(extra_feature, dim=0)
             dis_encode = torch.cat(dis_, dim=0)
             utt_c = torch.cat(chunks_sel, dim=0)
@@ -623,13 +622,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--no-cuda', action='store_true', default=False,
                         help='does not use GPU')
-    parser.add_argument('--lr', type=float, default=0.00001, metavar='LR',
+    parser.add_argument('--lr', type=float, default=0.0005, metavar='LR',
                         help='learning rate')
     parser.add_argument('--l2', type=float, default=0.0001, metavar='L1',
                         help='L2 regularization weight')
     parser.add_argument('--dropout2', type=float, default=0,
                         metavar='dropout2', help='ec chunk dropout rate')
-    parser.add_argument('--dropout3', type=float, default=0.5,
+    parser.add_argument('--dropout3', type=float, default=0.4,
                         metavar='dropout3', help='word_encode dropout rate')
     parser.add_argument('--dropout', type=float, default=0, metavar='dropout',
                         help='dropout rate')
@@ -651,6 +650,8 @@ if __name__ == '__main__':
                         help='dimension of pre-trained embeddings')
     parser.add_argument('--pos_dim', type=int, default=100,
                         help='dimension of position embeddings')
+    parser.add_argument('--data', type=str, default=r'../ECPEC_phase_two_gcn_0.4_0.7_relu_full.pkl',
+                        help='dataset from step one')
     args = parser.parse_args()
 
     # path = r'/home/maxwe11y/Desktop/weili/phase3/JointEC_gcn_res_sigmoid'
@@ -681,6 +682,7 @@ if __name__ == '__main__':
     dropout2 = args.dropout2
     dropout3 = args.dropout3
     tf = args.tf
+    data_ = args.data
 
     D_m = args.embed_dim
     pos_D_m = args.pos_dim
@@ -693,7 +695,7 @@ if __name__ == '__main__':
     word_idx_rev, word_id_mapping, word_embedding, pos_embedding = load_w2v(D_m, pos_D_m, w2v_path, w2v_file)
     word_embedding = torch.from_numpy(word_embedding)
     pos_embedding = torch.from_numpy(pos_embedding)
-    embedding = torch.nn.Embedding.from_pretrained(word_embedding, freeze=False).cuda() if cuda else \
+    embedding = torch.nn.Embedding.from_pretrained(word_embedding, freeze=True).cuda() if cuda else \
         torch.nn.Embedding.from_pretrained(word_embedding, freeze=True)
     pos_embedding = torch.nn.Embedding.from_pretrained(pos_embedding, freeze=True).cuda() if cuda else \
         torch.nn.Embedding.from_pretrained(pos_embedding, freeze=True)
@@ -719,9 +721,10 @@ if __name__ == '__main__':
         loss_function_c = MaskedNLLLoss()
 
     optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.l2)
+    #scheduler = ExponentialLR(optimizer, gamma=0.999)
 
     train_loader, valid_loader, test_loader = \
-        get_IEMOCAP_loaders(r'../ECPEC_phase_two_gcn_0.4_0.7_relu_full.pkl',
+        get_IEMOCAP_loaders(data_,
                             valid=0.0,
                             batch_size=batch_size,
                             num_workers=2,
@@ -750,11 +753,11 @@ if __name__ == '__main__':
                 format(e + 1, train_loss, p_p2, r_p2, f_p2, p_p3, r_p3, f_p3, test_loss, test_loss_3, precision, recall,
                        fscore, round(time.time() - start_time, 2)))
 
-    path = '/home/maxwe11y/Desktop/weili/phase3/case_study/'
-    with open(os.path.join(path, 'predicted_dialogue_1_' + str(tf) + '.json'), 'w') as f:
-        json.dump(best_pred, f)
-    with open(os.path.join(path, 'ground_truth_dialogue_1_' + str(tf) + '.json'), 'w') as g:
-        json.dump(best_ground, g)
+    # path = '/home/maxwe11y/Desktop/weili/phase3/case_study/'
+    # with open(os.path.join(path, 'predicted_dialogue_2_' + str(tf) + '.json'), 'w') as f:
+    #     json.dump(best_pred, f)
+    # with open(os.path.join(path, 'ground_truth_dialogue_2_' + str(tf) + '.json'), 'w') as g:
+    #     json.dump(best_ground, g)
     print('Test performance..')
     print('Loss {} precision {} recall {} fscore{} '.format(best_loss, best_precision, best_recall, best_fscore))
 
