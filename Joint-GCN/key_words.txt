@@ -1,0 +1,1623 @@
+1,sadness,sadness,What's he going to say? Maybe we should tell him before he sees it.
+2,sadness,sadness,He saw it.
+3,sadness,sadness,He was out here when it broke.
+4,sadness,sadness,Around Four this morning and there was a crack and I looked out.  We're standing right there when I cracked.
+5,sadness,sadness,I don't know.  but When it cracked he ran back into the house and start to cry in the kitchen.
+6,sadness,sadness,Did you talk to him?
+7,sadness,sadness,No.  I figured it was best to leave him alone.
+8,sadness,sadness,He cried hard.
+9,sadness,sadness,I could hear him right through the floor of my room.
+10,sadness,sadness,He is thinking about him again.
+11,sadness,sadness,It's getting just like after Larry died he's having dreams he's walking around at night.
+12,sadness,sadness,I guess he is.
+13,sadness,sadness,What's the meaning of that?
+14,sadness,sadness,I don't know the meaning of it.  But I know one thing mom did.  We made a terrible mistake with dad.
+15,sadness,sadness,Being dishonest with him.  It's the kind of thing that pays off and now it's paying off.
+16,sadness,sadness,You know that Larry's not coming back and I know it.  So why do we go on letting him think that we believe with him?
+17,frustrated,frustrated,No um I don't want to argue with him but it's time we realized that nobody else believes that Larry is alive.
+18,frustrated,frustrated,Why shouldn't he dream about him walk around during the night looking for him um.  Do we contradict him?  Do we say outright that we don't have any hope anymore that we haven't had any for years now?
+19,frustrated,frustrated,We have to say it to him!
+20,angry,angry,For God's sake mom three years.  Nobody comes back after three years!  It's insane!
+21,frustrated,frustrated,To you it is and to me but not to your father.  Now look you can talk yourself  blue in the face but there's no body and there's no grave so where are you?
+22,frustrated,frustrated,Sit down mom.  I want to talk to you.
+23,frustrated,frustrated,All right All right mom.  Listen!
+24,sadness,sadness,You know why I asked Annie here don't you?
+25,frustrated,frustrated,You know.
+26,null,null,Well I got an idea.  But what's the story?
+27,null,null,I'm going to ask her to marry me.
+28,frustrated,frustrated,You know that's not just my business.
+29,frustrated,frustrated,So it's all right.  I can go ahead with it then?
+30,frustrated,frustrated,I ignore what I got to ignore.  The girl is Larry's girl.
+31,frustrated,frustrated,Now Chris you can go on from there but I don't know what to do.  I mean do you know what to do because I don't.
+32,frustrated,frustrated,I don't know why it is.  But every time I reach out for something I want I have to pull back because other people will suffer.  My whole bloody life time after time after time.
+33,null,null,Well you're a considerate fellow there's nothing wrong with that.
+34,angry,angry,To hell with that!
+35,null,null,Have you asked Annie yet to marry you?
+36,null,null,Well how did you know that she will go along with it I mean maybe she feels the same way as your father?
+37,null,null,The trouble is you don't see enough women you never have
+38,frustrated,frustrated,So what I'm not fast with women.
+39,null,null,Well I just don't see why it has to be Annie.
+40,frustrated,frustrated,Because it is.
+41,frustrated,frustrated,I can't help it.  I know her best.  I was brought up next door to here the easiest when I think of somebody for my wife I think of Annie.  Do you want a diagram?
+42,frustrated,frustrated,No I don't want a diagram but Chris your father thinks Larry's coming back.
+43,sadness,sadness,You marry his girl and you're pronouncing him dead.  Now what's going to happen to your father do you know?  I don't.
+44,frustrated,frustrated,All right then Mom.
+45,frustrated,frustrated,I've given it three years of thought.  And hope by now that he wouldn't.  Can you forget about Larry an-- and we can have a regular wedding and have everybody be happy.  But that can't happen here I'm set to get out.
+46,angry,angry,What the hell is this?
+47,frustrated,frustrated,I'll get out. I'll get married and live some place else.  Maybe maybe New York?
+48,angry,angry,Are you crazy?
+49,frustrated,frustrated,Wait a minute.  Tell me this.  Do you mean to say that you would leave the business?
+50,angry,angry,The business?  The business?  It doesn't inspire me?
+51,frustrated,frustrated,Don't- you you can't think like that!  Don't think like that!
+52,angry,angry,All right!  But don't think like that because I mean what the hell did we do all this for Chris?  The whole business it's all for you!  The whole shooting match is for you!
+53,frustrated,frustrated,I don't understand you do I?
+1,null,null,D.S.L. Extreme can I help you?
+2,frustrated,frustrated,Hi I need- I need some help.  I've been transferred to like eight different departments and I've told my problem to every single department and then they just send me to another one and say they are going to send all my information so I won't have to repeat it and then that person doesn't know what's going on.  And I've restated my story about eight different times and I just want somebody to help me get my connection back because this happens every two weeks.  And I want to know what to do to stop it from happening again.
+3,null,null,This happens every two weeks?
+4,frustrated,frustrated,Yeah.  That my service just goes out.
+5,null,null,You've lost your connection.
+6,frustrated,frustrated,yeah.
+7,null,null,okay.
+8,frustrated,frustrated,And I'll reset the IP address.  I will do like you know direct connect the modem to my computer and then reset everything and then put the router back in. And-
+9,null,null,Hmm.  Mmm.
+10,frustrated,frustrated,Is not It it It will work again for like a week and then it goes out again.
+11,null,null,Has somebody tried to pin your site?
+12,null,null,Uh yeah.  We've pinned it a couple of times.
+13,null,null,Okay. Um-  Well I don't know.  And it consistently happens every two weeks?
+14,null,null,Pretty much yeah - I don't know if it's like bad phone lines or something.
+15,null,null,Well you know what does your D.S.L. cable -- you have D.S.L. right?
+16,null,null,Hmm. Mmm.
+17,null,null,Okay.  Does your D.S.L. cable you know travel a long distance by any chance? - Does it go through any windows?  I mean is it --
+18,null,null,yeah.
+19,null,null,It goes- It goes like through doorways.  But it goes a long distance.
+20,null,null,Okay.  Is it being- Is it being compressed between anything by any chance?  Because sometimes your connection can be you know disrupted by you know the cable being squished.
+21,null,null,Yeah. That can be- That can create a bad connection.  And it won't always be a bad connection but it will be bad off and on.
+22,null,null,Well I- I can check that.  Is there anything else we can do too?  Like I'll go through and check the line throughout the house but --
+23,null,null,Yeah well absolutely.  What we can -- let's just go ahead and just do a basic diagnostic of your system first off okay.  Can you go down to your start button?
+24,null,null,Uh huh.
+25,null,null,Okay And uh- go ahead and click on run.
+26,null,null,All right.
+27,null,null,Okay.  We're gonna get your -- a little black box is going to come up.  Do you see that?
+28,null,null,Yeah I see that.
+29,null,null,Okay Uh- You've got your C calling go ahead and type in directory list.
+30,null,null,Okay.
+31,null,null,And hit enter.
+32,null,null,Okay.
+33,null,null,Okay?  Can you tell me what that says?
+34,null,null,Uh it it's like a bunch of different letter and numbers and stuff.
+35,null,null,Okay Okay And Um- letters and numbers and stuff.  Uh- Can you - Can you just type in IP address search? And hit enter.
+36,null,null,Uh huh Okay.
+37,null,null,Okay?  Does it list your IP address there?
+38,null,null,Uh yeah looks -- no no.  It's set to zeros.
+39,null,null,It's set to zeros.  Okay maybe that's our problem.  That could very well be our problem there.  Somehow you've lost your IP address.  I'm not sure why that would happen every week.  It could be a cycling issue something like that.  But let's go ahead and type your IP address in again.
+40,null,null,Well if it does happen again let me give you my direct number and you can call me.  Actually I'll give you my cell number. Um- It's --
+41,null,null,Of course.  we seriously- Yeah I mean obviously you've worked- you know -- I don't want to hassle you anymore.
+42,happy,happy,Oh my God.  I can't even tell you how much of a relief that is.  I literally call and talk to five different people.  Like last week it went off and I spent an hour and a half on the phone with different people.  And I've been doing that like every every other week for months now.
+43,null,null,I completely understand.
+44,frustrated,frustrated,It's so frustrating.
+45,null,null,Absolutely. And I just don't want that to happen to you anymore.
+46,null,null,Absolutely.  It's a new service we are offering.
+47,happy,happy,Yeah accountability.  It's awesome.
+48,null,null,Uh huh Uh huh We want you to be happy.  You're our customer.  You're the most important thing. Okay?
+49,happy,happy,Wow.  You know I was thinking about changing internet providers but but that- that really is enough to change my mind.
+50,happy,happy,Great.  Well that makes me very happy.  That makes us all happy here at D.S.L. Extreme.  Is there anything else I can help you with?
+51,happy,happy,No.  I'm just gonna go have a fantastic day now.
+52,null,null,All right.  You have a wonderful day.  Call us anytime.
+53,happy,happy,Okay.  Thanks.
+54,happy,happy,All right.  Bye bye.
+1,null,null,Hi sir.  How can I help you?
+2,frustrated,frustrated,Oh thank God.  Do you know how long I've been on the phone for half an hour trying to talk to a freaking human being.
+3,frustrated,frustrated,All I want to do is put my pay for my freaking credit card and there's something wrong in my bill Like I swear it says I didn't paid last month but I know I paid last month.
+4,null,null,Okay.
+5,frustrated,frustrated,I put- I've been typing my number in millions of times it won't listen to me it's not working and I can't get a single human being and finally-
+6,null,null,[LAUGHTER] All right.  I'm sorry sir that you've been having a hard time.
+7,angry,angry,This is ridiculous.  I- I seriously I don't understand why you think these automated systems are supposed to like work for anybody.  They have never ever work for me.
+8,null,null,I kwon it is ridiculous
+9,null,null,yeah I understand.
+10,angry,angry,Can you like talk to somebody about this can you like can you tell them that this is ridiculous and can they change it from now on is there a phone number you have that I can call that will like automatically be talking to somebody a human being.
+11,null,null,Uh- when's when's-
+12,frustrated,frustrated,Sir-
+13,null,null,If yeah well if you just slow down we'll um we'll definitely have your problem solved and after we have your problem solved then I can transfer you to a manager someone who can you know you can voice your complaint to who will be able to something about it.
+14,frustrated,frustrated,Well okay well First off fine fine fine.  Let's see first off um- yeah my bill's wrong.
+15,angry,angry,Like I know I paid last month but it hasn't been paid and you charged me a late fee.
+16,null,null,Okay so where? okay all right so where did you uh- locate your your bill?
+17,frustrated,frustrated,I got it in the mail.
+18,null,null,In the mail?
+19,frustrated,frustrated,yeah
+20,null,null,So is it is- is it at all possible that maybe this statement is just old and that the transaction hadn't been processed yet?
+21,frustrated,frustrated,Well when I look online it says it says that I was charged a late fee so I'm assuming that I paid on your web site-
+22,null,null,Okay.
+23,frustrated,frustrated,like I paid right through your own company before my due date but it's still and it even shows my payment there and then it charged me the late fee afterwards.
+24,null,null,Okay.
+25,null,null,Okay so I'll just look it up and you know see what's going on maybe we can...
+26,frustrated,frustrated,Okay.
+27,null,null,if I call it up on the screen.
+28,null,null,Okay great go ahead.
+29,null,null,So in the database it looks as though um there is a there is like a glitch in the transaction where it hadn't gone through before but I do see that you paid the what can you tell me the amount what was the amount?
+30,frustrated,frustrated,It was one ninety eight sixty three. I paid the minimum.
+31,null,null,Okay I do see that on here and it says that um it had some trouble clearing for some reason.  And I think that was the problem on our end.  So um-
+32,null,null,Well you know sometimes-- just with online transactions things happens. so um-
+33,null,null,No No No I am grateful.
+34,null,null,Yeah we- Somebody went in and- and cleared the problem and it looks like you're all paid.
+35,null,null,Did they take-
+36,null,null,You do the direct the direct it um- it's taking right out of your bank account correct?
+37,null,null,Yes yes exactly.
+38,null,null,Yeah so- That --that did go through.
+39,null,null,Are you taking the late fee off of my account then?
+40,null,null,Um- I can try to do that for you certainly.
+41,frustrated,frustrated,Because I paid it on time.
+42,null,null,Right right and since--yeah since it was just a computer glitch then that's that should be cleared up as well.  So I'm going to go ahead and try and put that into the computer.  And if for some reason you notice on your statement in a few days that you've been charged and an overdue fee then you should just call back and we'll have that.
+43,null,null,Right.
+44,frustrated,frustrated,Yeah but if I call back I'll have to go through this whole rigmarole again. and try to get a hole or someone.
+45,null,null,Well I'll give you my direct line and my number so you can- you can  get directly to me.
+46,null,null,yeah.
+47,happy,happy,That would be wonderful that would be great seriously.
+48,null,null,No problem.
+49,happy,happy,thank you what's the number?
+50,null,null,ahh one eight hundred three two three
+51,null,null,three two three
+52,null,null,six four nine four
+53,happy,happy,six four nine four. That would be so great thank you so much.
+54,null,null,You're welcome
+55,null,null,I'm sorry that it was an inconvenience.
+56,happy,happy,It was horrible but you've made it much better thank you very much. Absolutely
+57,null,null,Have a good day.
+58,happy,happy,You too thank you so much have a wonderful day.
+59,null,null,bye bye
+1,excited,excited,What time is it?  Isn't it supposed to start running around midnight?  This is great isn't it?  Look at this great night we got here.  Couldn't be better--
+2,excited,excited,actually I was hoping to go a little bit further up the coast to get away from the lights and the people but I was afraid I will miss it.  How are you doing?
+3,null,null,Fine.
+4,excited,excited,Is that--no no no is that foam?  I can't even tell although if I- if I can't tell it probably isn't it?  Right It'll probably be unmistakable but don't you think?  How you doing?
+5,excited,excited,Oh no you know what I did.  I forgot my flashlight.  How could I be so stupid?  I can't believe I forgot my flashlight.
+6,null,null,What flashlight?
+7,frustrated,frustrated,The flashlight the silver one there's only one isn't there?
+8,frustrated,frustrated,It's not your flashlight.
+9,frustrated,frustrated,Whose is it?
+10,frustrated,frustrated,Well Sure.
+11,frustrated,frustrated,I mean you keep saying my flashlight as if it's somehow just yours.  How's that suppose to make me feel?
+12,frustrated,frustrated,No Of course you are right.  Our flashlight.  Me flashlight is you flashlight naturally.  How can we not think to bring it?
+13,null,null,yes.
+14,excited,excited,Are you cold?  You want my jacket?  We should have bought a blanket.  Our blanket-.  This is great isn't it?
+15,excited,excited,I didn't even think to bring a six-pack.  A six-pack would be just the thing right about now. I can't believe I forgot.  And look at kid I am surprise I make it out of the house about flies it.
+16,excited,excited,[LAUGHTER] I wonder if they can hear me talk or if they can feel the vibration in the sand when we are moving around
+17,excited,excited,you want my jacket?
+18,null,null,It's after eleven let's go home.
+19,frustrated,frustrated,There is no point in coming out here.
+20,excited,excited,Right.
+21,frustrated,frustrated,So let's go.
+22,null,null,Not particularly.
+23,frustrated,frustrated,Why not?
+24,null,null,I just don't.
+25,excited,excited,Honey this is a natural phenomenon. I mean  It happens like once a year.  It's a great opportunity.
+26,excited,excited,Think about people in Kansas they have to get a- a plane reservation and a hotel reservation just to see this uh- but we are just forty minutes away.  Too good to pass up.
+27,frustrated,frustrated,Pass up what?  Its little fish one month on the beach and they flop around and they swim away and then they die.
+28,excited,excited,Yeah but that moment on the beach is the highlight of their little lives all that flopping around is laying eggs or what you- mating or spawning or something like that.
+29,excited,excited,This is a big night for these guys.  Life's last orgy. Yeah
+30,frustrated,frustrated,What are you so excited about?  I mean it's not--it's not rocket science we are talking about its fish.  Its fish nobody even eats.
+31,excited,excited,Okay but they are fish that do something that no other fish do.  Like the swallows returning to Capistrano or the lemmings jumping off a cliff you know like that.
+32,excited,excited,There's There's mystery here and magic.  A little bit of the unexplainable.  I can't understand how you could not be interested.
+33,null,null,I am just not.
+34,null,null,Yes.
+35,frustrated,frustrated,Last year you also remember our shoes got wet and I got sand in my panties and we got into a big fight.  You had a sore throat and we did not see the grunions.
+36,frustrated,frustrated,We weren't in a good spot.
+37,frustrated,frustrated,We didn't see them the first time either.
+38,excited,excited,Look there what's that?  Is it?  Is that a--Ah it's a seaweed isn't it?
+39,excited,excited,Oh this is great.  I wouldn't miss this for the world.  I mean think about this. I know you are not interested but think about this for a second.
+40,excited,excited,Somewhere out there is a giant mass of silver fish all swimming in this direction.  They don't know why and we don't know why. They didn't get an invitation.  And it wasn't a vote- it wasn't a decision.  And nobody sent them a map or anything like that.
+41,excited,excited,It's just some little instinctual time-release firecracker that went off inside them and all this one they turn around and form a line as long as the California coast and just started swimming.
+42,excited,excited,They are swimming right now as if it's the only thing that matters.  It's- It's single mindedness with no mind urgency that's pure urge. It's- They don't know what drives them.  They- They don't give any name or ask any question. They just turn as one and started to swim to the very point we are standing right now for a massive celebration of sex and death.  God it's giving me goose bumps all over my hairs on my arm. popping up.
+43,excited,excited,Well So what do you think?
+1,frustrated,frustrated,Uh God.  I don't know what to do anymore.  Like I said --
+2,frustrated,frustrated,I don't know.  There's nothing for me out there.  I can't get a job.  I haven't gotten a job in a year three years.  What is it three years now; right? That I haven't been able to have a job.
+3,null,null,Really? It's been that long?
+4,frustrated,frustrated,Something like that.  I can't even remember anymore. I don't know what to do anymore.  I just get out there everyday -- well not everyday almost everyday.
+5,null,null,Wow.
+6,frustrated,frustrated,And try to do something. I mean-
+7,null,null,What have you been trying?
+8,frustrated,frustrated,Well everything.  I'll do temping you know office work.  You know whatever to pay the bills.  You know I'll do anything.
+9,frustrated,frustrated,But I mean I don't want to keep those jobs.  I don't want those jobs.It's not what I want to do.
+10,null,null,Right.
+11,frustrated,frustrated,But I don't know.  God what am I going to do?  Should I go back to school?  I can't- I can't afford to go back to school.
+12,frustrated,frustrated,What do you do?
+13,null,null,Well I mean right now I'm just doing a little bit of everything.  And I don't- I don't think that I'm in like a profession like career oriented place.
+14,null,null,You plan on being there forever? I mean Like what do you --
+15,null,null,No.  I'm just working in restaurants and stuff. But I'm also trying to audition and what not.  So it's --
+16,null,null,yeah.
+17,null,null,right.
+18,frustrated,frustrated,Yeah yeah.  Well hello.  That's what I'm doing too.  But I can't get the restaurant job.  I can't get -- -- the restaurant gig.  No one will give me anything.
+19,null,null,Really?
+20,frustrated,frustrated,I go in for these interviews and they're all cool and everything you know.  Their nice and I'm nice to them you know give and take back and forth and whatever.
+21,frustrated,frustrated,But they always go with somebody else.
+22,null,null,L.A. is really hard.  I mean have you tried like just going into a bar a couple of times to make friends with people who work there? and
+23,frustrated,frustrated,Yeah absolutely.  Hello?  You know me.  I go to bars all the time.  Like they all know me you know.  But no one wants to hire me.
+24,frustrated,frustrated,but Maybe they don't want to hire me because they know me. I don't know what's wrong with me Is there something wrong with me?
+25,null,null,I was just going to say that's your issue. Maybe you are going in too much. No I mean just
+26,null,null,are you going into the bars every night?
+27,frustrated,frustrated,I mean You can tell me what.  Why is no one hiring me?  Is it me?  Be honest.  You can tell me. you know I can take it.  I can take it you just tell me. Why?
+28,null,null,Well I don't really know.  I don't I don't know you in like a job situation so.
+29,frustrated,frustrated,Yeah but I'm -- okay well how about personality wise?  I mean people who know me won't hire me.  Why?
+30,null,null,Wow.  I don't -- I mean do you- do you have an attitude problem when you're on the job?
+31,null,null,Maybe [garbage].
+32,null,null,Right.  Maybe you have like you know a little bit of an abrasive vibe or something.
+33,angry,angry,An abrasive vibe?
+34,null,null,I don't know.  I'm I'm just trying --
+35,angry,angry,Let me know that's -- that's fine.  You think I have an abrasive vibe whatever.  You're entitled to your opinion of course.  Maybe that's why I don't have a job.
+36,null,null,Are you getting defensive?
+37,null,null,Yeah.  That might be something you want to look at.  I mean --
+38,frustrated,frustrated,I'm not like this all the time.  I mean I don't -- I'm just frustrated right now all right.  I just want to do --
+39,null,null,Okay.
+40,frustrated,frustrated,I want to make some money.  I need to make some money.  I've got to pay some bills I owe people money.  I owe lots of people money.  I need to make some money.
+41,null,null,I understand.
+42,null,null,Yeah it's stressful.  I recognize that.
+43,frustrated,frustrated,Do you have any idea how I can make money?  I mean what can I do to make some quick money something?  Anything that's relatively within the you know law.
+44,null,null,ah.
+45,null,null,Not- Not selling pot right?
+46,frustrated,frustrated,Right probably not selling pot. I don't want to go to jail.
+47,null,null,Okay so.
+48,null,null,Fair enough.
+49,frustrated,frustrated,Because that would just really be a topper for me.
+50,frustrated,frustrated,Thank you.  Ha ha.
+51,null,null,Sorry.  So let's see.  What else?  What's available? What? Um.  Hmm.
+52,frustrated,frustrated,See what I mean?  You can't even think of anything.
+53,null,null,Well not off the top of head.  It will just take you know take a minute.  But do you have any like special skills?
+54,frustrated,frustrated,I can juggle.
+55,null,null,Well maybe we can find you something with juggling.
+56,frustrated,frustrated,I've tried.
+57,null,null,Have you checked out Craig's List and stuff?
+58,frustrated,frustrated,Yes!  Nobody wants a juggler.  I am not going to -- I'm not going to dress up like a clown. I'm not going to dress up like a freaking clown. No.
+59,null,null,What if you do kids parties? oh come on.
+60,frustrated,frustrated,No it's demeaning.  I am not a clown.  I have talent.  Clowns don't have talent.
+61,null,null,Okay.  All right.
+62,frustrated,frustrated,It's that simple.
+63,null,null,Okay.  Well fine. we won't- I won't argue with you about that.
+64,frustrated,frustrated,yeah.
+65,frustrated,frustrated,What else?  I can't -- uh.  I'm drawing a blank here.
+66,frustrated,frustrated,You and me both.
+67,null,null,That's rough.  I'm really sorry Ryan.
+68,null,null,Well um is that kinda like the side of you that you let people see when you go into these job interviews?
+69,frustrated,frustrated,No I just showed that for you [garbage].
+70,null,null,Okay.  Well that's good.  Yeah I mean you're you're- when you're happy you're a pretty personable guy.  And I don't --I don't
+71,frustrated,frustrated,I like to think so.
+72,null,null,I can't see where the issue would be. so
+73,frustrated,frustrated,see.
+74,angry,angry,Yeah well thanks for your help.
+75,sadness,sadness,I'll need it.
+1,null,null,Can I help you?
+2,null,null,Oh this- this form that you have is the wrong form.  You need to go over to the other line on the other side of the D.M.V..
+3,null,null,Right but this is the wrong form.  Somebody gave you the wrong form.
+4,null,null,Yeah.  So I can't -- I can't do anything-
+5,null,null,No but this is for um- replacements and you need a new -- whole new license as a California --
+6,frustrated,frustrated,What's the difference?  What's the difference between that form and this form?
+7,frustrated,frustrated,Sir don't get an attitude with me.
+8,angry,angry,I'm not getting a -- well you wait in this line and not get an attitude.
+9,null,null,No I understand and there are a lot of people here.  But what I'm telling you is that it's different for different states and since your getting a new license in the state of California -- You have to fill out a different form than you did.
+10,frustrated,frustrated,Well then when I showed them my I.D. before and I said I had to get a new I.D why didn't they tell me to fill out the right form?
+11,frustrated,frustrated,I don't know.  I don't know who told you.  It wasn't me.
+12,frustrated,frustrated,Well it was this girl standing right next to you.  Can we ask her why she didn't let me fill out the right form?
+13,frustrated,frustrated,You- You can ask her if you want but she's busy and she probably won't answer you.
+14,null,null,I know.
+15,frustrated,frustrated,Sir you- I mean
+16,frustrated,frustrated,Do you know how long it's gonna take me to start all over and fill out the new form?
+17,frustrated,frustrated,You can waist as much as you want
+18,null,null,Yeah.  I know it's gonna take a minute.  But you-- so you might as well get started now.
+19,frustrated,frustrated,Might as well get started now? but Just take this one.
+20,frustrated,frustrated,I can't take this one sir. this is the wrong form.
+21,frustrated,frustrated,Why can't we just -- you know what?  How about if we just pretend that I'm getting a -- renewing my California I.D. and we just don't tell anybody -- That I'm getting a new one from a different state?
+22,frustrated,frustrated,Sir please don't waste my time.
+23,frustrated,frustrated,There is nothing I can do about it.  You need to take this other form and fill it out and go stand in the other line.
+24,frustrated,frustrated,Come on!  You know -- you can't just take -- make a little exception to the rule?  I know that you guys make exceptions.  I see -- you know if I was-if I was your friend and you knew me or something like that you'd probably make a little exception for me wouldn't you?
+25,frustrated,frustrated,They're different forms we process them all different-
+26,angry,angry,Wouldn't you? Oh come on.  you just tell me.  You would make an exception for me.
+27,frustrated,frustrated,I -- there's no way I'd make an exception.
+28,frustrated,frustrated,Sir don't patronize me.  I can't make an exception.  I don't- I don't have the power to do that.  It's a different form.
+29,frustrated,frustrated,Shh...I know you've got the power to do that.
+30,frustrated,frustrated,They're processed differently.
+31,frustrated,frustrated,That's crap- You're crap.  I don't buy it.
+32,frustrated,frustrated,Sir you're gonna have to go stand in the other line.
+33,frustrated,frustrated,I'm not leaving this line until I get my new I.D.  That's as simple as it is.  I'm not leaving this line until I get my new I.D.
+34,angry,angry,I'm gonna- I'm gonna bring security over and have them escort you out.
+35,frustrated,frustrated,Well then you're just gonna look stupid because I'm just waiting for an I.D. and you're gonna make security take me out because I want my I.D.
+36,frustrated,frustrated,That's just dumb.
+37,frustrated,frustrated,But you filled out the wrong form and you're in the wrong line and you're wasting both of our times.
+38,frustrated,frustrated,I filled out the wrong form because they made me fill out the wrong form!
+39,angry,angry,Well that's unfortunate sir.  You're gonna have to go stand in the other line now.
+40,frustrated,frustrated,This is crap.  You know I don't even know why I'm in this state.  Screw California.  I'm out of here.
+1,happy,happy,You're the only one I know who loves his parents.
+2,happy,happy,I know.  It's going out of style isn't it?
+3,happy,happy,No it's good.
+4,happy,happy,It's so lovely here.  The air is sweet.
+5,happy,happy,No.  But I'm not going to stay.
+6,null,null,What?
+7,sadness,sadness,Well sort of embarrassed soon as I came.
+8,happy,happy,Well the plan was to kind of sneak up on you over a period of a week or so.  But uh- they take it for granted that we're all set.
+9,null,null,How did you know?
+10,null,null,Well from her point of view why else would I come?
+11,happy,happy,I guess this is why I came.
+12,happy,happy,Anne I love you.  I love you a great deal.  I love you!
+13,excited,excited,I- I -I have no imagination that's all I know what to say I-I'm embarrassing you. I I didn't want to tell you here.  I wanted it to be some place different some place where we could be new to each other you know.
+14,excited,excited,You feel it's wrong here don't you- this yard this chair?  I want you to be ready for me Annie.  I don't want to win you away from anything.
+15,excited,excited,Oh God- I kissed Annie! I can't believe I kissed Annie!  How long I've wanted to do this.
+16,happy,happy,I'll never forgive you.  Why did you wait so long?  All this time I've been wondering if I was a fool for thinking of you!
+17,excited,excited,Oh Annie we're going to live now.  I'm going to make you so happy.
+18,happy,happy,Not like that you're not.
+19,happy,happy,Like Larry's brother.  Do it like you Chris.  Chris what's the matter?
+20,sadness,sadness,Yeah I suppose I have been.  But it's going from me.
+21,sadness,sadness,It wouldn't work like this.
+22,sadness,sadness,It's- It's mixed up with so many other things I-
+23,sadness,sadness,Remember when I was overseas?  I was in command of the company.
+24,null,null,yeah sure.
+25,sadness,sadness,Yeah.  I lost them.
+26,sadness,sadness,how many?
+27,sadness,sadness,just about all.
+28,sadness,sadness,Oh gee.
+29,sadness,sadness,Takes a little time to toss something like that off you know because they weren't just men-
+30,sadness,sadness,for instance there's this one time.  It had been raining for several days.  And this kid came up to me and gave me his last pair of dry socks. you know He just put them in my pocket.
+31,sadness,sadness,I know that- that's not a big thing but it's just the kind of guys I had. They didn't die. They- They killed themselves for each other.
+32,sadness,sadness,I mean that exactly that-a little more selfish and they would have still been here today.
+33,sadness,sadness,And I got an ideal watching them all go down.  Everything was being destroyed see and-
+34,sadness,sadness,but it seemed to me that something new was being created at the same time a kind of responsibility man for man.  Do you understand me?
+35,sadness,sadness,And to show that-to-to bring that back onto the earth again like a- like a monument.  And everyone would have it standing behind them and- and it would make a difference for them.
+36,sadness,sadness,And then I went home and it was incredible.  It had no meaning here.
+37,sadness,sadness,It was all like some kind of bus accident to them.  I went back to work with my dad in that whole rat race again.
+38,sadness,sadness,And I felt what you said- ashamed somehow-because nobody had changed at all.  It seemed to make suckers out of a whole lot of guys. and
+39,sadness,sadness,It felt wrong to be alive-to open that bank-book; to buy that new car; to look at that new refrigerator.  I mean you can take those things out of the war but if you drive that car you have to know that that comes from the love that a man has for a man.  And you've got to be a little bit better than that!
+40,null,null,Do you still feel like that?
+41,excited,excited,I I want you now Annie.
+42,sadness,sadness,Because you can't feel like that anymore Chris you hear me?  I mean everything that you have you deserve.  And that includes me.  And your father?  Your father put hundreds of planes in the air you should be proud.  A man should be paid for that.
+43,happy,happy,Oh Annie.  Annie I am going to make you a fortune!
+44,happy,happy,What would I do with a fortune?
+1,excited,excited,Okay so big news.
+2,excited,excited,What?
+3,excited,excited,Come on what?
+4,excited,excited,I'm getting married.
+5,excited,excited,Yeah.
+6,excited,excited,No way.
+7,excited,excited,Yeah.
+8,excited,excited,Uh-huh.
+9,excited,excited,No way when? whenwhen When did it happen?
+10,excited,excited,Just a couple days ago.
+11,excited,excited,Oh my gosh.
+12,excited,excited,And you actually said yes.  I can't believe it.  I never thought you would get married.
+13,excited,excited,I know me neither.
+14,excited,excited,Oh my gosh.
+15,excited,excited,Right I thought I would be way older too. I thought I would be I be at least thirty something.
+16,excited,excited,Oh absolutely.
+17,excited,excited,Well we always said we'd be in our thirtieth when we got married. And we were going to get married to each other if we didn't by then
+18,excited,excited,Yeah.
+19,excited,excited,Thirty nine yeah.  I can't believe it.  So you broke our pact. Thanks a lot.
+20,excited,excited,Sorry.
+21,excited,excited,Thanks a lot.  Well okay you've got to tell me the details.  What did he say?  Where was it?  What happened?
+22,excited,excited,Okay.  That's okay spontaneous is great.  Spontaneous is awesome.
+23,excited,excited,Am I in it?
+24,excited,excited,Yeah.  Yeah of course.
+25,excited,excited,Cool perfect.  Another Chicagoite got to love it.
+26,happy,happy,It's so weird too right that like you can grow up so near somebody and never know them until you travel hundreds of miles away.
+27,happy,happy,I know
+28,happy,happy,Right being like oh where are you from?  The U.S.  Where in the U.S.?  Chicago.  Where in Chicago?
+29,happy,happy,[LAUGHTER] I am sil
+30,happy,happy,Knowing the neighborhood.  Yeah it's pretty bizarre.
+31,excited,excited,And now you're getting married.
+32,happy,happy,Yeah.
+33,excited,excited,That is amazing.  You must be so excited.  Did you tell your mom?
+34,happy,happy,Mm-hmm.
+35,excited,excited,Oh did she cry?
+36,happy,happy,Yeah she loves him.
+37,happy,happy,Yeah she-yeah that's my type.
+38,excited,excited,[BREATHING]
+39,excited,excited,you.. I can't believe it.  I'm so happy for you.  This is exactly what you wanted.  It's your dream come true.
+40,happy,happy,Thank you.
+41,excited,excited,The exact right guy I fully approve.  He's a wonderful guy.  We have a great time.  He can drink.  That's awesome.
+42,happy,happy,[LAUGHTER]
+43,happy,happy,[LAUGHTER]
+44,excited,excited,Yeah we all have to hang out now.
+45,excited,excited,Of course of course she will ... of course she will.  Yeah don't go and disappear like everyone else after they get married and I never see them again.  That'll make me mad.  You don't want to make me mad.  You know how I get when I get mad.
+46,happy,happy,Exactly.
+47,happy,happy,Exactly "laugh".
+48,happy,happy,Sorry.
+49,happy,happy,There's still time for that.
+50,excited,excited,Oh thanks. move here before you get married [LAUGHTER]
+51,happy,happy,[BREATHING]
+52,excited,excited,Perfect okay good. "sigh"
+53,excited,excited,I don't feel so bad then.  Well I'm excited for you.
+54,excited,excited,I know. I can't believe it.
+55,excited,excited,I can't believe it.
+56,excited,excited,I am very excited
+57,happy,happy,So I was one of the first ones? That makes me feel so important.
+58,happy,happy,I have to think about moving now.  We're going to move in together
+59,excited,excited,Oh yeah of course.
+60,happy,happy,I think it's a good idea to live together before you get married.
+61,excited,excited,I think so too.  Are you going to get a house or-
+62,happy,happy,I don't want a house I mean just-
+63,happy,happy,L.A. apartment is fine.
+64,happy,happy,Two artists though.  We're bound to be poor forever.
+65,happy,happy,yeah.
+66,happy,happy,yeah.
+67,happy,happy,Definitely not for a while
+68,happy,happy,yeah.
+69,happy,happy,[LAUGHTER] Good luck.
+70,happy,happy,[LAUGHTER]
+71,happy,happy,Oh thanks.  I'll need it.
+72,happy,happy,You won't have trouble You won't have trouble.
+73,happy,happy,Oh thanks you're too nice
+74,happy,happy,just being polite now
+75,happy,happy,You should just approach her like that.  Hey will you bear my children?
+76,happy,happy,because I am not getting married.
+77,happy,happy,Exactly [LAUGHTER] I think that'll go over great don't you?
+78,happy,happy,Yeah totally.
+79,happy,happy,That's what girls like right?
+80,happy,happy,Total turn on.
+81,happy,happy,Would you mind popping out a few for me?
+82,happy,happy,[LAUGHTER]
+83,happy,happy,That'd be great thanks.
+1,sadness,sadness,Brian I need help.
+2,null,null,Babe I don't know what to tell you.  Don't give up.
+3,null,null,Well of course not but what are you going to do if you move back home?  Are you going to be able to find a job there?
+4,frustrated,frustrated,I don't know.  I mean what am I supposed to do? I've It's not for lack of effort.  I've been trying.
+5,frustrated,frustrated,I wish I had some answers for you babe.  I mean-I don't know what to tell you.
+6,frustrated,frustrated,How did you get a job?  What am I - What am I supposed to do?
+7,null,null,I went to school and I got my degree.  And I got a job.
+8,frustrated,frustrated,I mean I just don't--I don't know.  If you don't have a lot of qualification where do you - where do you find work?  It's like L.A. is so frustrating because if you don't know somebody you can't -you can't get a job.  It's impossible.  It's totally discriminatory.  You have to know somebody.
+9,null,null,Nothing's impossible.
+10,frustrated,frustrated,It's not fair.
+11,null,null,You have to be willing - You have to be willing to start you know at the bottom and work your way up. and
+12,frustrated,frustrated,That's fine.  I'd be willing to start anywhere.  I can't get a job.
+13,frustrated,frustrated,I
+14,frustrated,frustrated,I mean on six seven and five an hour does not - does not pay the bills I mean.
+15,null,null,No it doesn't pay the bills but it would pay something.  And it would help you get somewhere else.
+16,angry,angry,I still can't live on in six seven and five.  It's not possible in Los Angeles.  Housing is too expensive.
+17,null,null,and No I understand but you've got to start somewhere.  It's better than nothing and that's all you have.  You have nothing right now.
+18,frustrated,frustrated,I mean I can do the McDonald's thing for a while as humiliating as that is but I mean then what?  I mean You can't exactly move up in that kind of industry.
+19,null,null,Wait You can move up.  There's management programs in McDonalds and things like that.
+20,frustrated,frustrated,Oh come on that's not what I envisioned for myself. Honestly would you settle for being a manager at McDonalds?
+21,null,null,[GARBAGE] No I wouldn't but I--
+22,frustrated,frustrated,This is humiliating.
+23,null,null,Well you know what?  Life gets humili... humiliating at times.
+24,frustrated,frustrated,No I don't I don't want to accept that.  I think that's bullshit.
+25,null,null,Well what are you going to do about it to make it different?
+26,frustrated,frustrated,I don't know.  I feel like I've tried everything.
+27,null,null,Have you?  There's got to be something else.
+28,frustrated,frustrated,Three years of going out every day--every day--and looking for a job and being constantly denied everywhere I go.
+29,frustrated,frustrated,I don't know what to tell you babe. Maybe- Maybe you're right.  Maybe you do have to go someplace else.  I don't know maybe it's just not meant to be here.  I mean I want you to-I don't want you to give up but I mean I don't want you to move away but at the same time I don't like seeing you like this.
+30,sadness,sadness,I'm just so scared to start over I mean.  I put so much time and energy into being here.
+31,sadness,sadness,Where am I supposed to go?  I mean like what?
+32,null,null,If it's rent or something like that I mean I can help you out a little bit if- if that will help you you know stick with it.
+33,sadness,sadness,I don't know. Maybe I can take out a loan. I just- I need prospects and I don't feel like I have any.
+34,null,null,Well just don't give up. And there's- you know You never know something might be around the corner tomorrow.
+35,null,null,Well you know I'm not going to let you starve.
+36,sadness,sadness,I'm just worried.
+37,frustrated,frustrated,It's three years.
+38,frustrated,frustrated,I understand but you know what you've been negative for three years.
+39,null,null,It's the way it seems to me.  You started complaining about not being able to find a job the first day you went out and didn't find a job.  And I'm not saying like and not trying to you know put you down or anything it's just that-
+40,sadness,sadness,That's really hard to hear.
+41,frustrated,frustrated,But it's true babe.  You've got to be more positive about things.  Like- Have some faith in yourself.
+42,sadness,sadness,I feel like I have faith and now faith is running thin because there is no money.
+43,null,null,Well exactly.  Money is not everything.
+44,frustrated,frustrated,Brian I don't think you have a concept of what I mean by- by money.  I don't mean money like oh I can't go get my hair and my nails done today I mean like I can't eat.
+45,frustrated,frustrated,You can.
+46,null,null,You know I would never let that happen.  I wouldn't let that happen.
+47,frustrated,frustrated,I just-- I
+48,null,null,You can always stay with me if you- if you have to stay with me for a while and get yourself back up on your feet again.  You know I'm not just going to you know just throw you to the wolves or something like that.  If there's any way I can help you I will.
+49,null,null,But you have to keep trying.  You can't give up.
+50,frustrated,frustrated,Yeah I don't intend to stop trying.  I just--I don't when is when enough is enough.
+51,null,null,And you've got to think--well ask yourself why are they not hiring you?
+52,frustrated,frustrated,I don't know.
+53,null,null,I mean are you going in for interviews?
+54,frustrated,frustrated,Yeah and I look nice and I'm you know--
+55,null,null,Are you presenting-
+56,frustrated,frustrated,charismatic.
+57,null,null,putting your best foot forward? or you
+58,frustrated,frustrated,yah to-totally and I'm not--
+59,null,null,Do they seem to like you? I mean Can you get any read from them?
+60,frustrated,frustrated,Yeah I always think so but I- I just feel like it's a lot of lip service everywhere I go.
+61,null,null,Have you ever called them back and asked why you didn't get the job?
+62,frustrated,frustrated,Yeah I follow up.
+63,null,null,Do they give you any specifics as to why they didn't go with you?
+64,frustrated,frustrated,It's just like- it's a matter of-
+65,frustrated,frustrated,not tall enough not pretty enough not--you know how this place is.
+66,null,null,Yeah I understand. maybe What jobs are we talking about?
+67,frustrated,frustrated,I mean anything.
+68,null,null,Like- What's your ideal job?  What do you want to do?
+69,null,null,Well I'd like to be a working actor.
+70,null,null,Of course.
+71,null,null,But um--
+72,null,null,Everyone wants to be a working actor but they all work at something else.
+73,null,null,Yeah.
+74,null,null,So what's the something else?
+75,null,null,Bartending catering.
+76,null,null,You can't get a catering gig?  Well I can call some friends.  I- Well I did call some friends before but you went in once and then never went back.
+77,sadness,sadness,Would you be willing to make some more calls on my behalf? I won't--I won't make you look bad.
+78,null,null,If I- If you- Will you stick with it?
+79,null,null,yeah.
+80,null,null,Okay.  Okay I'll call some people.
+81,null,null,Thank you.
+82,null,null,But you've got to keep looking for other stuff. You've got to do it on your own too.  Okay?
+83,null,null,I will I will.
+84,null,null,You know I'll always help you.
+1,excited,excited,So guess what.
+2,excited,excited,what
+3,excited,excited,I got into college.
+4,excited,excited,Shut up.  What'd you get where'd you get accepted to? please
+5,excited,excited,U.S.C..
+6,excited,excited,Oh sweet.
+7,excited,excited,yeah.
+8,excited,excited,So you're not going to leave me.
+9,excited,excited,No.
+10,excited,excited,oh good good good good good good.
+11,excited,excited,I'll stay in town.
+12,excited,excited,Are you going to live on campus?  Where are you going to live?
+13,happy,happy,Uh- I don't know.
+14,excited,excited,Uh! stay over here.  Like travel to school. because you are so close to me
+15,null,null,Well I don't want to I don't want to live with my mom.
+16,happy,happy,Okay you're right you're right you're right  right.  Maybe we should get a place together.
+17,excited,excited,Whoa.  What an idea.  Where would you want to live?
+18,excited,excited,That'll be awesome.
+19,excited,excited,I don't know.  Well.  I wouldn't mind living by the U.S.C. campus you know but I'm not going to go to school right now so.
+20,happy,happy,I know.
+21,excited,excited,But I'd love to go all the US- all the U.S.C. parties and do all that crazy stuff with you.
+22,excited,excited,Whoa this is going to be so much fun.
+23,excited,excited,it is going to be so much fun. Yes.
+24,excited,excited,Uh! I'm so happy that you're not going to go away.
+25,excited,excited,Thank you. I know I'm really really really excited.
+26,excited,excited,Oh I bet you're going to love it too.  You always wanted to go to U.S.C..
+27,excited,excited,I know they have a really really great program for what I want to do.
+28,excited,excited,You're going to have so much fun.  And there's lo- tons of people you're going to meet so many people I'm going to meet so many people too because we're going to be there together.
+29,excited,excited,Can we for real live together?
+30,excited,excited,Sure why not.  I don't know why not I'm not doing anything I have no plans I could live anywhere I want.
+31,excited,excited,awesome.
+32,excited,excited,So should we get a place near campus? or-
+33,excited,excited,That'll be great. That'll be great.
+34,excited,excited,We should try to find like a party spot though like you know where there's going to be a lot of parties where there are cool people though.  Do you know any people that might be out there?
+35,excited,excited,okay.
+36,excited,excited,Yeah me either.
+37,excited,excited,[garbage] I know I know I know we'll figure it out.  Right?  [garbage] it is going to be so much fun.
+38,excited,excited,It's going to be ridiculous.  It's going to be so cool.
+39,excited,excited,You can't make fun of me because I'm not going to school though because I'm going to be working though.
+40,excited,excited,[LAUGHTER] Oh I'm going to be working too I mean.
+41,excited,excited,I- I hear the same.
+42,excited,excited,Woo- I I do.
+43,excited,excited,I don't know how I feel about that but-
+44,excited,excited,I know exactly how you feel about that. I think you feel really excited about it.  I know you are. I can tell. I know you.
+45,excited,excited,oh yeah.
+46,excited,excited,oh yeah.
+47,excited,excited,You're a wild and crazy woman.
+48,excited,excited,[LAUGHTER] Oh it'll be awesome that's for sure.
+49,excited,excited,Uh huh it will be awesome.
+50,excited,excited,Better than if I'd picked up and moved to Boston.
+51,excited,excited,living near the U.S.C. campus by myself not going to school there. just really pathetic and sad.
+52,excited,excited,[LAUGHTER] by yourself.
+53,excited,excited,you'd be that kid
+54,excited,excited,living near campus and not going to school.
+55,excited,excited,Exactly.  Mooching off of all like the college experiences that would've been me but you have saved me from that disaster. Thank you. Thank you very much.
+56,excited,excited,[LAUGHTER]
+57,excited,excited,Oh it's going to be so much fun.
+58,excited,excited,yeah.
+59,excited,excited,Well congratulations. and to me too because now I get to-have-
+60,excited,excited,We should go apartment shop-er-hunting.
+61,excited,excited,That's a good idea.
+62,excited,excited,Let's go tomorrow.
+63,excited,excited,Tomorrow tomorrow tomorrow-
+64,excited,excited,yeah.
+65,excited,excited,Good.  We'll have to have one soon you're going to have to go to school in a couple of months.
+66,excited,excited,Woo-
+67,excited,excited,Oh God it's awesome... There's going to be tons of places. [garbage]
+68,excited,excited,exciting.
+1,excited,excited,Well so what do you think?
+2,null,null,About what?
+3,excited,excited,What I was just saying.
+4,null,null,It's ridiculous.
+5,frustrated,frustrated,It certainly is not.  It's slightly exaggerated scientific fact.
+6,frustrated,frustrated,I'm sorry.  It's just it's it's just fish to me.
+7,null,null,uh Carla Can I ask you a question?  no don't get upset but are you having your period?
+8,angry,angry,God damn it Augie.  Seriously you always ask me that.  Why do you ask me that?  I hate it.  It's so insulting.
+9,frustrated,frustrated,What's bugging you then?
+10,frustrated,frustrated,I just - We just have different ideas of what this night is suppose to look like.
+11,frustrated,frustrated,It's not that complicated.  We come down here the grunions arrive they do their little fish thing.  We say ooh awe look at the little fish.  And then they go home and we go home.
+12,frustrated,frustrated,We We don't ever.  Have we ever?
+13,frustrated,frustrated,We've missed them twice.  That's hardly ever.
+14,angry,angry,Twice is every time we've tried that's ever
+15,angry,angry,No we won't.  It's like waiting up for Santa Clause or something.  I feel like as though my whole life is going to be standing on the beach waiting with my eyes opened expectantly my hands clasped neatly in front of me waiting for fish to show up.  And the fish will not show up.
+16,frustrated,frustrated,Okey They're just fish.  It's nothing to get traumatized over.
+17,frustrated,frustrated,You don't understand anything I am saying.
+18,frustrated,frustrated,No of course not.
+19,sadness,sadness,I did want to see it.  I always want to see it.  I just- I keep thinking this will be the time and it never is.
+20,frustrated,frustrated,I'm trying to work this backwards.  But I can't seem to pinpoint the time where everything went wrong here.  Okay so --
+21,frustrated,frustrated,you were fine on the phone call with Marge eating dinner was finetalking- uh washing the dishes no problem.  All right.  So I'm taking a shower you're watching TV the news and you say the grunions are running tonight and I say Great let's go.  I'm feeling lucky.  And so all right and I'm putting on my coat I'm putting out the animals I'm pulling the car out of the garage.
+22,sadness,sadness,Do you remember the first time that we came to see the grunion?  It was about four years ago right after we got married.  We thought I was pregnant.  We had a bottle of champagne and no glasses.  You asked me to dance.  We took off our shoes.  And while we were dancing you said the most intimate things to me right in my ear so I could feel them as much as hear them.
+23,sadness,sadness,And I remember thinking to myself finally.  I am as happy as I am supposed to be.
+24,sadness,sadness,Dancing barefoot in the sand drinking champagne out of the bottle.
+25,null,null,It was in the car right?  When we were passing Knickerbocker Liquor Locker you said Let's stop and get champagne. and I said that times a wasting or something like that right?  You wanted it to be like it was before right?
+26,sadness,sadness,I would rather not remember some things.  I'd rather not hope for something.
+27,sadness,sadness,No.
+28,sadness,sadness,No.
+29,sadness,sadness,No.
+30,frustrated,frustrated,What you want me to blow in your ear?
+31,frustrated,frustrated,Do you want to get married again?- What?  What do you want a divorce?
+32,frustrated,frustrated,A vacation?
+33,sadness,sadness,No.
+34,frustrated,frustrated,A poodle a backrub a spa a suicide pack?  What Carla what the hell do you want?
+35,sadness,sadness,I just want- I just want things to turn out the way they are supposed to.
+36,angry,angry,Well welcome to the human race.  Do you think this is what I had planned?  Do you think that when I proposed that I had this great fantasy going that four years down the road we would end up arguing on the beach over some fish?
+37,angry,angry,Do you think that I thought there would be times when you would look at me like I was used Kleenex or I would look at you and think good God when's the next flight to Alaska?  No.  No I'm just like you. I thought it would all be like peaches and roses and sand in our toes and wind in our hair and the fish would always come.  And the bills would magically pay themselves.  And we'd have three fat rosy kids.  But ha ha baby the jokes on us!
+38,angry,angry,Because you know what you get Carla?  You know what you get?  This.
+39,frustrated,frustrated,Right.
+40,sadness,sadness,But this isn't at all what I wanted it to be.
+41,sadness,sadness,Now I know.  Me either
+42,sadness,sadness,This is just this.  I mean it's a lot and everything.  But it's not you know something else.  Am I making any sense?
+43,sadness,sadness,I'm trying the best I can.
+44,sadness,sadness,I know that Augie.  I do.  I know that. And and I know that this meant a lot to you and and it's special you know with the sand and the moon but.
+45,sadness,sadness,But I just couldn't help thinking about being somewhere else.
+46,sadness,sadness,Maybe if you're with somebody else too?
+47,sadness,sadness,I didn't say that.
+48,sadness,sadness,No I know.  But I know I don't make you happy.
+49,sadness,sadness,For heavens sake Augie whatever I am doing I'd rather it be with you.
+50,sadness,sadness,Yes.  Don't you know that? I mean You're probably the one you wishes you were with somebody else somebody who didn't take everything so hard and who knew how to enjoy herself.
+51,happy,happy,Actually now that you mention it no.  I don't.
+52,happy,happy,I don't know.  I think this is a pretty good spot.  I mean look at the view of the moon from here.
+53,happy,happy,Yes I did notice that.  It does look really beautiful over the water.  Big old white moon.
+54,happy,happy,Oh well look what we've got here.
+55,happy,happy,Well it isn't champagne.
+56,happy,happy,No.  I'm beginning to think you might be right. I think  this might be the spot after all.  Augie I'm sorry.
+57,happy,happy,Or not.
+58,happy,happy,Or not.
+1,null,null,You knew there was nothing in that.
+2,null,null,Only a trivial little broach.
+3,null,null,You worked the whole thing up in your jealous imagination.
+4,angry,angry,You must admit that he was in love with you wasn't he?
+5,null,null,maybe just a little but--
+6,angry,angry,You let him kiss you.  You said you did.
+7,null,null,And what of it?
+8,frustrated,frustrated,What of it?
+9,null,null,Well I- he got a lot of pleasure out of it and it didn't hurt me.
+10,angry,angry,Well that's a nice point of view I must say.
+11,frustrated,frustrated,I'm growing quite tired and bored of this conversation.
+12,null,null,So am I bored stiff.  Would you like some brandy?
+13,null,null,I'll have a little I think.
+14,null,null,I don't see why you want any.  You've already had three glasses.
+15,null,null,Well it seems silly to go on and on in such a thing.
+16,null,null,It's becoming a habit with you.
+17,angry,angry,You needn't be so grand simply because you don't happen to want any at the moment.
+18,angry,angry,Really Amanda.
+19,null,null,Just making myself fascinating for you.
+20,angry,angry,Oh that reply has broken my heart.
+21,frustrated,frustrated,Oh yes it is.
+22,angry,angry,It's a pity you didn't take a little more brandy.  It might have made you a little less disagreeable.
+23,angry,angry,Um It doesn't seem to have worked such wonders with you.
+24,angry,angry,adder don't snap they sting.
+25,angry,angry,They sting.
+26,angry,angry,They snap.
+27,angry,angry,I don't care if they bark and roll around like hoops okay.
+28,frustrated,frustrated,[BREATHING]
+29,angry,angry,Did you see much of Peter Burden after the divorce?
+30,null,null,Yes I did quite a bit.
+31,angry,angry,I suppose you let him kiss you a good deal more then.
+32,angry,angry,Mind your own business.
+33,angry,angry,You must have a riotous time no restraint at all very enjoyable.  I mean you never had much anyway.
+34,angry,angry,Oh dear you really are becoming quite insufferable.  I would imagine it's because you're drunk.
+35,frustrated,frustrated,Oh You are so insufferable.  Do you stop.
+36,frustrated,frustrated,Oh This is very interesting.  We- we might get a splendid debate going about this intemperate tots.
+37,angry,angry,Not very funny dear you better have some more brandy.
+38,frustrated,frustrated,Ugh.
+39,frustrated,frustrated,You better turn that off I think.
+40,angry,angry,Why?
+41,angry,angry,There aren't any people upstairs; it's a photographer's studio.
+42,angry,angry,They're away in Tunis.
+43,angry,angry,Turn it on again.
+44,angry,angry,Fine if you insist on being completely insolent.
+45,angry,angry,Turn it off.  It is driving me mad.
+46,angry,angry,Well do try to control yourself darling.
+47,angry,angry,Turn it off.
+48,angry,angry,You really do need to develop uh a clearer head.
+49,angry,angry,Turn it off.
+50,angry,angry,I- I hate you.
+51,angry,angry,Amanda-- Listen- Listen-
+52,angry,angry,I hate you.
+53,angry,angry,No no.  I'm tired of listening to you.  You're boorish and idiotic and completely overbearing.
+54,angry,angry,Very music- amusing indeed.
+55,angry,angry,Yeah very amusing.  Let me go.  I'm getting out of here.  I can't believe I intended to marry you.
+56,angry,angry,You are a vile tempered loose living wicked little beast and I never want to set eyes on you again.
+57,angry,angry,Oh marry you again?  I must have been insane.  What was I thinking?  I mean you're completely outrageous.
+58,angry,angry,Shut up shut up.  I wouldn't marry you again if you came crawling to me on bended knee. You're a mean evil-minded little vampire and I hope to God I never set eyes on you again.
+59,angry,angry,Beast; brute; cad; whore
+1,excited,excited,What time is it?  They're supposed to run around midnight.  Oh this is great isn't it?  Look at the night we've got here.  It couldn't be better.  Actually I wanted to go a little further up the coast you know to get away from all the lights and the people.  I was afraid we might miss it though so how are you doing?
+2,sadness,sadness,Fine.
+3,excited,excited,What's that? Is that- Wait is that foam?  I can't even tell.  Oh Actually I guess if I can't tell then it probably isn't it is it?  It will probably be unmistakable don't you think?
+4,excited,excited,This is great.  How are you doing?  Oh no.  Oh do you know what I did?  I forgot the flashlight.  How could I be so stupid?  I forgot the flashlight.
+5,null,null,What flashlight?
+6,excited,excited,The flashlight.  The silver one.  There's only one isn't there?  Stupid.
+7,excited,excited,Oh no of course our flashlight.  Me flashlight is to you flashlight naturally.
+8,excited,excited,How could we have forgotten it? Well I hope the moon stays out.  I wonder do they always run during a full moon?  I can't remember was the moon full last year do you remember?
+9,excited,excited,Are you cold?  Do you want my jacket?  We should have brought the blanket our blanket.  Oh this is great.  I didn't even think to bring a six pack.  Oh a six pack would be just the ticket right about now.
+10,excited,excited,I can't believe I forgot.I'm like a little kid.  I'm surprised I made it out of the house with my fly zipped. Oh [LAUGHTER]
+11,excited,excited,Oh I wonder if they can hear me or if they can feel the vibrations when we move around in the sand. or something
+12,excited,excited,Do you want my jacket?
+13,frustrated,frustrated,Oh
+14,excited,excited,Honey it's a natural phenomenon.  I mean this kind of thing only happens once a year.  It's a great opportunity.
+15,excited,excited,I mean Think about people in Kansas they've got to get like you know plane tickets and hotel reservations just to see this.  We're just forty minutes away.  It's just too good of an opportunity to pass up.
+16,frustrated,frustrated,Pass what up?  It's It's just little fish and they swim up on the beach and they flop around and they swim away and then they die.
+17,excited,excited,Yeah but all that time on the beach is the highlight of their little lives.  You know
+18,excited,excited,and all that about flopping around it's like laying eggs or what do you -- spawning or mating or something like that.
+19,excited,excited,I mean this is a big night for these guys.  You know life's last orgy.
+20,frustrated,frustrated,What are you so excited about.  This isn't rocket science this is just fish.  Fish nobody even eats.
+21,frustrated,frustrated,Yeah they do.
+22,frustrated,frustrated,Augie.
+23,excited,excited,All right.  But they are fish that do something no other fish do.  Like the swallows were turning into Capistrano or Lemmings jumping off the cliffs you know like that. There's- There's magic here and mystery.  And a little bit of the unexplainable.  You know I can't see how you could not be interested.
+24,sadness,sadness,I'm just not.
+25,frustrated,frustrated,For real?
+26,frustrated,frustrated,I don't get it.  I mean the first time we came you said it was the best night of your life. And last year I remember distinctly you were so excited about coming that you stubbed your toe toe pushing me out the door and you didn't even notice until you got in the car.
+27,frustrated,frustrated,Well if you also remember last year we- our shoes got wet I got sand in my panties we had a big argument you had a sore throat and we didn't see the grunion.
+28,frustrated,frustrated,We didn't see them the first time either.
+29,excited,excited,Look there.  What is that?  Is that -- Oh No that's seaweed.
+30,excited,excited,Oh this is great.  I wouldn't miss this for the world. I mean think about this I know you're not interested but just think about this for a second;
+31,excited,excited,somewhere out there is a giant mass of silver fish all swimming in this direction.  They don't know why they're doing it.  We don't know why they're doing it.  They didn't- It wasn't a decision.  No one took a vote.  Nobody sent them an invitation or a map or anything like that.  It was just some internal time release fire cracker that went off. And all as one they turned around and formed this giant line as long as the California coastline and they just started swimming.  They are swimming right now at this very moment.   And And-
+32,excited,excited,And it's single mindedness with no mind. It- It's urgency it's pure urge.  I mean they didn't make any decisions.  They don't ask any questions.  They don't give it a name
+33,excited,excited,they just all as one turn around and start swimming to this very point where we are standing now for one last celebration of sex and death. God it's giving me Goosebumps.  Look at all the hairs that are standing up.
+34,excited,excited,Well so what do you think?
+1,sadness,sadness,What's he going to say?  Maybe we should tell him before he sees it.
+2,sadness,sadness,When?  I was the first one up.  He was still in bed.  How could he have seen it?
+3,sadness,sadness,Did you talk to him?
+4,sadness,sadness,No.  I figured it was best to leave him alone.
+5,sadness,sadness,He cried hard?
+6,frustrated,frustrated,You know that Larry's not coming back and I know it.  So why do we go on letting him think that we believe with him?
+7,frustrated,frustrated,What do you want to do argue with him?
+8,frustrated,frustrated,I don't want to argue with him.  But it's time he knows that nobody else thinks that Larry's alive anymore.
+9,angry,angry,Why should he dream about him walking around looking for him at night?  Do we contradict him?  Do we say straight out that we don't have any hope anymore that we haven't had any hope for years now?
+10,frustrated,frustrated,We have to say it to him.
+11,frustrated,frustrated,how are you gonna prove it?  Can you prove it?
+12,angry,angry,For Gods sake!  Three years!  Nobody comes back after three years.  That's insane!
+13,frustrated,frustrated,To you it is and to me but not to him.  Now you can talk yourself until you're blue in the face Chris but there's no body and there's no grave.  So where are you?
+14,angry,angry,The trouble is the God damn newspapers.  I mean every every week a kid turns up missing like longer than Larry.
+15,frustrated,frustrated,All right.  All right mom.  Just listen.  You know why I invited Annie her don't you?
+16,null,null,You know.
+17,null,null,I'm going to ask her to marry me.
+18,frustrated,frustrated,It's not just my business.
+19,angry,angry,Well what do you want me to do?  You're old enough to make- to know your own mind.
+20,frustrated,frustrated,So it's okay then?  I should just go ahead and do it?
+21,angry,angry,Oh so it isn't just my business?
+22,frustrated,frustrated,I'm just saying.
+23,angry,angry,You infuriate me sometimes.  Do you know that?  God.
+24,angry,angry,Isn't it your business too if dad -- if I tell dad and he throws a fit about it?  I mean you have such a talent for ignoring things.
+25,angry,angry,I ignore what I got to ignore.  I mean the girl is Larry's girl.
+26,angry,angry,She is not Larry's girl!
+27,angry,angry,From your father's point of view he's not dead and she's still his girl.  Now you can go on from there if you know where to go Chris but I don't know.  So what can I do for you?
+28,frustrated,frustrated,I don't know why it is but everytime I reach out for something I- that I want I have to pull back because I might hurt somebody else.  My whole bloody life; time after time after time.
+29,null,null,Well you're a considerate fella there's nothing wrong in that
+30,angry,angry,To hell with that!
+31,null,null,Have you asked Annie yet?
+32,null,null,Well what if she feels like your father?  And how do you know she will marry you?
+33,null,null,Well the trouble is you never saw enough women.
+34,angry,angry,So what?  I'm not fast with women.
+35,frustrated,frustrated,Well I just don't see why it has to be Annie.
+36,frustrated,frustrated,Because it is.
+37,frustrated,frustrated,Well that's a good reason.  But that doesn't mean anything at all.  I mean you haven't seen her in five years.
+38,frustrated,frustrated,I know her best all right?  I don't know.  I grew up next to her.  When I think of somebody for my wife these days I think of Annie.  What do you want a diagram?
+39,frustrated,frustrated,No.  I don't want a -- look your father thinks he's coming back Chris.  You marry that girl and you're pronouncing him dead.  Now what's going to happen to your father; do you know?  Because I don't.
+40,angry,angry,I've given it three years of thought.  I hoped that if I'd waited dad would have forgotten about it by now.  And we could have like a normal wedding and everybody happy.
+41,angry,angry,But if that can't happen I'll just have to get out.
+42,angry,angry,I'll get out.  I'll go get married and live someplace else.  I don't know maybe New York.
+43,angry,angry,Are you crazy?
+44,angry,angry,I have been a good son for too long.  A good sucker.  I'm through with it.
+45,angry,angry,Yes.  On this I would.
+46,angry,angry,Well you help me stay here.
+47,angry,angry,All right.  But don't think like that.  Because what the hell did we work for Chris?  I mean this whole thing it's all for you.
+48,frustrated,frustrated,I know that mom.  Just you help me stay here.
+49,angry,angry,Just don't think that way.  Do you hear me?
+50,frustrated,frustrated,I don't understand you do I?
+51,frustrated,frustrated,No you don't.  I'm a pretty tough guy.
+52,frustrated,frustrated,Yeah I can see that.
+1,excited,excited,Guess what?
+2,excited,excited,What?
+3,excited,excited,I got it.  I got accepted to U.S.C..
+4,excited,excited,Oh for real?
+5,excited,excited,Yes! I just found out today.  I just got the letter.
+6,excited,excited,ohI'm so glad.
+7,excited,excited,I know. I know.  I'm so excited.
+8,happy,happy,What are you gonna study?
+9,excited,excited,oh Theater. yeah yeah.
+10,happy,happy,Really? Are you doing the M.F.A. program?
+11,excited,excited,yes.
+12,excited,excited,oh-
+13,happy,happy,I heard it's so tough to get into.
+14,excited,excited,It's exactly what I wanted.
+15,happy,happy,That's awesome.
+16,happy,happy,I worked really hard I'll say I worked really hard. You know I I'm not bragging or anything like that. But-
+17,excited,excited,Yeah that's awesome.
+18,null,null,No.
+19,excited,excited,Uh huh.  Yes seriously for years.
+20,excited,excited,Finally.  I'm so excited.  We're gonna -- well I'll be here.  We're still gonna be able to see each other.
+21,excited,excited,I know.  I know.  I'm- I'm definitely -- I realize [LAUGHTER].
+22,excited,excited,What are you wait what are you doing?
+23,happy,happy,Um- I'm gonna be studying at U.S.C. too.
+24,excited,excited,Perfect!  Oh my God.  Are you staying are you going to live on campus?
+25,excited,excited,Yeah.  Totally- Well where are you going to live?
+26,excited,excited,We are gonna have a great time.
+27,excited,excited,[garbage] I'm going to live on campus.  I mean well around campus anyway.  Yeah housing around campus.
+28,null,null,Oh yeah.
+29,null,null,Good tradeoff
+30,excited,excited,I just want to be really close to things you know.  I know it's not exactly the best neighborhood in the entire world. But uh-
+31,null,null,I don't- I don't think it's that bad.
+32,excited,excited,I don't- you know I feel the same way you know what I mean.  And everybody says a lot of other crap you know they don't know what they are talking about anyway.
+33,null,null,yeah.
+34,excited,excited,They don't live here.  They don't know right?
+35,null,null,Yeah. I think it's really also if you- if you consider yourself like us and them kind of thing- If you think you're part of your community then --you going to like it more
+36,excited,excited,yeah.
+37,excited,excited,Exactly.  You make it what you make it. You know? Right? And I'm gonna make it so freaking awesome.
+38,excited,excited,Right Exactly.
+39,excited,excited,Oh I'm so glad.
+40,excited,excited,yeah.
+41,happy,happy,So when do you know like where you're gonna live? and-
+42,excited,excited,Well I don't know.  I've got to go look for a place.
+43,null,null,Oh wow.
+44,excited,excited,Yeah yeah.  I- I don't- I don't know.  Do you have any suggestions?
+45,null,null,Um-
+46,excited,excited,You know the area better than I do.
+47,null,null,Yeah.  I mean I know I know like the- the housing surrounding the campus pretty well.
+48,null,null,Um- How many people do you want to live with?
+49,excited,excited,Not a lot.  I mean I wouldn't want to live with more than three other people.  So like four of us total right?
+50,null,null,All dudes?
+51,excited,excited,I don't care. I don't care.
+52,null,null,Um- I think I have some friends.
+53,excited,excited,yeah?
+54,null,null,yeah.
+55,excited,excited,That would be perfect.
+56,happy,happy,There's actually a friend of mine is um- moving out of her place and her place is amazing-- And it's really cheap.
+57,excited,excited,Really?
+58,excited,excited,Really?
+59,null,null,yeah.
+60,excited,excited,Cheap is exactly what I need- Because I have no money at all.
+61,null,null,Okay.
+62,excited,excited,But uh--
+63,excited,excited,Loans scholarships I've got a lot of scholarships-- Yeah yeah. I'm- I'm half Native American so I get all those scholarships too. yeah.
+64,happy,happy,You've got a lot- oh awesome.
+65,happy,happy,Oh cool.
+66,excited,excited,So it comes Indian like. And you know I'm kind of smart so.
+67,excited,excited,Yeah.
+68,null,null,totally.
+69,happy,happy,good for you.
+70,happy,happy,And yeah well I mean basically I just applied for any and every possible scholarship and grant that could come by so I can go.
+71,null,null,the way to do it.
+72,excited,excited,Yeah yeah yeah.  And it's gonna work out.  I'm gonna be able to pay for it I'm gonna go I mean I'll have a little debt in the end.  But I don't care.
+73,excited,excited,Wow are you so excited?
+74,excited,excited,It's just you know a dream come true.  How could you not be excited about a dream come true?
+75,excited,excited,You're gonna be so busy too. You're going to have to work so hard.
+76,excited,excited,Oh I know I know.
+77,excited,excited,But I'm so looking forward to being so busy. You know what I mean?  It's the kind of busy you've got to love right?
+78,excited,excited,Because you're doing something you love.  That's the kind of busy you want.  I want to be able to do that for the rest of my life.  Be that kind of busy.
+79,excited,excited,All right.  Wow.  So exciting.
+80,excited,excited,I had to tell you right away.  I knew you'd be excited.
+81,happy,happy,We'll have fun.
+82,happy,happy,Yeah.  We'll have so much fun.
+83,excited,excited,Great.  Okay.
+1,excited,excited,Guess what?
+2,null,null,what?
+3,excited,excited,I did it I asked her to marry me.
+4,excited,excited,Yes I did it.
+5,excited,excited,When?
+6,excited,excited,Oh my god it was just last weekend.
+7,excited,excited,Oh what how- where how did you do it?
+8,happy,happy,She--well she said yes first of all let me say that right off the bat. Well I would like to assume too.  But you never know these things right?
+9,excited,excited,Okay good. I I assumed.
+10,happy,happy,oh-
+11,happy,happy,I did it up at Yosemite.  We went camping right like we usually do.  You know we go camping up there all the time.  But um- the waterfalls had died down a little bit you know. And so uh- we-I had her climb up.
+12,happy,happy,You know- we did some- you know some rock climbing up the waterfalls and went up to this little pool that was up there.  And then I- it's great. Um- You have to climb this little rock-
+13,null,null,uh-huh
+14,happy,happy,and you can climb it and it's covered in algae you know. So I wanted her to climb it to go take a picture like back in this little waterfall area and she got back there and she took her picture. And then I had her come back.  And I was going to do the same thing.
+15,happy,happy,Well instead I climb up on the rock and like I- I didn't do it -- well I did it on purpose. I made it look like I accidentally did it.  I slipped down into this pool of water right?  And she freaks out because I slide all the way down this rock.  And um-
+16,happy,happy,And I pop up out of the water -- and I had planned it already you know? I pop up out of the water and I [BREATHING] and I like grab her hand you know.  and that In my hand I've got the ring.
+17,happy,happy,And she's like- she feels it you know and she doesn't know what it is.  And she you know helps me get out and I won't let go of her hand.  And she's like what are you doing?  I and said You saved my life now will you marry me?
+18,excited,excited,Oh my God.  That's so dramatic.
+19,happy,happy,Wasn't that great? I didn't want it to be too hokey.but- but- She liked it.She liked it.
+20,happy,happy,so cute.
+21,happy,happy,No it's totally original though.
+22,happy,happy,oh.
+23,happy,happy,Yeah.  And she said yes.  And she cried of course.
+24,happy,happy,Oh Then you had a whole weekend of camping?
+25,happy,happy,Yes.  We did that in the beginning exactly.  So we had so we just had you know good times the rest of the weekend yeah.
+26,happy,happy,Oh right. sure [LAUGHTER]
+27,happy,happy,It was a lot of fun- It was a lot of fun.  She's great.  And I'm so happy.
+28,happy,happy,So where are you going to have your wedding?
+29,happy,happy,We're going to do it back in the Midwest where her family all is.  They're all out there. you know so Um  And so just gonna have a small small wedding. But um- you know of course you're going to come right?
+30,excited,excited,Yeah. of course.
+31,excited,excited,Okay Okay.
+32,happy,happy,Um- And she wants you to be in it too.  She loves you so much. She thinks you're the sweetest.  Of course you are.  You're You're my best friend so-
+33,happy,happy,Where is she right now?
+34,null,null,oh She's back at work. yeah.
+35,happy,happy,YeahI'll hang out with the both of you.
+36,excited,excited,Of course.  We'll go out to dinner later this week.
+37,excited,excited,yes.
+38,excited,excited,It will be perfect.
+39,excited,excited,Oh I'm so excited for you.
+40,happy,happy,oh.
+41,happy,happy,She's the one.
+42,happy,happy,Oh my gosh.  You told your parents already? and everything
+43,happy,happy,Of course.  I told them right away.  We called them all right them.
+44,happy,happy,Are they so excited?
+45,happy,happy,Oh yeah.  My mom's freaking out. Oh yeah She's so happy. this is you know  It's her dream come true.  She always wanted her little boy -- she wants kids you know.
+46,happy,happy,She wants grandkids. So we'll be working on that right away.
+47,excited,excited,Are you guys gonna have kids?
+48,happy,happy,Of course we're gonna have kids like three at least.
+49,happy,happy,She wants like eight- She wants like eight kids and I'm like no no no no no.  I am like what Let's do maybe three and we'll go with that.
+50,null,null,Are you going to start right away?
+51,excited,excited,Well we're going to take a little bit of time you know we need to get acclimated and you know start our lives make money you know be comfortable.
+52,null,null,Yeah have you ever like lived with someone else before?
+53,happy,happy,Oh yeah yeah yeah yeah I mean actually we lived together awhile back when we -- Yeah back in college for a little while. yeah.
+54,happy,happy,But that- so we are really used to each other. We took the time apart and now we're going to get back together.  We're going to move in soon.
+55,null,null,Oooh
+56,happy,happy,it's great. I'm a lucky man.
+57,happy,happy,That's incredible yeah Congratulations.
+58,happy,happy,Thank you.
+1,excited,excited,Good God.
+2,excited,excited,I wonder.
+3,excited,excited,Hello?  Hello?  What?  Wrong number.
+4,excited,excited,Oh it sent shivers up my spine.
+5,excited,excited,Behave exquisitely.
+6,excited,excited,With the most perfect poise.
+7,excited,excited,Yes I shall probably do a Court Curtsey.
+8,null,null,The whole business is really rather ridiculous.
+9,null,null,Meaning exactly that.
+10,excited,excited,What does it all mean?  That's what I asked myself in my ceaseless quest for ultimate truth.  Dear God what does it all mean?
+11,null,null,Who's they?
+12,excited,excited,All the futile mortals who try to make life unbearable.  Laugh at them.  Be flippant.  Laugh at everything all their sacred shibboleths.  Flippancy brings out the acid in their damned sweetness and light.
+13,excited,excited,Certainly you must.  We're figures of fun alright [LAUGHTER].
+14,null,null,Well what if-what happens when our love-
+15,excited,excited,Who knows?
+16,excited,excited,No that fire will fade along with our passion.
+17,excited,excited,It all depends on how well we played.
+18,null,null,Well what if one of us dies does the other laugh then?
+19,excited,excited,Yes yes with all his might.
+20,excited,excited,No no it isn't.  Death is very laughable.  Come such a cunning little mystery all done with mirrors.
+21,excited,excited,no So is everyone else in the long run.  Let's be superficial and pity the poor philosophers.  Let's blow trumpets and squeakers and --
+22,excited,excited,enjoy the party as long as we can like very little quite idiotic schoolchildren. [garbage] Let's savor the delight of the moment.
+23,excited,excited,Darling come here and kiss me before your body rots and worms pop in and out of your eye sockets.
+24,excited,excited,Do you remember that awful scene we had in Venice?
+25,excited,excited,The one where you bought that little painted wooden snake and put it on my bed.
+26,excited,excited,Charles.  That was his name.  He did wriggle so beautifully.
+27,excited,excited,Horrible thing I hate it.
+28,excited,excited,How long did that row last?
+29,excited,excited,The worst one was in Cannes when your curling irons burnt a hole in my new dressing gown.
+30,excited,excited,Oh that was quite a rouser wasn't it?
+31,null,null,Oh I didn't hit you very hard.
+32,excited,excited,And then the manager came in and found us rolling around on the floor biting and scratching like panthers.
+33,excited,excited,[LAUGHTER] I shall never forget his face.
+34,happy,happy,Oh ridiculous. utterly ridiculous
+35,excited,excited,Oh we were very much younger then.
+36,excited,excited,Oh As a matter of fact the real cause of that row was Peter Burden.
+37,null,null,You knew there was nothing.
+1,excited,excited,Well so?  What do you think?
+2,frustrated,frustrated,What I was just saying.
+3,null,null,It certainly is not. It's slightly exaggerated scientific fact.
+4,null,null,I am not the only one look at all these people.
+5,frustrated,frustrated,I am sorry.  It's just fish to me.
+6,null,null,Carla can I ask you a question?  Now don't be upset are you having a period?
+7,angry,angry,God damn it Augie.  Why do you always ask things like that?  It's so insulting.
+8,frustrated,frustrated,What's bugging you?
+9,frustrated,frustrated,I just had a different idea of what this evening is going to look like.
+10,frustrated,frustrated,There's nothing to it.  We come down here.  The grunion arrives and they do their little fish thing.  And we say Oh wow.  Look at the little fish.  They go home we go home.
+11,frustrated,frustrated,For heaven's sake Augie grow up we are not going to see the grunions.
+12,frustrated,frustrated,Why not?
+13,frustrated,frustrated,We never do.  Have we ever?  We never have.
+14,frustrated,frustrated,We miss them twice it's not ever.
+15,frustrated,frustrated,Twice is every time we tried that's ever.
+16,null,null,Well We will see them this year.
+17,frustrated,frustrated,No we won't.  Augie it's like waiting for Santa Claus to come.  I feel like I am going to spend my entire life standing on the beach with my eyes wide open and my hands clasp expectantly in front of me waiting for the fish to show up and the fish will not show up.
+18,frustrated,frustrated,I thought you wanted to see it.
+19,frustrated,frustrated,I did I do want to see it.  I always want to see it Augie.
+20,frustrated,frustrated,It's just fish it's nothing to get traumatize over.
+21,frustrated,frustrated,For heaven's sake this is not about fish.
+22,frustrated,frustrated,Okay I been trying to work this backwards but I can't seem to pinpoint a moment when we took a turn for the worst here.
+23,sadness,sadness,Augie do you remember the first time we came to see it?  It was about four years ago right after we got married and we thought I was pregnant.
+24,sadness,sadness,We had a bottle of champagne but no glasses and you ask me to dance so we took off our shoes and while we were dancing you said the most intimate things right in my ears so I could feel them as much as hear them.
+25,happy,happy,And I remember thinking Finally finally.  I am as happy as I am supposed to be.
+26,null,null,Wait a minute I got it.
+27,sadness,sadness,Dancing barefoot in the sand drinking champagne from the bottle.
+28,sadness,sadness,I rather not remember some things.  I rather not hope for some things.
+29,excited,excited,Okay all right I got it.  You wanted it to be like the other time okay no problem. Listen You want to dance?
+30,sadness,sadness,No.
+31,excited,excited,You want me to go get some champagne?
+32,sadness,sadness,No.
+33,excited,excited,Take off our shoes?
+34,frustrated,frustrated,No.
+35,frustrated,frustrated,You want to get married again?
+36,frustrated,frustrated,What? What You want a divorce?
+37,frustrated,frustrated,No no.
+38,frustrated,frustrated,A vacation? A new carpet a poodle?  A bag of ice cream a suicide pack what what Carla?  What the hell do you want?
+39,frustrated,frustrated,I want something to turn out the way it is suppose to turn out.
+40,angry,angry,What.  Welcome to the human race.
+41,frustrated,frustrated,No no I was just like you I thought it will be all peaches and roses and- and sand in our toes and wind in our hair and the fish will always come. And the bills will always magically pay themselves and we will have three fat rosy kids and we will be HAHA baby the joke is on us.
+42,sadness,sadness,This what?  What is this?  This isn't even anything.
+43,sadness,sadness,Sure this is standing.  This is waiting.  This is fighting.
+44,sadness,sadness,But this isn't anything like I thought it would be.
+45,sadness,sadness,No I know me either.
+46,sadness,sadness,I mean it is just this  I mean it includes a lot and everything and you know it's the sand and it's the full moon and I just-I am sorry but I couldn't help wishing I was somewhere else.
+47,sadness,sadness,Maybe if you are with somebody else too?
+48,sadness,sadness,I didn't say that.
+49,sadness,sadness,No I know but.  I know I don't make you happy.
+50,sadness,sadness,For heaven's sake Augie wherever I am I always wanted to be with you.
+51,sadness,sadness,Whatever I am doing I wanted to be with you.  I mean you are probably the one who wishes you were with somebody else somebody who didn't take everything so hard and who knows how to enjoy herself.
+52,happy,happy,Actually now that you mention it.  No I don't.
+53,happy,happy,Good.  So maybe we are on the wrong spot but we are with the right person.
+54,happy,happy,I don't know.  Seems like a pretty good spot to me I mean look at the view of the moon you got from here.
+55,happy,happy,Yes I did notice that.  It does look really beautiful on the water.  The gold white moon.
+56,happy,happy,Well look what we have got here.
+57,happy,happy,No I am beginning to think that maybe this is the spot after all.
+58,happy,happy,Shh If we're very quiet the fish might come.
+59,happy,happy,Or not.
+1,excited,excited,I wonder.
+2,excited,excited,what Nobody knows we are here except Freda and she wouldn't ring up.
+3,excited,excited,What do we do?
+4,null,null,We're all right aren't we darling whatever happens?
+5,excited,excited,Now and always my sweet.
+6,excited,excited,I don't care then.
+7,excited,excited,It was bound to happen sooner or later.
+8,excited,excited,Oh it sent shivers up my spine.
+9,excited,excited,Oh what shall we do if they suddenly walk in on us.
+10,excited,excited,With the worst- with the most perfect poise?
+11,excited,excited,Uhh It's amazing how once you feel--
+12,excited,excited,things that ought to matter most dreadfully don't matter at all when one's happy do they?
+13,excited,excited,Uhh You mustn't say that my darling.
+14,excited,excited,Being that sacred and wonderful thing love.
+15,excited,excited,Um What does it all mean?  That's what I ask myself in my endless quest for ultimate truth.  Dear God what does it all mean?
+16,null,null,Don't laugh at me.  I'm serious.
+17,excited,excited,You mustn't be serious darling.  That's just what they want.
+18,null,null,Who's they?
+19,excited,excited,All the futile mortals who try to make life unbearable.  Laugh at them Be flippant.  Laugh at everything all their sacred shibboleths.
+20,excited,excited,uh- the- Being flippant brings out the acid in their damned beauty and light.
+21,null,null,If I laugh at everything then I must laugh at us too.
+22,excited,excited,Certainly you must.  We are figures of fun all right.
+23,null,null,Well will we always bicker and fight?
+24,excited,excited,No.  That fire will fade along with our passion.
+25,null,null,What if one of us dies does the other one laugh then?
+26,excited,excited,Yes yes with all his might.
+27,excited,excited,No no that is quit laughable.  The cutting little mystery all done with mirrors.
+28,excited,excited,So is everyone else in the long run.  Let's be superficial and pity the poor philosophers.  Let's blow trumpets and squeakers and enjoy the party as long as we can like little quiet idiotic school children.
+29,excited,excited,[garbage] Darling kiss me before your body rots and worms start popping in and out of your eye sockets.
+30,null,null,Elliott worms don't pop.
+31,excited,excited,I don't care what you do.  See you could paint your body bright green and and run naked through the Place Vendome and run with every man in the world and I shan't say a word.  As long as I know that you love me best.
+32,excited,excited,Do you remember that awful scene we had in Venice?
+33,excited,excited,The one where you bought that little painted wooden stake and you put it on my bed.
+34,excited,excited,Horrible thing.  I hated it.
+35,excited,excited,I know you did.  You threw it out the window into the Canal below.  I don't think I'll ever forgive you for that.
+36,excited,excited,How long did that roue last?
+37,excited,excited,Oh The worst one was in Cannes when your curling iron burnt a hole in my new dressing gown?
+38,excited,excited,Oh It burnt my comb and all the towels in the bathroom.
+39,excited,excited,[LAUGHTER] That was quit a rouser wasn't it?
+40,excited,excited,Oh I didn't hit you very hard.
+41,excited,excited,I should never forget his face. [LAUGHTER]
+42,excited,excited,We were very much younger then.
+43,null,null,You knew there was nothing in that.
+1,sadness,sadness,A good friend of mine passed away the other day.
+2,sadness,sadness,Oh no I'm so sorry. What happened?
+3,sadness,sadness,Oh they had some pretty progressive cancer
+4,sadness,sadness,metastasized and it was old and they knew that it wasn't looking good but-
+5,sadness,sadness,That's the worst.  I'm so sorry.  Did you know him well?
+6,sadness,sadness,Yeah.  We were.  Pretty close.
+7,sadness,sadness,[BREATHING]
+8,sadness,sadness,I am so sorry  It's-
+9,sadness,sadness,It's the worst when they go like that. [GARBAGE] Was he young?
+10,sadness,sadness,Kind of.
+11,sadness,sadness,It's hard to watch when it's painful for them you know.
+12,sadness,sadness,Absolutely absolutely.
+13,sadness,sadness,It's the think
+14,sadness,sadness,I just I don't know.
+15,sadness,sadness,There's no reason for it.
+16,sadness,sadness,I know.
+17,sadness,sadness,And he could of...  He was pretty awesome
+18,sadness,sadness,Yeah?  What'd he do?  What did they do?  How'd you know him?
+19,sadness,sadness,Uh  We grew up together.
+20,sadness,sadness,yeah.
+21,null,null,Is he an actor too or-?
+22,sadness,sadness,Yeah he kind of did a lot of things but we acted together sometimes.
+23,sadness,sadness,I feel really bad for his family you know.
+24,sadness,sadness,Yes of course of course.
+25,sadness,sadness,It must be really really hard to lose a child.
+26,null,null,Was he very close to his family?
+27,sadness,sadness,Yeah.  And they were really supportive like through the whole process but-
+28,null,null,yeah.
+29,sadness,sadness,[BREATHING]
+30,sadness,sadness,I can't imagine what his- what his parents are going through.
+31,sadness,sadness,Of course not.  You have no idea what it's like to lose a kid.
+32,sadness,sadness,Yeah I'm just going to miss him.
+33,sadness,sadness,Thank you.
+34,null,null,Is there a funeral planned? or-
+35,sadness,sadness,Yeah they're going to do some sort of memorial service or something.
+36,null,null,Cool Well If you want me to go with you I will.
+37,sadness,sadness,Thanks.
+38,null,null,No problem.
+39,sadness,sadness,It's really bizarre you know when you know somebody really well and then...
+40,sadness,sadness,something happens and they die and it's like-
+41,sadness,sadness,really hard to imagine that like you're going to continue to live and that person's just going to have stopped.
+42,sadness,sadness,Right it just doesn't make any sense it's not real.  It doesn't feel real.
+43,null,null,yeah.
+44,sadness,sadness,[BREATHING]
+45,null,null,Do you know what it's going to passeventually I mean it'll never pass it'll always be there and you'll always remember and everything like that but you know.  It'll get easier I guess.
+46,sadness,sadness,yeah.
+47,null,null,That's the best way to put it.
+48,sadness,sadness,It's hard to say good-bye.
+49,null,null,Absolutely.
+50,sadness,sadness,[BREATHING]
+51,null,null,Do you know what if it was me that died I'd really want you to be crying and being really upset too any way. So I think you should definitely do this because it's trying what it's supposed to be.
+52,sadness,sadness,yeah yeah.
+1,null,null,Hium- I think my baggage was lost and I need to I guess file a claim or I don't know what.
+2,null,null,Okay what flight were you on?
+3,null,null,Um-Seventeen. Coming from --
+4,null,null,On what airline?
+5,null,null,It was Virgin Atlantic coming from London.
+6,null,null,From London okay. Um- And you went through all your proper checkpoints?
+7,frustrated,frustrated,Yeah I don't know where it was lost.  I was coming from Africa so.
+8,null,null,So you haven't seen your bags since Africa. You flew threw Heath Row to here.
+9,null,null,Right.
+10,null,null,Yeah.
+11,null,null,Okay.  Well let me see here. I-
+12,null,null,It seems like it went through Heath Row.  I see it here. uh-
+13,null,null,That's good.
+14,null,null,But uh- I don't see it here in the airport yet. uh
+15,null,null,I'm not sure where it is.  We can absolutely keep an eye out for for it for you.
+16,null,null,Well I can't leave without it. I mean Could you find out?
+17,null,null,Well I'm not a miracle worker.  I don't know what I can do for you.  I don't have the bag right here.
+18,frustrated,frustrated,Right well can you get on the computer maybe and like track it down and see when it's going to get here?
+19,null,null,Well as I told you it left Heath Row and it seems to have arrived here.  But if you can't find it then-are you sure you know what your bag looks like?
+20,frustrated,frustrated,Yes sir I know what my bag looks like.
+21,null,null,Okay and what is that?  What kind of bag is it?
+22,null,null,Um- It's a travel backpack.  It's green and gray.  It's got my name on it and my information.
+23,frustrated,frustrated,And you couldn't find it?
+24,frustrated,frustrated,No it didn't turn up at the baggage claim.
+25,null,null,Are you sure?
+26,frustrated,frustrated,I mean we've gone through all of this.  I've been to five people already who--
+27,frustrated,frustrated,Well obviously that wasn't me so I'm going to have to ask you the same questions they asked you just so we can get to the same point.
+28,frustrated,frustrated,Okay.
+29,null,null,All right?  Now um- it's green travel bag you couldn't find it.  And was there something important in it that you need it?
+30,frustrated,frustrated,Yes lots of really like -- sentimental value only but--
+31,null,null,Sentimental value.
+32,null,null,Right.  Well I don't know what to tell you. Um- What I can offer you is a fifty dollar voucher on your next flight.
+33,null,null,No I understand. I mean. It's got to be tough all those sentimental things but um- this is all I can do for you.
+34,frustrated,frustrated,Does this happen often?  Do they--you just lose baggage and you just offer people money for it?
+35,null,null,Well you know sometimes that's--really I mean what else could we do?
+36,angry,angry,Uh- Not lose the baggage in the first place. I mean You're offering a service here. I paid so much money for that ticket.
+37,null,null,Well
+38,frustrated,frustrated,Obviously ma'am.
+39,frustrated,frustrated,I am sorry ma'am.
+40,null,null,Let's- Let's just relax for a moment ma'am.  You understand obviously we're going to do everything we can to keep all of your luggage here.
+41,null,null,Obviously we're not trying to lose your luggage.  Do you really believe that we're trying to lose your luggage ma'am?
+42,angry,angry,No but I mean like why can't- why can't you find it?  Where did it go?  Who lost it?
+43,angry,angry,Well I just-I paid so much money for this ticket.  I feel like you guys should be able to get-to offer me more than a fifty dollar voucher.
+44,null,null,Well we're talking about one bag.  You personally made it here didn't you?
+45,angry,angry,Yeah meaning I didn't die in a fiery plane crash.  How convenient but um- I paid two thousand dollar to ride your airline and I would really appreciate getting my bags there to my destination in one place.
+46,frustrated,frustrated,That's what the cost of the ticket was for.
+47,frustrated,frustrated,Ma'am international flights are not cheap and there's many reasons for that.  It does not have solely to do with your baggage or-
+48,angry,angry,Right but part of the agreement is that I'm paying so that I can take myself and my belongings with me.
+49,frustrated,frustrated,Right. Yes ma'am.
+50,angry,angry,And that you're going to transport them safely from one place to another.
+51,frustrated,frustrated,Right and also if you'll read the fine print of your agreement you'll see that while we do bear some responsibility for lost luggage it is a fifty dollar voucher.
+52,angry,angry,That's all you can offer me? I mean my the stuff in there is worth way more than fifty dollar.
+53,null,null,Well I understand that.  Did you buy flight insurance?
+54,null,null,Well my hands are really tied then.
+55,frustrated,frustrated,Why do I need flight insurance?  Why don't you guys just guarantee that you're going to get the stuff that I leave with to my destination?
+56,null,null,Well it's like any kind of insurance.  You don't-when you get it then you get more. You know Like if you--
+57,frustrated,frustrated,Right but if I'm riding a bus I don't need to buy luggage insurance that the backpack I take on is going to get to my destination with me.
+58,null,null,Well of course not because you've got your backpack with you the whole time.  Now if you--you said this was a travel bag.  Why weren't you carrying it on if it was so important?
+59,frustrated,frustrated,Because they made me check it.  It's too heavy.
+60,null,null,Uh so it was really heavy.
+61,frustrated,frustrated,Well you know what it could still turn up but until then I can offer you this fifty dollar voucher.
+62,frustrated,frustrated,There's nothing else you can do?
+63,null,null,I'm sorry ma'am there's nothing else I can do.  My hands are really tied here.  I really wish there was something else I could do for you.
+64,angry,angry,I don't believe that for a second.
+65,null,null,Well I don't know why you wouldn't believe that.
+66,frustrated,frustrated,Obviously I'm doing everything that I can here.
+67,null,null,Well I have no way to give you more money.  I'm giving you as much money as I can and figuring- as far as figuring out where you bag is-
+68,angry,angry,What do you mean as you can?  Who makes up these rules?
+69,null,null,makes up?
+70,angry,angry,You're an autono- autonomous human being.  You could- You could go into the com-
+71,null,null,The airline makes these rules mom ma'am.
+72,frustrated,frustrated,So I'm just supposed to oh well oops my luggage is gone and be fine with that and take your stinking fifty dollar voucher?
+73,frustrated,frustrated,Well you can take my stinking fifty dollar voucher and go home and wait and see if your luggage turns up. And if it does then we'll deliver it to you.
+74,frustrated,frustrated,And you have no guarantee.
+75,frustrated,frustrated,I have no guarantee absolutely not.
+76,frustrated,frustrated,This is ridiculous.
+77,frustrated,frustrated,How can I guarantee finding your luggage when it's lost?
+78,frustrated,frustrated,Uh- Because you guys lost it so it should be your responsibility to find it too.
+79,frustrated,frustrated,Right well when you're at home and you lose something do you guarantee that you're going to find it later on?
+80,frustrated,frustrated,Oh come on.  Would you cut it out?  This is ridiculous.
+81,frustrated,frustrated,Well it sounds to me like you're being ridiculous
+82,angry,angry,No I don't think I am.  I like have a whole bunch of stuff that means a lot to me and I brought it you know from Africa.  It's not like I can just go back and get it whenever I want.
+83,null,null,Right.
+84,angry,angry,It's not like I can go to Kmart and buy another.
+85,frustrated,frustrated,I understand that ma'am but things get lost.  There's nothing I can do about that.  Things happen.  Accidents happen.
+86,null,null,And while I really would love to be able to hand you your bag right now obviously I can't do that.
+87,null,null,So you'd like the fifty dollar voucher?
+88,frustrated,frustrated,Yeah I'll take your fifty dollar voucher.
+89,null,null,Okay just fill out these three forms and um- you'll- we'll have that sent to you within the next three weeks and of course we'll definitely keep an eye out for your bag.
+90,frustrated,frustrated,Thanks.
+91,null,null,You have a wonderful day.
+1,null,null,Hi I need an ID.
+2,null,null,ahh Yeah this is the wrong line.  I'm sorry.  You need to go back over to line two B.  That's where you should have started from.
+3,frustrated,frustrated,Okay I'm sorry but I just stood in this line for an hour.  can I Is there any way I can-
+4,frustrated,frustrated,No they told me-I'm sorry but they told me to be in this line.
+5,frustrated,frustrated,What I mean what... what's the difference?  What do I need to do there that I can't do here?
+6,null,null,Well I have no camera here.  I can't help you at all here ma'am.  I have forms for something completely different.  You need to go to a different place.
+7,frustrated,frustrated,Can you just-can I just get the right-
+8,frustrated,frustrated,Simply step to line two A ma'am I'm sorry.
+9,frustrated,frustrated,Would you be able to put me at the front of that line?
+10,frustrated,frustrated,There is a large line of people behind you waiting to be--
+11,frustrated,frustrated,I know.  I've been in line with these people.  I understand.  I understand what it's like.  Could you please like call over and-
+12,frustrated,frustrated,I don't want to be rude here ma'am but line two B is where you need to be.  This is the line for registration.
+13,frustrated,frustrated,I hear that.  I hear that.  Thank you but I've waited in line for so long and I don't want to have to be here all day.
+14,frustrated,frustrated,I don't have those-
+15,null,null,So could I maybe get the form from you fill it out here- and maybe you could-
+16,frustrated,frustrated,I don't have those forms ma'am.  I can't help you.  That's why you need to go to line two A.
+17,frustrated,frustrated,And how long is that going to take?
+18,frustrated,frustrated,Ma'am obviously I have no idea how long it's taking.  There seems to be a bit of a line there.  It looks like thirty forty people.  It could take four to five hours.  I'm sorry.
+19,frustrated,frustrated,I don't-
+20,frustrated,frustrated,There's nothing I can do for you ma'am.
+21,frustrated,frustrated,I don't have time for this today and-
+22,frustrated,frustrated,But obviously I don't have time for you to stand here and waste my time in this line.  There are other people who need service behind you who are waiting for the right things.
+23,frustrated,frustrated,Is there anything you can do?  Please have some compassion.  Is there something you can do?
+24,frustrated,frustrated,I am a very compassionate person and I'm offended that you imply that I'm not.  Of course I'm compassionate.  Look I work in the D.M.V..  What do you think I am?  Go wait in line two A.
+25,frustrated,frustrated,Don't ask me to have somebody else come over here and move you myself.  I can't come back over there.  I'll get security if you need me to.
+26,frustrated,frustrated,Please I don't think that's necessary.  I'm just asking maybe you could call over and say that somebody miss informed her because I didn't pick to stand in this line.  I asked them where to stand and they told me here.
+27,frustrated,frustrated,what no I'm sure they did not tell you here.
+28,frustrated,frustrated,No they did.  The lady over there told me to stand in this line and I've been here for an hour.
+29,frustrated,frustrated,what The lady what? the janitor?
+30,frustrated,frustrated,No.
+31,frustrated,frustrated,No I'm not I'm sorry.I'm not stupid.
+32,frustrated,frustrated,I'm not saying that you're stupid ma'am.  I think you just said that you were stupid.
+33,angry,angry,Isn't there anything you can do?  Just call over and ask them if I can go to the front of the line in the other line.
+34,frustrated,frustrated,It doesn't work that way here ma'am.
+35,angry,angry,Why not?
+36,frustrated,frustrated,There is a strict system here.  You need to wait in the right line for the right thing.  This is the line for registration.
+37,frustrated,frustrated,Except they're going tell are you going to tell me the right line to stand in this time at least?
+38,frustrated,frustrated,I told you it was line two A.
+39,angry,angry,Right well last time they told me it was this line and obviously it's not true.
+40,frustrated,frustrated,I don't know who told you that but they were wrong.  I'm sorry.
+41,frustrated,frustrated,Do you have a manager I could speak with?
+42,frustrated,frustrated,Are you being straight with me?
+43,frustrated,frustrated,I'm being very straight with you ma'am.  There is nothing I can do for you.  You need to stand in line two A.
+44,frustrated,frustrated,Fine.
+1,null,null,Why does that bother you?
+2,null,null,Well maybe maybe he just wanted to see her again.
+3,null,null,Nobody comes seven hundred miles just to see.
+4,frustrated,frustrated,What are you talking about?  He grew up next to the girl his whole life why wouldn't he want to see her again?  Don't look at me like that.  He hasn't told me anything he didn't told you.
+5,null,null,Why do you think he's even thinking that?
+6,null,null,He's got that about it.
+7,frustrated,frustrated,Well so what?
+8,angry,angry,What's going on here Joe?
+9,frustrated,frustrated,Now listen.
+10,frustrated,frustrated,How do you know why she's waited?
+11,frustrated,frustrated,Look it's a beautiful day outside why are we arguing?
+12,frustrated,frustrated,Well what do you want me to do about it?  What do you want?
+13,frustrated,frustrated,I want you to pretend like he's coming back.  Both of you don't think I haven't noticed you and Chris since she's gotten here.  I don't want any nonsense.
+14,frustrated,frustrated,But Kate?
+15,frustrated,frustrated,No because if she- he's not coming back then I'll kill myself. Laugh!  Laugh at me!
+16,frustrated,frustrated,Calm yourself.
+17,frustrated,frustrated,Calm yourself.
+18,frustrated,frustrated,Only last week a man turned up in Detroit missing longer than Larry.  You read it yourself.
+19,frustrated,frustrated,All right.  All right.
+20,angry,angry,You above all have got to believe.
+21,angry,angry,What's that suppose to mean me above all?  Look at you you're shaking.
+22,angry,angry,I can't help it.
+23,angry,angry,What have I got to hide Kate?  What the hell is the matter with you?
+1,sadness,sadness,Sweetheart I've got to tell you something.  I just got a call.  I'm going to Iraq.
+2,sadness,sadness,I know it's really crappy timing but I don't have a choice.
+3,sadness,sadness,I don't have a choice.  I have to go.  If I don't go they'll come and take me.
+4,frustrated,frustrated,No we have- There's got to be something you can do.  You can't go.
+5,frustrated,frustrated,I've tried everything.  I've called everyone I know.  I've tried everything. No one can do anything for me or they won't do anything for me.
+6,sadness,sadness,I know.
+7,sadness,sadness,I don't want to -- the kids.  You've got to take care of them.  You've got- you've got to-
+8,sadness,sadness,tell them about me and show them pictures of me and everything like that because they are not going to see me for such a long time.  And it's such an important time and I just don't want to miss it.
+9,frustrated,frustrated,There's got to be something we can do.  You can't just go.
+10,sadness,sadness,I don't have -- I know.  What are we gonna- What are we- just run away?  What can I do?  Where can we go?
+11,frustrated,frustrated,Why don't we do that- Can we- Can we just leave the country?
+12,null,null,What would be the worst that would happen if they found you somewhere else?
+13,frustrated,frustrated,They'd put me in jail and then how long- when will I get to see the kids?  What ten years?  I don't know.
+14,sadness,sadness,Well they're so young.
+15,sadness,sadness,I know.  But I'll-I'll send the pictures all the time and I'll write them emails and you can read them the emails that I send them.
+16,sadness,sadness,I'm gonna be in Bagdad just doing security.
+17,sadness,sadness,I just want to be honest with you.  I don't want you to .
+18,sadness,sadness,but it's gonna be fine.  I'm gonna be fine.  You know I'm good at this.  I can do this.  That's why I trained all this time.  I'm good at this.  Okay?
+19,sadness,sadness,I know.  I know.  I know.  But you know what?  That doesn't mean it's gonna be me; does it?
+20,sadness,sadness,No.  It doesn't.  And you can't think like that.
+21,sadness,sadness,I don't want you to -- I know.  I know. You can't worry about me.  You've got to worry about the kids.  And you've got to take care of the kids for me.  Okay?  Take care of the kids for me; all right?
+22,sadness,sadness,It's just so much.
+23,sadness,sadness,I'll miss you baby.
+24,sadness,sadness,[GARBAGE] You have to write me everyday.
+25,sadness,sadness,All- I'll write you everyday all the time.  And I'll send you pictures and you send me pictures. I know We've got email out there.  We've got email and I can see stuff and you can send me stuff all the time.  Okay?
+26,sadness,sadness,yeah yeah yeah.
+27,excited,excited,You you record every second.  You record every second because I want to see it all.  Okay?
+28,sadness,sadness,okay.
+29,sadness,sadness,[GARBAGE]
+1,null,null,Hi. Um-  My luggage didn't come out of the conveyor thingy.
+2,null,null,Hmm. Hmm.
+3,null,null,So um what do I do?
+4,null,null,How long ago was that?
+5,null,null,Uh- Like an hour and a half ago.  I talked to somebody who was standing out there and they said wait.  Sometimes like random butt- pieces come out late.
+6,null,null,Uh-Hmm.
+7,null,null,And so I waited there but nothing came.
+8,null,null,Um okay.  Well you can fly- file a claim.  Where were you coming from?
+9,null,null,I was coming from um the Midwest like Iowa.
+10,null,null,So within the country though? umm
+11,null,null,Yeah I know I was in the country.  I mean it's not that complicated.
+12,null,null,Yeah well the chances of it being lost forever you know are slight because -- -- you were in the --
+13,null,null,Well I would hope so.
+14,null,null,Well I mean you know that happens pretty often that sometimes baggage -- -- gets lost.
+15,null,null,People lose --
+16,null,null,yeah.
+17,null,null,You know this is actually I mean it's -- it's a really important piece of luggage.
+18,null,null,Okay.
+19,null,null,I mean it's not big or anything like that.  I mean it's not worth a lot of money or anything.
+20,null,null,Did you have insurance on your flight?
+21,null,null,No you have to buy it now.  It's like thirty dollar extra.
+22,frustrated,frustrated,Well no one even told me about that.  Like why would I think to buy insurance?  I was- It's like a three hour flight.
+23,null,null,well it's something that worth
+24,null,null,yeah I don't know.
+25,frustrated,frustrated,How can you lose my luggage like from like in --
+26,null,null,Chances are it's probably just you know -- taking time being um- unloaded from the airplane.
+27,frustrated,frustrated,I should hope so.  You know I need that today.
+28,null,null,Um well there's not much I can do.  I can you can file this report and we'll call you when it comes in.
+29,frustrated,frustrated,Let me explain to you what the problem is.  My grandfather's remains are in that bag.  And I have to like distribute them today.  We're suppose to you know throw them out to the sea today.
+30,null,null,wow.
+31,null,null,Wow.  Well that's really important obviously.  But um --
+32,frustrated,frustrated,Yeah.  I mean if you have a suggestion like it would be great to help me out here.
+33,null,null,Uh- Actually I don't know that that's legal. Um- it is the issue
+34,frustrated,frustrated,Well I don't care if it's legal.  It's happened.  It's already done.
+35,null,null,Yeah I mean Your bag might have been confiscated because it's --
+36,frustrated,frustrated,Well could you tell me if it's been confiscated then.
+37,null,null,-- it's a biohazard. so- um
+38,frustrated,frustrated,I mean some information here would be great.  Some help.  Can you like type something in and find out?
+39,null,null,Yeah.  Let me just call security.
+40,frustrated,frustrated,That would be great.  Thank you very much.
+41,null,null,[LAUGHTER] Okay.  Hold on.
+42,null,null,Thank you
+1,null,null,You're the only one I know who loves his parents.
+2,happy,happy,It's all right.  It's a good thing.  It's lovely here.  The air is sweet.
+3,excited,excited,So you're not sorry I came?
+4,null,null,Well your mother first of all pretty much told me to leave.
+5,null,null,Well-
+6,null,null,I figured they would your mother at least.
+7,null,null,Well from her perspective I mean why else would I come here?
+8,excited,excited,You feel it's wrong here don't you; this yard this chair?  I want you to be ready for me Annie. I- I don't want to win you away from anything.
+9,happy,happy,Oh Chris I've been ready for a long time.
+10,sadness,sadness,I almost got married two years ago.
+11,happy,happy,You felt something that far back?
+12,happy,happy,Everyday since.
+13,excited,excited,Well I mean until then you never wrote and when you did what did you say?  I mean you sure can be ambiguous.
+14,excited,excited,oh God I kissed Annie.  I kissed Annie. I can't How long have I waited to do that?
+15,excited,excited,Oh Annie we're gonna live now.  I'm going to make you so happy.
+16,excited,excited,Not like that you're not.
+17,sadness,sadness,Like Larry's brother.  Do it like you Chris.  What's the matter?
+18,sadness,sadness,Lets go for a ride.  I I- I want to be alone with you.
+19,sadness,sadness,No nothing like that.
+20,sadness,sadness,Even in your letters there was something ashamed.
+21,sadness,sadness,Yeah I suppose I have been.  But it's going for me.
+22,sadness,sadness,You have to tell me.
+23,null,null,I don't I don't know where to start.
+24,sadness,sadness,It wouldn't work like this.
+25,sadness,sadness,It's so mixed up with so many other things.
+26,null,null,Yeah sure.
+27,sadness,sadness,I lost them.
+28,sadness,sadness,How many?
+29,sadness,sadness,Just about all.
+30,sadness,sadness,It- It takes time to toss something like that offI mean because they weren't just men.
+31,sadness,sadness,I know it's it's just a little thing but that's just the kind of guys I had.  They didn't die.  They killed themselves for each other.
+32,sadness,sadness,I mean that exactly anymore selfish -- just a little bit more selfish and they would have been here today. And it gave me an idea as I was watching them all go down.
+33,sadness,sadness,It was and then I went home.  And it was incredible.  It didn't have any meaning there.
+34,sadness,sadness,I felt what you said ashamed somehow because nobody had changed at all.
+35,frustrated,frustrated,It seemed to make suckers out of so many guys.  And I-I felt wrong to be alive; to to open that bank book to to drive that car the new car and look at that new refrigerator. I mean
+36,frustrated,frustrated,you can take those things out of the war but if you're gonna drive that car you've got to know that that came from the love a man can have from a man. And you've got to be a little bit better because of that.  Because if you're not then it's all just loot and there's blood on it and I didn't want any of it.
+37,sadness,sadness,And I guess that included you.
+38,sadness,sadness,Do you still feel like that?
+39,sadness,sadness,I want you now Annie.
+40,sadness,sadness,Because you can't feel like that anymore Chris.  Because everything you have you have a right to me included.
+41,excited,excited,Oh Annie
+42,happy,happy,[LAUGHTER] What will I do with a fortune?
+43,happy,happy,Annie I am going to make you a fortune.
+1,null,null,Only a trivial little broach.
+2,null,null,Not at all.  I quite like it.  I wear it often.
+3,frustrated,frustrated,[garbage] No I didn't.  You worked the whole thing up in your jealous imagination.
+4,frustrated,frustrated,You must admit that he was in love with you. wasn't he?
+5,null,null,Oh maybe a little.  Nothing serious.
+6,frustrated,frustrated,He let him kiss you.  You said you did.
+7,null,null,Well what of it.
+8,null,null,Well it gave him a lot of pleasure and it didn't hurt me.
+9,angry,angry,Well that's a nice point of view I must say.
+10,frustrated,frustrated,I'm getting very bored with this conversation.
+11,angry,angry,Me too bored stiff.
+12,null,null,Do you want some brandy?
+13,null,null,No thanks.
+14,null,null,I think I'll have a little.
+15,null,null,It's becoming a habit with you.
+16,frustrated,frustrated,Don't be stupid.
+17,angry,angry,Amanda really.
+18,frustrated,frustrated,Nothing.  Are you going out somewhere darling?
+19,null,null,Just making myself fascinating for you.
+20,frustrated,frustrated,Um- Well that reply has just broken my heart.
+21,angry,angry,No it isn't.
+22,angry,angry,No it it is not be quiet.
+23,angry,angry,It's a pity you didn't have a little bit more brandy.  It might have made you a little less disagreeable.
+24,frustrated,frustrated,Nonsense they've got a little bag of venom behind their fangs and they snap!
+25,frustrated,frustrated,They sting.
+26,angry,angry,They snap.
+27,null,null,So did you see much of Peter Burden after the divorce?
+28,null,null,Yes I did quite a lot.
+29,angry,angry,You must have let him kiss you quite a good deal more then huh?
+30,angry,angry,I'm sure you had a riotous time no restrain at all very enjoyable.  You never had much anyway.
+31,frustrated,frustrated,You're quite insufferable.  I do imagine it's because you're drunk.
+32,angry,angry,I am not the slightest bit drunk.
+33,null,null,You always had a weak head.
+34,angry,angry,I do believe that I have said already that I had three minuet liquor glasses of brandy in the entire evening.  A child of two couldn't get drunk of that.
+35,angry,angry,Oh really?  How about a child of three or child of six what about a child of nine?
+36,angry,angry,Not- Would you shut up.
+37,angry,angry,You know we could get a really good debate going on about this.  You know intemperate tots.
+38,frustrated,frustrated,You're not very funny dear.  You better have some more brandy.
+39,angry,angry,You know what?  That's a very good idea.  I think I will.
+40,angry,angry,You better turn that off I think.
+41,angry,angry,Because it's very late and you'll disturb the people upstairs.
+42,angry,angry,Well there are people downstairs I suppose.
+43,angry,angry,This is no time of the year for Tunis.
+44,angry,angry,I do I shall do no such thing.
+45,angry,angry,Very well.  If you have to be boorish and idiotic.
+46,angry,angry,Turn it off.  It's driving me mad.
+47,angry,angry,You are far too temperamental.  Try to control yourself.
+48,angry,angry,Turn it off!
+49,angry,angry,Go away!  Go away!  I- I hate you.
+50,angry,angry,Very amusing indeed.
+51,angry,angry,You know what I'm sick and tire of listening to you.  You're a-- You're a total sadistic bully.
+52,angry,angry,Ja! Very funny.
+53,angry,angry,Stop.  Would you just go away?  I mean you're conceited and overbearing and utterly impossible.
+54,angry,angry,You are a vile tempered wicked living evil little beast.  And I hope I never set eyes on you ever again.
+55,angry,angry,This is the end! Do you understand me? This is the end.
+56,angry,angry,Oh you're not going like this.
+57,angry,angry,Yes I am. Let go with me
+58,angry,angry,[GARBAGE] No you're not.
+59,angry,angry,You are a cruel fiend and I-I loath you.  I thank God I realized who you are before I decided to marry you again.  Oh my God never!
+60,angry,angry,oh! Marry you again? I wouldn't marry you again if you came crawling to me on bended knee.
+61,angry,angry,Beast
+62,angry,angry,You're a wicked little vampire.  And I pray to God I never set eyes on you again as long as I live.
+63,angry,angry,Brute
+64,angry,angry,pig
+1,sadness,sadness,I just got some bad news.
+2,sadness,sadness,My friend Shotty passed away.
+3,sadness,sadness,Oh I'm so sorry
+4,sadness,sadness,The end he's been sick for awhile.  He had cancer.
+5,sadness,sadness,Oh my gosh.
+6,sadness,sadness,Yeah.  It's just I never thought it would actually happen you know? I mean- He's such a fighter and he's always so positive about everything.
+7,sadness,sadness,You know he was gonna and we -- all the way up to the end we were just talking about how- you know all the stuff we were gonna do and you know.  When he finally kicked this stupid cancer you know and we were gonna --
+8,sadness,sadness,he wanted to travel you know.  And he's so talented.  Probably the most talented person I have ever met in my entire life.
+9,sadness,sadness,What did he do?
+10,sadness,sadness,He was a designer you know.  But he did everything. You know He painted and he- and he did costume design he did set design he did lighting he was --
+11,sadness,sadness,he just did everything.  He was literally literally the most talented guy I have ever met in my entire life.
+12,sadness,sadness,And he's gone now and I  -- I just can't believe it.
+13,sadness,sadness,Yeah.  I'm so sorry.
+14,sadness,sadness,I mean one second you think you know you're just having a conversation and then --
+15,sadness,sadness,you know sometimes you think you want to make that phone call or you think you want to tell somebody something or something like that.  Do you know what I mean?  Like that's -- he was the person that I did that with.  You know like that's the person who I needed to call to tell things to all the time.
+16,sadness,sadness,You guys have been-
+17,sadness,sadness,And now I don't have that person anymore you know.  And it's -- -- it's just you.
+18,sadness,sadness,You think that things get easier you know as you as you get older and you -
+19,sadness,sadness,and it just gets worse.  It just gets worse everything is bad all the time; people die your friends die family dies your best friends die. it's-
+20,sadness,sadness,I'm sorry. I-
+21,sadness,sadness,You always think you know when you were- you know when you were a little kid and you think something is gonna happen like it will all be better when I am older you know?
+22,sadness,sadness,Wow Ryan I know that you are hurting right now but I don't think you always feel like that.
+23,sadness,sadness,No you're right.  I don't.  You're right.
+24,sadness,sadness,Even yeah -- he doesn't he would never feel that way he would never want me to feel that way.  Of course not but that's just where I am right now and -- -- I don't know what else to do with it.
+25,sadness,sadness,Yeah. I understand.  I think it's really healthy to grieve.
+26,sadness,sadness,I just miss him.
+27,sadness,sadness,If there's anything I can do to be there for you.
+28,sadness,sadness,Thanks.
+1,sadness,sadness,What's he going to say?  Maybe we ought to tell him before he sees it.
+2,sadness,sadness,He was out here when it broke.
+3,sadness,sadness,About four this morning.  I heard it crack and I looked out the window and he was standing right there when it cracked.
+4,sadness,sadness,I don't know.  But after he saw it he ran back into the house and started crying in the kitchen.
+5,sadness,sadness,No.  I figured it was best to leave him alone.
+6,sadness,sadness,Yes yes he is.  I don't know the meaning in it.  But I know one thing mom we made a terrible mistake with Dad.
+7,frustrated,frustrated,I don't want to argue with him.  But it's time that he knows that nobody else believes that Larry's alive. I mean
+8,frustrated,frustrated,Why shouldn't he dream about him walk the nights waiting for him?  Do we contradict him?  Do we say outright that we don't have any hope anymore?  That we haven't had any hope for a long time?
+9,frustrated,frustrated,For Gods sake three years!  Nobody comes back after three years.  It's insane!
+10,frustrated,frustrated,The trouble is the God damn newspapers I mean ea- each week a new boy turns up out of nowhere.  So the next one is gonna be Larry.  So you--
+11,frustrated,frustrated,All right.  All right just listen.
+12,frustrated,frustrated,You know it's not just my business.
+13,frustrated,frustrated,What do you want me to do?  I mean You're old enough to know your own mind.
+14,frustrated,frustrated,So it's all right then?  I should just go ahead with it?
+15,angry,angry,Isn't it your business too if I tell dad and he throws a fit about it?  You have such a talent for ignoring things.
+16,frustrated,frustrated,I ignore what I got to ignore.  I mean the girl is Larry's girl.
+17,angry,angry,She's not Larry's girl.
+18,frustrated,frustrated,I don't know why it is but every time I reach out for something that I want I have to pull back because it might hurt somebody else my whole bloody life time after time after time.
+19,angry,angry,what to hell with that!
+20,null,null,Have you asked Annie yet?
+21,null,null,Well how do you know she'll marry you?  Maybe she feels like your father does.
+22,frustrated,frustrated,I'll find out and then we'll thrash it out with dad all right?  Mom don't avoid me.
+23,null,null,The trouble is you don't see enough women.  You never did.
+24,frustrated,frustrated,So what I'm not fast with women?
+25,frustrated,frustrated,Because it is.
+26,null,null,Well that's a good reason.  But it don't mean a thing. I mean You haven't seen her since you went to war.  It's been five years.
+27,frustrated,frustrated,[garbage] I don't know.  It's just
+28,frustrated,frustrated,she's who I know best. I know her since I- I was a kid I grew up with her.  When I think of somebody for my wife these days I I think of Annie.  What do you want a diagram?
+29,frustrated,frustrated,No I don't want a-  Your father thinks he's coming back Chris.  If you marry that girl you're pronouncing him dead.
+30,sadness,sadness,Now what's going to happen to your father do you know?  I don't.
+31,frustrated,frustrated,All right then mom.
+32,angry,angry,I've given it three years of thought.  I had hoped if I waited dad would've forgotten him by now and we could have a- a regular wedding and everybody happy.
+33,angry,angry,But if that can't happen then I'll just get out.
+34,angry,angry,I'll get out.  I'll go get married someplace else I- I'll live someplace else maybe New York.
+35,angry,angry,Are you crazy?
+36,angry,angry,The business?  The business doesn't inspire me.
+37,angry,angry,Must you be inspired?
+38,angry,angry,Yeah I'd like one hour a day.  If I have to grub for money all day long I'd like to go home to something beautiful.  I'd like a family.  I'd like some kids.
+39,angry,angry,You don't want to think like that.
+40,frustrated,frustrated,All right.  But don't think like that because what the hell did we work for Chris?  All of this all of it it's all just for you.
+41,frustrated,frustrated,I know that mom.  Just you help me stay here.
+42,angry,angry,Well I am thinking like that.
+43,frustrated,frustrated,I don't understand you do I?
+44,angry,angry,No you don't.  I'm a pretty tough guy.
+1,null,null,What is it?
+2,sadness,sadness,um.
+3,sadness,sadness,I'm sorry.  It's just a lot ahh to explain. ahh I got a call--
+4,sadness,sadness,I got a call today
+5,sadness,sadness,I'm going to need to go overseas for a while.
+6,angry,angry,You got called up.
+7,angry,angry,I thought you said this wasn't going to happen for at least a year.
+8,frustrated,frustrated,What am I going to do?
+9,sadness,sadness,I don't know "sigh".
+10,frustrated,frustrated,The kids-
+11,sadness,sadness,I know.  I know.
+12,sadness,sadness,I know.  Well we'll have to figure all that out.  I mean I think the Army's going to provide childcare and help us out with that. um.
+13,angry,angry,Where do you have to go?  Where are you going?
+14,sadness,sadness,Iraq.
+15,sadness,sadness,I think infantry.  I'm not sure.
+16,frustrated,frustrated,It's going to be at least six months probably a year. I tried.
+17,angry,angry,I don't understand why they would just do something like this?
+18,frustrated,frustrated,I know I know.  It's really really messed up.
+19,angry,angry,It doesn't make any sense.  It's stupid.  I told you you shouldn't go in the Army.
+20,frustrated,frustrated,I don't know I don't know what I'm going to do.  I don't know how to-
+21,frustrated,frustrated,Well maybe you should move in with my mom and she can help.
+22,frustrated,frustrated,I don't know I'm just--I'm trying to think of something.
+23,frustrated,frustrated,You can't what?
+24,sadness,sadness,I don't think there's anything we can do.
+25,sadness,sadness,I'll tell them I'm sick and that you can't leave something.
+26,sadness,sadness,It's not fair.
+27,sadness,sadness,I know.  I know it's not fair.
+28,sadness,sadness,Why has to be you?  There's all those other people.  Somebody else can go instead.  It's not right.
+29,sadness,sadness,Well apparently nobody else can go.
+30,frustrated,frustrated,I don't know.  Baby why are you asking me this?  It's just as hard for me.  Please try to understand that.
+31,frustrated,frustrated,I understand baby.  I'm sorry. I mean try to understand I'm I'm scared myself.
+32,sadness,sadness,I understand.  I'm worried about you.  I don't know what's going to happen to you.
+33,sadness,sadness,I know.
+34,sadness,sadness,I know.
+35,sadness,sadness,I jus-
+36,sadness,sadness,We'll figure something out.  We just have to ... we just have to think about this.  Could any of your family help us?
+37,sadness,sadness,I don't know.
+38,sadness,sadness,Yeah.  I guess.  I don't know what they're going to say.
+39,sadness,sadness,Yeah we'll call them.  We'll figure something out.  I'm sorry I'm sorry I'm sorry.  You're right.
+40,sadness,sadness,I'm going to miss their first words.
+41,sadness,sadness,I know.
+42,sadness,sadness,You'll have to send me pictures and letters everyday.
+43,sadness,sadness,All the time every day every day.  They have e-mail over there and stuff like that right? I can send you pictures.
+44,sadness,sadness,Yeah as much as I can.
+45,sadness,sadness,"sigh" Three weeks.
+46,sadness,sadness,Yeah.
+47,sadness,sadness,Yeah.
+48,sadness,sadness,I love you.
+49,sadness,sadness,I love you.  I'm going to miss you so much. "sigh"
+1,null,null,Why does that bother you?
+2,null,null,She's been in New York three and a half years.  Why all of the sudden?
+3,null,null,Well maybe.  Maybe she just wanted to see her again.
+4,null,null,What did you mean? He lived next door to the girl all of his life why wouldn't he want to see her again? Don't look at me like that he didn't tell me any more than he told you.
+5,frustrated,frustrated,How do you know he is even thinking about it?
+6,frustrated,frustrated,Well so what.
+7,frustrated,frustrated,What's going on here Joe?
+8,frustrated,frustrated,Now listen Kate just-
+9,angry,angry,She's not his girl.  She knows she's not.
+10,frustrated,frustrated,She's . . . Then why is she still single.  New York is full of men why isn't she married?  Probably a hundred people told her she's foolish but she's waited.
+11,frustrated,frustrated,How do you know why she's waited?
+12,frustrated,frustrated,Because she knows what I know - she's faithful as a rock and my worst moments I think of her waiting and I know again that I'm right.
+13,frustrated,frustrated,Look.  It's a nice day.  Why are we arguing?
+14,frustrated,frustrated,Nobody in her- this house dares shake her faith.  Strangers might but not his father and not his brother.
+15,frustrated,frustrated,What do you want me to do? What do you want--
+16,angry,angry,I want you to pretend like he's coming back!
+17,frustrated,frustrated,But Kate...
+18,angry,angry,Because if he's not coming back then I'll kill myself.
+19,frustrated,frustrated,[LAUGHTER]
+20,angry,angry,Laugh.  Laugh at me but what happens the night that she goes to sleep in his bed and his memorial breaks in pieces?
+21,frustrated,frustrated,Calm yourself.
+22,frustrated,frustrated,Calm yourself!
+23,angry,angry,Only last week another boy turned up in Detroit been missing longer than Larry you read it yourself.
+24,frustrated,frustrated,All right all right.  Calm yourself.
+25,sadness,sadness,You've got to believe. You've got to--
+26,angry,angry,What do you mean me above all?  Look at you.  You're shaking!
+27,angry,angry,I can't help it!
+28,angry,angry,What have I got to hide?  What the hell is the matter with you Kate?
