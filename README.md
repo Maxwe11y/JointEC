@@ -6,7 +6,7 @@ ECPEC (Emotion-Cause Pair Extraction in Conversations)
 > We build a new dataset entitled ConvECPE on the basis of IEMOCAP dataset. Besides, we also developed a two-step baseline model for ECPEC task. In the first step, all the possible emotion and cause utterances are jointly extracted. After that,
 > the extracted emotion and cause utterances are paired into emotion-cause pairs for final binary classification.
 
-![img](https://github.com/Maxwe11y/JointEC/blob/main/example_v2.png)
+<div align=center>![img](https://github.com/Maxwe11y/JointEC/blob/main/example_v2.png)
 
 
 
