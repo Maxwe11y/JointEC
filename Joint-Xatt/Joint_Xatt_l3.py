@@ -82,22 +82,6 @@ class MaskedNLLLoss(nn.Module):
                             /torch.sum(self.weight[target]*mask_.squeeze())
         return loss
   
-class GraphNetwork(torch.nn.Module):
-    def __init__(self, num_features, num_classes, hidden_size=64, dropout=0.5,
-                 relations = 2, no_cuda=False):
-        """
-        The Speaker-level context encoder in the form of a 2 layer GCN.
-        """
-        super(GraphNetwork, self).__init__()
-
-        #self.conv1 = RGCNConv(num_features, hidden_size, num_relations=relations, num_bases=30)
-        #self.conv2 = RGCNConv(hidden_size, hidden_size, num_relations=relations, num_bases=30)
-
-    def forward(self, x, edge_index, edge_type, edge_norm=None, seq_lengths=None, umask=None):
-        out = self.conv1(x, edge_index, edge_type)
-        out = self.conv2(out, edge_index, edge_type)
-        return out
-
 
 class ECPEC(nn.Module):
 
