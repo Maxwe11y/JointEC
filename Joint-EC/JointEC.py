@@ -121,22 +121,16 @@ class ECPEC(nn.Module):
         self.wgru = nn.LSTM(input_size=input_dim, hidden_size=int(input_dim / 2), num_layers=1, batch_first=True,
                             bidirectional=True)
 
-        # self.xatt = nn.Parameter(kaiming_normal_(torch.zeros((4*input_dim+1, 4*input_dim+1))), requires_grad=True)
-        # self.xattck = nn.Parameter(kaiming_normal_(torch.zeros((4*input_dim+1, 4*input_dim+1))), requires_grad=True)
-
         self.s1 = nn.Linear(input_dim, input_dim)
         self.s2 = nn.Linear(input_dim, 1, bias=False)
 
-        #self.ac = nn.Sigmoid()
-        #self.ac = nn.ReLU()
         self.ac = nn.LeakyReLU()
-        #self.ac = nn.Tanh()
 
         self.softmax = nn.Softmax(dim=1)
         self.dropout = nn.Dropout(dropout)
         self.dropout2 = nn.Dropout(dropout2)
         self.nocuda = not args.cuda
-        self.W3 = nn.Linear(3*input_dim + 2 + 49 + pos_dim, input_dim) # TODO
+        self.W3 = nn.Linear(3*input_dim + 2 + 49 + pos_dim, input_dim)
         self.cls = nn.Linear(input_dim, self.n_class)
         self.scorer = nn.Linear(input_dim, 1)
 
