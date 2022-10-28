@@ -80,6 +80,23 @@ Here, the emotion of each utterance have already been labled.
 
 ### Dataset Structure
 
+```
+ConvECPE
+│   ID of conversations
+│   speaker info of conversations
+|   label of conversations
+│   the first cause label of each utterance in conversations
+│   the second cause label of each utterance in conversations
+│   the third cause label of each utterance in conversations
+│   textual features of conversations
+│   audio features of conversations
+│   video features of conversations
+│   raw text of conversations
+│   ID of training conversations
+│   ID of test conversations
+
+```
+
 ## Uasge
 In order to implement the proposed two-step framework, you have to download the pre-trained GloVe vectors(glove.6B.100d.txt is the most commonly used vectors in this project).
 The downloaded GloVe vectors should be placed in the dir of both step 1 and step 2 models(Joint-EC, Joint-GCN, Joint-Xatt). Note that the batch size should be set to 1 as we process one dialogue each time. The proportion of valid set ranges from 0 to 0.1.
