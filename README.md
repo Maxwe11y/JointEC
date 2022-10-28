@@ -95,3 +95,35 @@ the proposed step 1 models (specified in ["ECPEC: Emotion-Cause Pair Extraction 
 
 ###
 Detailed description of this project will come soon...
+
+```
+JointEC Project
+│   README.md
+│   requirements_jointEC.txt
+|   model_p2_v2-1.png
+│
+└───Dataset
+│   │   IEMOCAP_emotion_cause_features.pkl
+│   
+└───Joint-EC
+│   │   JointEC.py
+│   │   JointEC_window.py
+│   │   convert_window_to_normal.py
+│   │   dataloader_jointEC_window.py
+│   │   dataloader_jointEC_window.py
+│   │   key_words.txt
+│   │   prepare_data.py
+│
+└───Joint-GCN
+│   │   GCN_features.py
+│   │   JointGCN4.py
+│   │   dataloader_gcn.py
+│   │   key_words.txt
+│   │   prepare_data.py
+│
+└───Joint-Xatt
+    │   Joint_Xatt_l3.py
+    │   dataloader.py
+    │   key_words.txt
+    │   prepare_data.py
+```
