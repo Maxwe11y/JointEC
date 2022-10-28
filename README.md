@@ -80,20 +80,22 @@ Here, the emotion of each utterance have already been labled.
 
 ### Dataset Structure
 
+The structure of the proposed ConvECPE dataset is as follows:
+
 ```
 ConvECPE
-│   ID of conversations
-│   speaker info of conversations
-|   label of conversations
-│   the first cause label of each utterance in conversations
-│   the second cause label of each utterance in conversations
-│   the third cause label of each utterance in conversations
-│   textual features of conversations
-│   audio features of conversations
-│   video features of conversations
-│   raw text of conversations
-│   ID of training conversations
-│   ID of test conversations
+└───   ID of conversations
+└───   speaker info of conversations
+└───   label of conversations
+└───   the first cause label of each utterance in conversations
+└───   the second cause label of each utterance in conversations
+└───   the third cause label of each utterance in conversations
+└───  textual features of conversations
+└───   audio features of conversations
+└───  video features of conversations
+└───  raw text of conversations
+└───  ID of training conversations
+└───  ID of test conversations
 
 ```
 
