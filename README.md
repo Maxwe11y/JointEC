@@ -118,6 +118,7 @@ JointEC Project
 │   README.md
 │   requirements_jointEC.txt
 |   model_p2_v2-1.png
+│   .gitignore
 │
 └───Dataset
 │   │   IEMOCAP_emotion_cause_features.pkl
