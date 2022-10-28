@@ -88,7 +88,7 @@ in a descent order.
 
 ## Uasge
 In order to implement the proposed two-step framework, you have to download the pre-trained GloVe vectors(glove.6B.100d.txt is the most commonly used vectors in this project).
-The downloaded GloVe vectors should be placed in the dir of both step 1 and step 2 models(Joint-EC, Joint-GCN, Joint-Xatt). Note that the batch size should be set to 1 as we process one dialogue each time.
+The downloaded GloVe vectors should be placed in the dir of both step 1 and step 2 models(Joint-EC, Joint-GCN, Joint-Xatt). Note that the batch size should be set to 1 as we process one dialogue each time. The proportion of valid set ranges from 0 to 0.1.
 
 👉 Check out [GloVe Embeddings](https://nlp.stanford.edu/data/glove.6B.zip) before you run the **code**.
 
