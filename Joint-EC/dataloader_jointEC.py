@@ -42,8 +42,8 @@ class IEMOCAPDataset(Dataset):
             thr = torch.rand(1)
             if thr.item() > self.tf:
                 bi_label_emo = torch.LongTensor([0 if label == 2 else 1 for label in self.videoLabels[vid]])  # generate emotion label
-                bi_label_cause = torch.LongTensor([1 if i in causeLabels else 0 for i in range(1, len(self.videoLabels[vid]) + 1)])  # generate cause label
-                #bi_label_cause = torch.LongTensor([1 for i in range(1, len(self.videoLabels[vid]) + 1)])  # generate all the cause chunk label
+#                 bi_label_cause = torch.LongTensor([1 if i in causeLabels else 0 for i in range(1, len(self.videoLabels[vid]) + 1)])  # generate cause label
+                bi_label_cause = torch.LongTensor([1 for i in range(1, len(self.videoLabels[vid]) + 1)])  # generate all the cause chunk label
             else:
                 bi_label_emo = torch.LongTensor(self.sa_Tr[vid])  # generate emotion label
                 bi_label_cause = torch.LongTensor(self.cd_Ta[vid])  # generate cause label
